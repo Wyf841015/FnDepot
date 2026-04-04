@@ -1,53 +1,43 @@
-# FnDepot 飞牛NAS第三方应用仓库
+# FnDepot 飞牛NAS应用仓库
 
-> 收录飞牛NAS第三方应用，提供一站式下载和更新
+> 收录自研和收集的飞牛NAS应用插件
+
+[![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
+[![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
+
+## 目录
+
+### 日志哨兵 (fnlogpush)
+
+飞牛NAS日志监控与多渠道推送工具
+
+**功能**：
+- 实时监控系统日志和备份进度
+- 支持企业微信、钉钉、飞书、Bark、PushPlus、MeoW等推送渠道
+- Web界面管理、事件订阅、免打扰和告警聚合
+
+**安装**：在飞牛NAS应用中心搜索"日志哨兵"安装
+
+**仓库**：[FNLogPush](https://gitee.com/wyf1015/FNLogPush)
+
+---
 
 ## 应用列表
 
-### FNLogPush 日志推送
+| 应用 | 说明 | 版本 |
+|------|------|------|
+| [fnlogpush](./fnlogpush/) | 日志哨兵 - 多渠道日志推送 | 0.6.9 |
 
-- **版本**: 0.5.0
-- **描述**: 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
-- **标签**: 工具, 效率, 监控
+## 关于
 
-## 使用方法
+本仓库用于存放飞牛NAS应用，方便集中管理和分发。
 
-### 飞牛NAS应用商店添加
+## 作者
 
-在飞牛NAS应用商店中添加第三方仓库：
-
-```
-https://raw.githubusercontent.com/Wyf841015/FnDepot/main/fnpack.json
-```
-
-## 第三方仓库API
-
-应用商店通过以下URL获取应用信息：
-
-```
-https://raw.githubusercontent.com/Wyf841015/FnDepot/main/fnpack.json
-```
-
-## 项目展示
-
-### FNLogPush 功能
-
-- 📊 日志监控 - 实时监控系统日志
-- 💾 备份监控 - 跟踪备份进度
-- 📢 多渠道推送 - 企业微信、钉钉、飞书、Bark等
-- 🔔 告警聚合 - 智能合并重复告警
-- 🎨 多主题 - 支持多种界面主题
-
-## 贡献指南
-
-欢迎提交Issue和Pull Request！
+- 作者: 再见一零一二
+- Gitee: https://gitee.com/wyf1015
+- Email: 64652178@qq.com
 
 ## 许可证
 
 MIT License
-
-## 作者
-
-- 再见一零一二
-- GitHub: https://github.com/Wyf841015
-- Gitee: https://gitee.com/wyf1015
