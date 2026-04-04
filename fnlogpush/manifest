@@ -1,0 +1,15 @@
+appname               = fnlogpush
+version               = 0.6.9
+display_name          = 日志哨兵
+desc                  = 飞牛NAS日志监控与多渠道推送工具，实时监控系统日志和备份进度，支持企业微信、钉钉、飞书、Bark、PushPlus、MeoW等推送渠道，提供Web界面管理、事件订阅、免打扰和告警聚合功能
+platform              = all
+source                = thirdparty
+desktop_uidir         = ui
+desktop_applaunchname = fnlogpush.Application
+maintainer            = 一零一二
+maintainer_url        = https://gitee.com/wyf1015
+distributor           = 一零一二
+distributor_url       = https://gitee.com/wyf1015
+service_port          = 19800
+checkport             = false
+install_dep_apps      = python312

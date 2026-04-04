@@ -2,7 +2,7 @@
   "fnlogpush": {
     "display_name": "日志哨兵",
     "platform": "all",
-    "version": "0.6.8",
+    "version": "0.6.9",
     "desc": "自动监控飞牛NAS系统日志和备份进度，实时推送至企业微信、钉钉、飞书等多种渠道",
     "labels": "工具,效率,监控",
     "author": "再见一零一二",
@@ -14,6 +14,6 @@
     "install_type": "系统空间",
     "size": "1.4",
     "download_url": "",
-    "changelog": "v0.6.8\n- 🆕 新增存储管理事件：CreateStorage、MountStorage、UnmountStorage、DeleteStorage等\n- 🆕 新增防火墙事件：FW_ENABLE、FW_DISABLE、FW_START_SUCCESS/FAILED等\n- 🔧 新增存储管理和防火墙事件分类\n\nv0.6.7\n- 🔧 Web界面优化 - 删除冗余CSS/JS文件，减少约22000行代码\n- 🔧 降低刷新频率 - 健康检查/状态更新从2-5秒调整为15秒\n- 🔧 JS模块化拆分 - 新增api.js、websocket.js、components.js模块\n\nv0.6.6\n- ✨ WebSocket实时推送 - 启用前后端WebSocket通信，新日志实时推送到前端\n- ✨ Schema验证 - 新增配置Schema验证，统一配置中心\n- 🔧 删除冗余文件 - 移除history_service1.py, mappings1.py, base1.py\n- 🔧 修复重复推送 - 优化推送逻辑，仅在所有渠道失败时加入重试队列\n- 🔧 推送历史详情 - 详情弹窗显示每个渠道的推送结果\n- 🔧 优化重试机制 - 只重试失败的渠道，最多5次\n\nv0.6.0\n- ✨ 新增钉钉推送渠道 - 支持Webhook + 签名验证\n- ✨ 新增飞书推送渠道 - 支持Webhook\n- ✨ 新增Bark推送渠道 - iOS设备推送\n- ✨ 新增PushPlus推送渠道 - 支持Token + 群组\n- 🔧 修复推送历史记录准确性问题 - 同步执行推送并返回实际结果\n- 🔧 彻底解决登录session问题 - 统一credentials配置，定时检查session有效性\n- 🔧 修复退出登录后无法重新登录的问题\n\nv0.5.0\n- 初始版本\n- 日志监控功能\n- 多渠道推送支持（企业微信、钉钉、飞书、Bark、Webhook）\n- 备份进度监控\n- Web界面管理\n- 告警聚合和免打扰模式"
+    "changelog": "v0.6.9\n- 🆕 新增 MeoW 推送渠道\n- 🔧 优化页面初始化状态同步加载\n\nv0.6.8\n- 🆕 新增存储管理事件：CreateStorage、MountStorage、UnmountStorage、DeleteStorage等\n- 🆕 新增防火墙事件：FW_ENABLE、FW_DISABLE、FW_START_SUCCESS/FAILED等\n- 🔧 新增存储管理和防火墙事件分类\n\nv0.6.7\n- 🔧 Web界面优化 - 删除冗余CSS/JS文件，减少约22000行代码\n- 🔧 降低刷新频率 - 健康检查/状态更新从2-5秒调整为15秒\n- 🔧 JS模块化拆分 - 新增api.js、websocket.js、components.js模块\n\nv0.6.6\n- ✨ WebSocket实时推送 - 启用前后端WebSocket通信，新日志实时推送到前端\n- ✨ Schema验证 - 新增配置Schema验证，统一配置中心\n- 🔧 删除冗余文件 - 移除history_service1.py, mappings1.py, base1.py\n- 🔧 修复重复推送 - 优化推送逻辑，仅在所有渠道失败时加入重试队列\n- 🔧 推送历史详情 - 详情弹窗显示每个渠道的推送结果\n- 🔧 优化重试机制 - 只重试失败的渠道，最多5次\n\nv0.6.0\n- ✨ 新增钉钉推送渠道 - 支持Webhook + 签名验证\n- ✨ 新增飞书推送渠道 - 支持Webhook\n- ✨ 新增Bark推送渠道 - iOS设备推送\n- ✨ 新增PushPlus推送渠道 - 支持Token + 群组\n- 🔧 修复推送历史记录准确性问题 - 同步执行推送并返回实际结果\n- 🔧 彻底解决登录session问题 - 统一credentials配置，定时检查session有效性\n- 🔧 修复退出登录后无法重新登录的问题\n\nv0.5.0\n- 初始版本\n- 日志监控功能\n- 多渠道推送支持（企业微信、钉钉、飞书、Bark、Webhook）\n- 备份进度监控\n- Web界面管理\n- 告警聚合和免打扰模式"
   }
 }

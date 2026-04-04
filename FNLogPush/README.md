@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.6.7-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.6.9-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -23,6 +23,7 @@
 - 钉钉机器人
 - 飞书机器人
 - Bark推送
+- MeoW推送
 - Webhook自定义
 
 ### 🔔 告警聚合
@@ -53,6 +54,7 @@
 | 钉钉 | Webhook地址 |
 | 飞书 | Webhook地址 |
 | Bark | 设备Key |
+| MeoW | 昵称 |
 | Webhook | 自定义URL |
 
 ### 关键字监控
@@ -100,6 +102,15 @@ FNLogPush/
 - 数据存储在应用目录内
 
 ## 更新日志
+
+### v0.6.9
+- 🆕 **新增 MeoW 推送渠道** - 支持 MeoW App 消息推送
+- 🔧 优化页面初始化状态同步加载
+
+### v0.6.8
+- 🆕 新增存储管理事件：CreateStorage、MountStorage、UnmountStorage、DeleteStorage等
+- 🆕 新增防火墙事件：FW_ENABLE、FW_DISABLE、FW_START_SUCCESS/FAILED等
+- 🔧 新增存储管理和防火墙事件分类
 
 ### v0.6.7
 - 🔧 **Web界面优化** - 删除冗余CSS/JS文件，减少约22000行代码
