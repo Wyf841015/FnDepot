@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.7.2-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.7.6-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -52,11 +52,26 @@
 
 ## 版本历史
 
+### v0.7.6 (2026-04-05)
+- 🎨 **界面重构：现代侧边栏** - 玻璃拟态设计，桌面端固定显示
+- 🎨 侧边栏收缩功能 - 桌面端可收起/展开
+- 📱 移动端优化 - 汉堡菜单 + 滑出抽屉
+- 🔧 移动端遮罩层点击事件修复
+- 🎯 底部导航优化 - 移除健康检查按钮，5按钮布局更美观
+
+### v0.7.5 (2026-04-05)
+- 🛠️ **代码质量优化** - 提取公共函数，减少重复代码
+- 🛠️ 新增 constants.py 常量模块
+- 🛠️ 状态值使用常量替代硬编码字符串
+- 🛠️ Session/重试间隔等数值使用常量管理
+- 🔒 **安全加固** - 移除硬编码 Secret Key、Webhook 改用 POST、敏感信息加密存储
+
+### v0.7.4 (2026-04-05)
+- ⚡ **性能优化：WebSocket推送健康状态** - 替代轮询，实时推送系统状态
+
 ### v0.7.2 (2026-04-05)
 - 🎨 **主题系统重构**：分离独立主题CSS文件
 - ✨ 新增科技感霓虹主题（Cyber）
-
-### v0.7.2 (2026-04-05)
 - 🎨 **界面全面升级**：字体系统、动画效果、状态指示器
 - 📊 添加页面加载进度条 + 骨架屏加载
 - 🎬 卡片入场动画 (fadeInUp + stagger)
