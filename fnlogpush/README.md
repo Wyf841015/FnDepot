@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.7.6-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.8.0-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -12,6 +12,12 @@
 - 实时监控飞牛NAS系统日志
 - 关键字过滤和告警匹配
 - 支持多种日志类型
+
+### 🎯 事件管理（新增）
+- 独立事件管理面板
+- 添加、编辑、删除自定义事件
+- 从80+ Font Awesome图标库选择图标
+- 支持自定义事件颜色
 
 ### 💾 备份监控
 - 监控备份任务进度
@@ -51,6 +57,19 @@
 2. 或访问 [Gitee发布页](https://gitee.com/wyf1015/FNLogPush/releases) 下载FPK
 
 ## 版本历史
+
+### v0.8.0 (2026-04-06)
+- 🔔 **事件管理功能** - 新增独立事件管理面板
+  - 配置卡片显示事件列表
+  - 添加、编辑、删除事件
+  - 支持手动添加事件ID、名称、颜色
+  - 从80+图标库选择图标
+  - 自动关联 events.json 配置文件
+- 🔍 **事件查询功能** - 在添加事件时支持查询数据库中的最新记录
+  - 输入事件ID后点击"查询"按钮
+  - 显示该事件的最新一条日志详情（时间、级别、参数等）
+  - 自动转换为上海时区时间
+- ✨ **智能监控** - 添加新事件后自动启用监控
 
 ### v0.7.6 (2026-04-05)
 - 🎨 **界面重构：现代侧边栏** - 玻璃拟态设计，桌面端固定显示
