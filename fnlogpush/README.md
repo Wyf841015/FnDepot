@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.8.0-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.8.1-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -57,6 +57,17 @@
 2. 或访问 [Gitee发布页](https://gitee.com/wyf1015/FNLogPush/releases) 下载FPK
 
 ## 版本历史
+
+### v0.8.1 (2026-04-06)
+- 🎨 **颜色选择器优化** - 改用预设颜色按钮方案
+  - 10个常用颜色按钮（蓝、绿、红、黄、青、紫、粉、橙、灰、黑）
+  - 点击选择，黑色边框显示选中状态
+  - 适配移动端触摸操作
+- 🎨 **颜色图标联动** - 选择颜色时图标颜色同步变化
+- 📱 **移动端适配优化**
+  - 事件列表支持横向滚动
+  - 分类/颜色列响应式隐藏
+  - 按钮和文字更紧凑
 
 ### v0.8.0 (2026-04-06)
 - 🔔 **事件管理功能** - 新增独立事件管理面板
