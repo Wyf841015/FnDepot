@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.8.1-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.8.2-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -57,6 +57,13 @@
 2. 或访问 [Gitee发布页](https://gitee.com/wyf1015/FNLogPush/releases) 下载FPK
 
 ## 版本历史
+
+### v0.8.2 (2026-04-08)
+- 📝 **消息分段推送** - 解决消息过长推送失败问题
+  - 消息超长时自动分段推送
+  - 保持每条日志内容的完整性
+  - 自动添加序号前缀（如 [1/3]）
+  - 各渠道长度限制：企业微信 2048字、钉钉/飞书/Webhook 4000字、Bark/MeoW 2000字、PushPlus 5000字
 
 ### v0.8.1 (2026-04-06)
 - 🎨 **颜色选择器优化** - 改用预设颜色按钮方案
