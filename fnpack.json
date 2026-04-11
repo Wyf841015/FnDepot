@@ -32,7 +32,7 @@
       "v0.6.0": "新增钉钉、飞书、Bark、PushPlus推送渠道",
       "v0.5.0": "初始版本；日志监控；多渠道推送；备份进度监控；Web界面管理；告警聚合和免打扰模式"
     }
-  }
+  },
     "usbrsync": {
     "display_name": "USB Rsync",
     "platform": "all",
