@@ -1,6 +1,6 @@
 # USB Rsync - USB自动同步工具
 
-![Version](https://img.shields.io/badge/version-v0.1.3-blue)
+![Version](https://img.shields.io/badge/version-v0.1.4-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20fnOS-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
@@ -176,6 +176,13 @@ A:
 A: 点击任务卡片的"立即同步"按钮，日志窗口会显示rsync的实时进度。
 
 ## 更新日志
+
+### v0.1.4 (2026-04-12)
+- **界面美化** - 全新深色主题设计
+- **响应式布局** - 自动适配桌面端和移动端
+- **毛玻璃效果** - Header模糊滤镜效果
+- **流畅动画** - 卡片淡入、悬停变换动画
+- **打包优化** - fnpack打包体积优化至1.5MB
 
 ### v0.1.3 (2026-04-11)
 - 修复日志自动刷新功能
