@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.8.4-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.9.0-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -57,6 +57,29 @@
 2. 或访问 [Gitee发布页](https://gitee.com/wyf1015/FNLogPush/releases) 下载FPK
 
 ## 版本历史
+
+### v0.9.0 (2026-04-19)
+- ✨ **统计图表优化**
+  - 新增 `/api/stats/chart-data` 后端API，统一提供图表数据
+  - 后端聚合历史数据，前端直接渲染
+  - 美化图表样式：渐变色配色、圆角阴影效果
+  - 自动适配暗色/亮色主题
+- 🎨 **图表响应式设计**
+  - 桌面端图表高度280px、平板端220px、移动端180px
+  - 图例位置自动调整
+- 🔧 **事件管理优化**
+  - 事件分类改为下拉选择框
+  - 自动加载已存在的分类
+  - 支持"新建分类"选项
+- 🐛 **Bug修复**
+  - 修复事件保存成功但提示失败的问题
+  - 修复统计图表API路径错误
+  - 修复JS语法错误（未转义换行符）
+- 🔒 **WebSocket优化**
+  - 优先使用轮询模式避免SSL证书问题
+  - 连接失败不影响核心功能
+- 🔐 **安全优化**
+  - 为所有需要认证的API添加登录保护
 
 ### v0.8.4 (2026-04-08)
 - 🐛 **修复 MeoW 推送状态判断问题**
