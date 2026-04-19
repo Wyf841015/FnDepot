@@ -2,7 +2,7 @@
   "fnlogpush": {
     "display_name": "日志哨兵",
     "platform": "all",
-    "version": "0.8.4",
+    "version": "0.9.0",
     "desc": "飞牛NAS日志监控与多渠道推送工具，支持WebSocket实时推送健康状态",
     "labels": "工具,效率,监控",
     "author": "再见一零一二",
@@ -14,8 +14,9 @@
     "install_type": "存储空间",
     "size": "1.5",
     "download_url": "",
-    "changelog": "v0.8.4\n- 修复 MeoW 推送状态判断问题",
+    "changelog": "v0.9.0\n- 统计图表优化与美化\n- 事件分类改为下拉选择\n- 修复多个Bug\n- WebSocket连接优化",
     "history": {
+      "v0.9.0": "统计图表优化与美化、事件分类优化、Bug修复、WebSocket优化",
       "v0.8.4": "修复 MeoW 推送状态判断问题",
       "v0.8.3": "修复推送渠道重启后无法解密问题",
       "v0.8.2": "消息分段推送",
