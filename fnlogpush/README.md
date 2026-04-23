@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.9.0-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.9.5-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -57,6 +57,26 @@
 2. 或访问 [Gitee发布页](https://gitee.com/wyf1015/FNLogPush/releases) 下载FPK
 
 ## 版本历史
+
+### v0.9.5 (2026-04-23)
+- ✨ **丰富推送信息内容**
+  - 新建相册：显示照片数量
+  - 分享创建：显示关联相册名称和照片数量
+  - 分享删除：显示关联相册名称
+  - 设备注册：显示备份路径
+  - 批量创建相册：显示总数和每个相册的照片数量
+- 🐛 **分享相册优化**
+  - 分享相册时只推送分享消息，不推送新建相册消息
+- ⚡ **备份监控优化**
+  - 点击备份卡片保存按钮时自动启动/停止备份监控
+  - 修复备份监控启用开关配置保存和加载
+- 🎨 **系统状态卡片优化**
+  - 数据库状态和监控状态放在同一行动态显示
+  - 日志、备份、相册三个监控运行状态指示器
+  - 删除重置监控按钮
+- 📱 **UI改进**
+  - 推送历史显示相册来源标签（紫色"相册"徽章）
+  - 系统状态卡片添加相册数据库状态指示器
 
 ### v0.9.0 (2026-04-19)
 - ✨ **统计图表优化**
