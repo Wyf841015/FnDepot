@@ -1,6 +1,6 @@
 # USB Rsync - USB自动同步工具
 
-![Version](https://img.shields.io/badge/version-v0.1.6-blue)
+![Version](https://img.shields.io/badge/version-v0.1.7-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20fnOS-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
@@ -176,6 +176,13 @@ A:
 A: 点击任务卡片的"立即同步"按钮，日志窗口会显示rsync的实时进度。
 
 ## 更新日志
+
+### v0.1.7 (2026-04-27)
+- **安全优化** - HTTP API Token认证（首次启动自动生成，支持环境变量 USBSYNC_TOKEN）+ 路径变量替换后二次realpath验证
+- **功能完善** - rsync --delete 参数用户可用（UI橙色危险提示开关）+ exclusions排除规则生效 + 同步历史记录（最近100条）
+- **暂停机制重写** - 改用进程组信号SIGSTOP/SIGCONT，修复死锁风险
+- **文件锁保护** - tasks.json写入添加fcntl文件锁，多进程/线程并发安全
+- **UI增强** - 新增同步历史卡片 + Token认证模态框
 
 ### v0.1.6 (2026-04-13)
 - **UI全面升级** - 霓虹暗夜风格，现代化设计
