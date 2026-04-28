@@ -63,7 +63,7 @@
   "fnclearup": {
     "display_name": "清理精灵",
     "platform": "all",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "desc": "扫描FnOS所有vol目录，找出已安装应用但残留目录文件的孤立应用，一键清理",
     "labels": "工具,清理,维护",
     "author": "再见一零一二",
@@ -75,8 +75,9 @@
     "install_type": "存储空间",
     "size": "0.4",
     "download_url": "",
-    "changelog": "v0.1.4\n- 移除Token鉴权，直接打开即可使用\n\nv0.1.1\n- Token鉴权：首次使用由用户设置密码，持久化到config/token\n- 显示已安装应用列表模块\n- appcenter-cli解析逻辑优化，适配Unicode表格框线格式\n- 前端全面优化（响应式/颜色对比度/焦点样式/aria-label/深色检测/spinner/reduced-motion）\n- KPI卡片式布局\n- 赞助弹窗点击图片冒泡修复",
+    "changelog": "v0.1.5\n- 已安装应用列表支持折叠，默认收起\n- 列表顺序调整为：显示名称 → 应用标识\n\nv0.1.4\n- 移除Token鉴权，直接打开即可使用\n\nv0.1.1\n- Token鉴权：首次使用由用户设置密码，持久化到config/token\n- 显示已安装应用列表模块\n- appcenter-cli解析逻辑优化，适配Unicode表格框线格式\n- 前端全面优化（响应式/颜色对比度/焦点样式/aria-label/深色检测/spinner/reduced-motion）\n- KPI卡片式布局\n- 赞助弹窗点击图片冒泡修复",
     "history": {
+      "v0.1.5": "已安装应用列表支持折叠、列表顺序调整为显示名称在前",
       "v0.1.4": "移除Token鉴权，直接打开即可使用",
       "v0.1.1": "Token鉴权、前端UI优化、KPI卡片布局",
       "v0.1.0": "初始版本"
