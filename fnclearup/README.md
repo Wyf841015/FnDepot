@@ -108,10 +108,11 @@ fnclearup/
 ### v0.1.4 (2026-04-28)
 
 **新功能**
-- 区分登录/设置两种模式：已有密码显示登录框，首次使用显示设置框
+- 移除 Token 鉴权，直接打开即可使用，无需任何验证
 
 **Bug 修复**
-- 后端 `/api/setup` 改为统一入口：首次设置（无 token）或登录验证（有 token）
+- 后端：移除 `_load_token`、`_save_token`、`_check_auth`、`@app.before_request` 鉴权中间件及 `/api/status`、`/api/setup` 接口
+- 前端：移除 `initAuth`、`showLoginModal`、`showSetupModal`、`submitAuth`、`_authHeaders` 等函数及相关 HTML 弹窗
 
 ### v0.1.3 (2026-04-28)
 
