@@ -93,7 +93,7 @@
   "fnclearupcgi": {
     "display_name": "清理精灵CGI",
     "platform": "all",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "desc": "扫描FnOS所有vol目录，找出已安装应用但残留目录文件的孤立应用，一键清理",
     "labels": "工具,清理,维护",
     "author": "一零一二",
@@ -105,7 +105,7 @@
     "install_type": "存储空间",
     "size": "0.4",
     "download_url": "",
-    "changelog": "v0.1.4\n- CSS变量化重构，建立完整颜色/阴影系统\n- JS使用IIFE命名空间封装全局变量\n- HTML按钮添加type属性，script添加defer\n- 图片添加alt属性，提升无障碍访问\n- 添加SEO meta和favicon链接\n\nv0.1.3\n- 拆分js和css到外部文件\n\nv0.1.2\n- 第一版发布",
+    "changelog": "v0.1.5\n- 前端审计修复: XSS防护(innerHTML转义)、label for属性、WCAG AA对比度优化\n\nv0.1.4\n- CSS变量化重构，建立完整颜色/阴影系统\n- JS使用IIFE命名空间封装全局变量\n- HTML按钮添加type属性，script添加defer\n- 图片添加alt属性，提升无障碍访问\n- 添加SEO meta和favicon链接\n\nv0.1.3\n- 拆分js和css到外部文件\n\nv0.1.2\n- 第一版发布",
     "history": {
       "v0.1.2": "第一版发布",
       "v0.1.0": "初始版本",
