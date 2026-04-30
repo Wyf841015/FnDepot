@@ -93,7 +93,7 @@
   "fnclearupcgi": {
     "display_name": "清理精灵CGI",
     "platform": "all",
-    "version": "v0.2.8",
+    "version": "v0.2.9",
     "desc": "扫描FnOS所有vol目录，找出已安装应用但残留目录文件的孤立应用，一键清理",
     "labels": "工具,清理,维护",
     "author": "一零一二",
