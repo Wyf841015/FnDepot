@@ -93,7 +93,7 @@
   "fnclearupcgi": {
     "display_name": "清理精灵CGI",
     "platform": "all",
-    "version": "v0.2.1",
+    "version": "v0.2.2",
     "desc": "扫描FnOS所有vol目录，找出已安装应用但残留目录文件的孤立应用，一键清理",
     "labels": "工具,清理,维护",
     "author": "一零一二",
@@ -105,8 +105,9 @@
     "install_type": "存储空间",
     "size": "0.4",
     "download_url": "",
-    "changelog": "v0.2.1\n- 新增Docker残余卷Tab，支持查看/删除未使用卷\n\nv0.2.0\n- 新增Tab切换：网盘挂载目录 /data/vol02 未挂载目录\n- 新增KPI卡片：显示已挂载数量和未挂载数量\n- 主题按钮样式优化：与赞助按钮风格统一\n- CSS修复：html.dark选择器、重复残缺样式块\n- JS修复：App对象重复属性、switchTab添加async关键字\n- 移除vol02列表展开/收起按钮，列表始终显示\n\nv0.1.5\n- 前端审计修复: XSS防护(innerHTML转义)、label for属性、WCAG AA对比度优化",
+    "changelog": "v0.2.2\n- 修复Docker卷API路径(JS: docker_delete -> volumes/delete)\n- 优化api.sh移除jq依赖，改用docker inspect --format\n\nv0.2.1\n- 新增Docker残余卷Tab，支持查看/删除未使用卷\n\nv0.2.0\n- 新增Tab切换：网盘挂载目录 /data/vol02 未挂载目录\n- 新增KPI卡片：显示已挂载数量和未挂载数量\n- 主题按钮样式优化：与赞助按钮风格统一\n- CSS修复：html.dark选择器、重复残缺样式块\n- JS修复：App对象重复属性、switchTab添加async关键字\n- 移除vol02列表展开/收起按钮，列表始终显示\n\nv0.1.5\n- 前端审计修复: XSS防护(innerHTML转义)、label for属性、WCAG AA对比度优化",
     "history": {
+      "v0.2.2": "修复Docker卷API路径，优化jq依赖",
       "v0.2.1": "新增Docker残余卷Tab，支持查看/删除未使用卷",
       "v0.1.2": "第一版发布",
       "v0.1.0": "初始版本",
