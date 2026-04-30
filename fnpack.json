@@ -114,25 +114,6 @@
             "v0.1.5": "前端审计修复: XSS防护、label for、WCAG对比度优化",
             "v0.2.0": "Tab切换、KPI卡片、主题按钮优化、CSS/JS多项修复"
         }
-    },
-    "usbrsync-cgi": {
-        "display_name": "USB自动同步CGI",
-        "platform": "all",
-        "version": "0.1.0",
-        "desc": "USB存储设备自动同步工具，纯Bash CGI重写，检测到USB设备插入后自动同步指定目录",
-        "labels": "工具,效率,同步",
-        "author": "再见一零一二",
-        "author_url": "https://gitee.com/wyf1015",
-        "distributor": "再见一零一二",
-        "distributor_url": "https://gitee.com/wyf1015",
-        "bug_report_url": "https://github.com/Wyf841015/usbrsync-cgi/issues",
-        "isdocker": "false",
-        "install_type": "存储空间",
-        "size": "0.3",
-        "download_url": "",
-        "changelog": "v0.1.0\n- 初始版本：纯Bash CGI重写，无Python依赖\n- 支持USB设备扫描、任务管理、rsync同步\n- 支持目录浏览、同步历史记录",
-        "history": {
-            "v0.1.0": "初始版本：纯Bash CGI重写"
-        }
+    
     }
 }
