@@ -86,7 +86,7 @@
     "display_name": "清理精灵CGI",
     "platform": "all",
     "version": "0.3.0",
-    "desc": "扫描FnOS所有vol目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除docker残余卷的残留目录，一键清理",
+    "desc": "扫描目录，找出已删除应用（含关联的系统用户）、网盘挂载和docker的残留目录，一键清理<",
     "labels": "工具,清理,维护",
     "author": "一零一二",
     "author_url": "https://gitee.com/wyf1015",
@@ -97,7 +97,7 @@
     "install_type": "存储空间",
     "size": "0.4",
     "download_url": "",
-    "changelog": "v0.3.0\n- 重新打包：前端全面优化（无障碍修复、模态框role标注、alert阻塞修复）\n- 新增：网盘Tab新增\"卷总数\"KPI卡片（显示/vol02子目录总数）\n- 修复：do_volumes中orphan_json缺少[]包裹导致前端\"not iterable\"错误\n- 修复：静态文件响应缺少Status:200 OK导致浏览器解析失败\n- 修复：api.sh第524/544行复杂pattern substitution导致bash -n报语法错误\n- 优化：Docker残余卷批量获取driver信息，O(1)查表替代逐个inspect\n- 优化：网盘挂载变量名修正（binds_json→mounts_json）\n\nv0.2.3\n- 修复api.sh文件损坏问题，恢复完整代码",
+    "changelog": "v0.3.0\n- 重新打包：新增docker残余卷清理\n前端全面优化（无障碍修复、模态框role标注、alert阻塞修复）\n- 新增：网盘Tab新增\"卷总数\"KPI卡片（显示/vol02子目录总数）\n- 修复：do_volumes中orphan_json缺少[]包裹导致前端\"not iterable\"错误\n- 修复：静态文件响应缺少Status:200 OK导致浏览器解析失败\n- 修复：api.sh第524/544行复杂pattern substitution导致bash -n报语法错误\n- 优化：Docker残余卷批量获取driver信息，O(1)查表替代逐个inspect\n- 优化：网盘挂载变量名修正（binds_json→mounts_json）\n\nv0.2.3\n- 修复api.sh文件损坏问题，恢复完整代码",
     "history": {
       "v0.3.0": "前端全面优化、KPI卡片新增、orphan_json修复、静态文件Status修复、bash语法修复、Docker性能优化",
       "v0.2.3": "修复api.sh文件损坏问题"

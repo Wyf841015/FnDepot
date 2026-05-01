@@ -60,7 +60,7 @@ cd /app/dist/data/fnclearup-cgi
 ### v0.3.0 (2026-05-01)
 
 - 前端全面优化：无障碍修复（aria-label、role="dialog"）、模态框标注、alert 阻塞修复
-- 新增：网盘 Tab 新增"卷总数"KPI 卡片（显示 /vol02 子目录总数）
+- 新增：网盘 Tab 新增"目录总数"KPI 卡片（显示 /vol02 子目录总数）
 - 修复：do_volumes 中 orphan_json 缺少 [] 包裹导致前端 "not iterable" 错误
 - 修复：静态文件响应缺少 Status:200 OK 导致浏览器解析失败
 - 修复：api.sh 第 524/544 行复杂 pattern substitution 导致 bash -n 报语法错误
