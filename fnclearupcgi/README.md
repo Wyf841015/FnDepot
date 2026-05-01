@@ -1,6 +1,6 @@
 # 清理精灵 CGI
 
-> 扫描 FnOS 所有 vol 目录，找出已安装应用但残留目录文件的孤立应用，一键清理。
+> 扫描 FnOS 所有 vol 目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除 docker 残余卷的残留目录，一键清理。
 
 ![清理精灵 CGI](ICON_256.png)
 
@@ -11,7 +11,8 @@
 - **多选删除** — 支持批量勾选，一键清理，附确认弹窗与路径预览
 - **明暗主题** — 支持手动切换与系统主题跟随（`prefers-color-scheme`）
 - **Tab 切换** — 网盘挂载目录 / data/vol02 未挂载目录独立展示
-- **KPI 卡片** — 显示已挂载数量和未挂载数量
+- **KPI 卡片** — 显示卷总数、已挂载数量、未挂载数量
+- **Docker 卷管理** — 查看在用卷/残余卷，一键批量删除
 - **响应式布局** — 适配桌面端与移动端
 - **轻量架构** — 纯 Bash CGI 实现，无 Python/Flask 依赖
 
@@ -55,6 +56,16 @@ cd /app/dist/data/fnclearup-cgi
 | `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/vol02` | GET | 获取 /data/vol02 目录列表 |
 
 ## 版本历史
+
+### v0.3.0 (2026-05-01)
+
+- 前端全面优化：无障碍修复（aria-label、role="dialog"）、模态框标注、alert 阻塞修复
+- 新增：网盘 Tab 新增"卷总数"KPI 卡片（显示 /vol02 子目录总数）
+- 修复：do_volumes 中 orphan_json 缺少 [] 包裹导致前端 "not iterable" 错误
+- 修复：静态文件响应缺少 Status:200 OK 导致浏览器解析失败
+- 修复：api.sh 第 524/544 行复杂 pattern substitution 导致 bash -n 报语法错误
+- 优化：Docker 残余卷批量获取 driver 信息，O(1) 查表替代逐个 inspect
+- 优化：网盘挂载变量名修正（binds_json → mounts_json）
 
 ### v0.2.0 (2026-04-30)
 
