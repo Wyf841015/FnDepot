@@ -1,8 +1,8 @@
-# 清理精灵 CGI
+# 清理精灵 FnClearup
 
 > 扫描 FnOS 所有 vol 目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除 docker 残余卷的残留目录，一键清理。
 
-![清理精灵 CGI](ICON_256.png)
+![清理精灵 FnClearup](ICON_256.png)
 
 ## 功能特性
 
@@ -13,15 +13,15 @@
 - **Tab 切换** — 网盘挂载目录 / data/vol02 未挂载目录独立展示
 - **KPI 卡片** — 显示卷总数、已挂载数量、未挂载数量
 - **Docker 卷管理** — 查看在用卷/残余卷，一键批量删除
-- **响应式布局** — 适配桌面端与移动端
+- **响应式布局** — 适配桌面端与移动端（768px 以上 3 列，480px 以下堆叠为 3 行）
 - **轻量架构** — 纯 Bash CGI 实现，无 Python/Flask 依赖
 
 ## 技术架构
 
 ```
-清理精灵 CGI
+清理精灵 FnClearup
 ├── app/ui/www/           # 前端界面（HTML/CSS/JS）
-├── app/api.sh            # CGI 入口，路由 /api/* 请求
+├── app/index.cgi         # CGI 入口，路由 /api/* 请求
 ├── cmd/                  # FnOS 生命周期脚本
 └── config/               # 权限与资源配置
 ```
@@ -39,7 +39,7 @@
 ### 构建
 
 ```bash
-cd /app/dist/data/fnclearup-cgi
+cd /app/dist/data/fnclearup
 /app/dist/data/tool-bin/fnpack build .
 # 输出: App.Native.FnClearup.fpk
 ```
@@ -54,8 +54,23 @@ cd /app/dist/data/fnclearup-cgi
 | `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/installed` | GET | 获取已安装应用列表 |
 | `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/mounts` | GET | 获取已挂载的网盘目录 |
 | `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/vol02` | GET | 获取 /data/vol02 目录列表 |
+| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/volumes` | GET | 获取 Docker 卷列表 |
 
 ## 版本历史
+
+### v0.5.6 (2026-05-03)
+
+- 移动端 KPI 响应式布局（768px 以上 3 列，480px 以下堆叠为 3 行）
+
+### v0.5.5 (2026-05-03)
+
+- 移动端 KPI 恢复 3 列布局
+
+### v0.5.4 (2026-05-03)
+
+- 修复 main.js 语法错误（JS 执行失败导致按钮无效）
+- 修复展开按钮初始无箭头问题
+- 修复数据无法加载问题
 
 ### v0.3.0 (2026-05-01)
 
@@ -74,27 +89,14 @@ cd /app/dist/data/fnclearup-cgi
 - 主题按钮样式优化：与赞助按钮风格统一
 - CSS 修复：`html.dark` 选择器、重复残缺样式块清理
 - JS 修复：App 对象重复属性、`switchTab` 添加 `async` 关键字
-- 移除 vol02 列表展开/收起按钮，列表始终显示
 
 ### v0.1.5 (2026-04-30)
 
 - 前端审计修复: XSS防护(innerHTML转义)、label for属性、WCAG AA对比度优化
 
-### v0.1.4 (2026-04-30)
-
-- 前端优化: CSS变量化、JS命名空间封装、SEO增强、无障碍改进
-
-### v0.1.3 (2026-04-30)
-
-- 拆分js和css到外部文件，提升可维护性
-
-### v0.1.2 (2026-04-30)
-
-- 第一版发布
-
 ## 维护者
 
-- 作者：[@一零一二](https://gitee.com/wyf1015)
+- 作者：[@再见一零一二](https://gitee.com/wyf1015)
 
 ---
 
