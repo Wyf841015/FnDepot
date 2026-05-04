@@ -70,7 +70,7 @@
   "fnclearup": {
     "display_name": "清理精灵",
     "platform": "all",
-    "version": "0.5.6",
+    "version": "0.5.7",
     "desc": "扫描 FnOS 所有 vol 目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除 docker 残余卷的残留目录，一键清理",
     "labels": "工具,清理,维护",
     "author": "再见一零一二",
@@ -87,6 +87,7 @@
       "v0.5.6": "移动端 KPI 响应式布局",
       "v0.5.4": "修复 JS 语法错误、按钮无效、箭头初始值问题",
       "v0.3.0": "前端优化、docker 残余卷清理"
-    }
+    },
+    "checksum": "89d64f7f1925a7a02a1b194c746e2377cd5cf0c4fcd45edb8b2038f8cd8822c5"
   }
 }
