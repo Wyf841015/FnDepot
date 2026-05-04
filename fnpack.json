@@ -88,6 +88,6 @@
       "v0.5.4": "修复 JS 语法错误、按钮无效、箭头初始值问题",
       "v0.3.0": "前端优化、docker 残余卷清理"
     },
-    "checksum": "89d64f7f1925a7a02a1b194c746e2377cd5cf0c4fcd45edb8b2038f8cd8822c5"
+    "checksum": "75a8c96da87cfc52bda5b790a52f833c0d2933ad0df74935bcb77a412a21d4cb"
   }
 }
