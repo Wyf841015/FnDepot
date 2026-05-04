@@ -80,7 +80,7 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnclearup/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": "0.4",
+    "size": 412149,
     "download_url": "",
     "changelog": "v0.5.6\n- 移动端 KPI 响应式布局（768px 以上 3 列，480px 以下堆叠为 3 行）\n\nv0.5.5\n- 移动端 KPI 恢复 3 列布局\n\nv0.5.4\n- 修复 main.js 语法错误（JS 执行失败导致按钮无效）\n- 修复展开按钮初始无箭头问题\n- 修复数据无法加载问题\n\nv0.3.0\n- 重新打包：新增 docker 残余卷清理\n- 前端全面优化（无障碍修复、模态框 role 标注、alert 阻塞修复）",
     "history": {
