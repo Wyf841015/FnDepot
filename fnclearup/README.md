@@ -2,7 +2,12 @@
 
 > 智能扫描系统，精准识别已卸载应用、网盘挂载和 Docker 的残留目录，一键安全清理。
 
-![清理精灵 FnClearup](ICON_256.png)
+![清理精灵 FnClearup](../ICON_256.png)
+
+## v0.6.0 更新
+
+- **Docker 网络清理** — 新增 Docker 未使用网络扫描与批量删除功能
+- **系统资源概览** — 新增 `/api/system` 端点，返回磁盘分区、内存状态、Docker 基础信息
 
 ## 功能特性
 
@@ -13,101 +18,33 @@
 - **Tab 切换** — 网盘挂载目录 / data/vol02 未挂载目录独立展示
 - **KPI 卡片** — 显示卷总数、已挂载数量、未挂载数量
 - **Docker 卷管理** — 查看在用卷/残余卷，一键批量删除
-- **响应式布局** — 适配桌面端与移动端（768px 以上 3 列，480px 以下堆叠为 3 行）
+- **Docker 网络管理** — 扫描未使用网络，一键批量删除
+- **响应式布局** — 适配桌面端与移动端
 - **轻量架构** — 纯 Bash CGI 实现，无 Python/Flask 依赖
 
-## 技术架构
-
-```
-清理精灵 FnClearup
-├── app/ui/www/           # 前端界面（HTML/CSS/JS）
-├── app/index.cgi         # CGI 入口，路由 /api/* 请求
-├── cmd/                  # FnOS 生命周期脚本
-└── config/               # 权限与资源配置
-```
-
-- **后端**：Bash CGI + FnOS 原生工具（`appcenter-cli`）
-- **前端**：原生 HTML/CSS/JS，无框架依赖
-- **通信**：HTTP CGI 请求，无需端口监听
-
-## 快速开始
-
-### 安装
+## 安装方式
 
 将 `fnclearup.fpk` 上传至 FnOS 应用中心安装。
-
-### 构建
-
-```bash
-cd /app/dist/data/fnclearup
-/app/dist/data/tool-bin/fnpack build .
-# 输出: App.Native.FnClearup.fpk
-```
-
-## 接口说明
-
-| 接口 | 方法 | 说明 |
-|------|------|------|
-| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/` | GET | 前端界面 |
-| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/scan` | POST | 扫描孤立目录 |
-| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/delete` | POST | 删除指定目录 |
-| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/installed` | GET | 获取已安装应用列表 |
-| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/mounts` | GET | 获取已挂载的网盘目录 |
-| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/vol02` | GET | 获取 /data/vol02 目录列表 |
-| `/cgi/ThirdParty/App.Native.FnClearup/index.cgi/api/volumes` | GET | 获取 Docker 卷列表 |
 
 ## 版本历史
 
 ### v0.6.0 (2026-05-05)
-
 - Docker 网络清理功能完善（tab 头部删除按钮恢复）
-- 新增系统资源概览 `/api/system` 端点（磁盘分区、内存状态、Docker 基础信息）
-- 应用/网盘选项卡合并表格：状态列+badge，参照 docker 表格样式
-- 移动端 KPI 卡片保持 3 列自适应，缩小图标和文字
-- 修复：每次打开强制重新加载 main.js（添加时间戳参数避免缓存）
-- 修复：应用 tab 和网络 tab 状态文字格式优化
-
-### v0.5.6 (2026-05-03)
-
-
-- 移动端 KPI 响应式布局（768px 以上 3 列，480px 以下堆叠为 3 行）
-
-### v0.5.5 (2026-05-03)
-
-- 移动端 KPI 恢复 3 列布局
+- 新增系统资源概览 `/api/system` 端点
+- 应用/网盘选项卡合并表格：状态列+badge
+- 移动端 KPI 卡片保持 3 列自适应
+- 修复：每次打开强制重新加载 main.js
 
 ### v0.5.4 (2026-05-03)
-
 - 修复 main.js 语法错误（JS 执行失败导致按钮无效）
-- 修复展开按钮初始无箭头问题
-- 修复数据无法加载问题
 
 ### v0.3.0 (2026-05-01)
-
-- 前端全面优化：无障碍修复（aria-label、role="dialog"）、模态框标注、alert 阻塞修复
-- 新增：网盘 Tab 新增"目录总数"KPI 卡片（显示 /vol02 子目录总数）
-- 修复：do_volumes 中 orphan_json 缺少 [] 包裹导致前端 "not iterable" 错误
-- 修复：静态文件响应缺少 Status:200 OK 导致浏览器解析失败
-- 修复：api.sh 第 524/544 行复杂 pattern substitution 导致 bash -n 报语法错误
-- 优化：Docker 残余卷批量获取 driver 信息，O(1) 查表替代逐个 inspect
-- 优化：网盘挂载变量名修正（binds_json → mounts_json）
-
-### v0.2.0 (2026-04-30)
-
-- 新增 Tab 切换：网盘挂载目录 / data/vol02 未挂载目录独立展示
-- 新增 KPI 卡片：显示已挂载数量和未挂载数量
-- 主题按钮样式优化：与赞助按钮风格统一
-- CSS 修复：`html.dark` 选择器、重复残缺样式块清理
-- JS 修复：App 对象重复属性、`switchTab` 添加 `async` 关键字
+- 前端全面优化：无障碍修复、模态框标注、alert 阻塞修复
+- 新增网盘 Tab"目录总数"KPI 卡片
 
 ### v0.1.5 (2026-04-30)
-
-- 前端审计修复: XSS防护(innerHTML转义)、label for属性、WCAG AA对比度优化
+- XSS防护(innerHTML转义)、label for属性、WCAG AA对比度优化
 
 ## 维护者
 
 - 作者：[@再见一零一二](https://gitee.com/wyf1015)
-
----
-
-> 如果这个项目对您有帮助，欢迎赞助支持 ❤️
