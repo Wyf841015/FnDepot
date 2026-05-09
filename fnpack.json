@@ -71,7 +71,7 @@
   "fnclearup": {
     "display_name": "清理精灵",
     "platform": "all",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "desc": "扫描 FnOS 所有 vol 目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除 docker 残余卷的残留目录，一键清理",
     "labels": "工具,清理,维护",
     "author": "再见一零一二",
@@ -92,6 +92,6 @@
       "v0.3.0": "前端优化、docker 残余卷清理",
       "v0.6.0": "Docker 网络清理功能完善（tab 头部删除按钮恢复）；系统资源概览"
     },
-    "checksum": "bf163be78226e179fed49ccdc64bc56c5106766765c2b4ab806a9f8ec4c0ea7f"
+    "checksum": "cf3fb587c496b6728d959fcb503ab75674f6dce490a47371ab4ab5461d1c5b2f"
   }
 }
