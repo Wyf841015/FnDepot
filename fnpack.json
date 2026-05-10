@@ -2,7 +2,7 @@
   "fnlogpush": {
     "display_name": "日志哨兵",
     "platform": "all",
-    "version": "0.9.30",
+    "version": "0.9.31",
     "desc": "飞牛NAS日志监控与多渠道推送工具，支持WebSocket实时推送健康状态，实时监控系统日志和备份进度，支持企业微信、钉钉、飞书、Bark、PushPlus、魔法推送、MeoW等推送渠道",
     "labels": "工具,效率,监控",
     "author": "再见一零一二",
@@ -14,8 +14,9 @@
     "install_type": "存储空间",
     "size": "1.5",
     "download_url": "",
-    "changelog": "v0.9.30\n- 修复推送渠道配置热重载失效\n- 修复禁用渠道静默失败\n- 修复update_config竞态条件和configure_from_config线程安全问题\n- 修复登录过期返回302重定向而非JSON\n- 新增SSH登录认证失败/登出、Docker初始化异常事件\n- 新增系统分区使用率告警/恢复事件\n- 新增34个测试用例覆盖核心逻辑\n\nv0.9.29\n- 新版发布（见 manifest）：删除重复损坏的div片段\n\nv0.9.25\n- 修复HTML结构：删除损坏的重复div片段\n\nv0.9.24\n- 修复魔法推送无法保存：删除重复的损坏HTML片段\n\nv0.9.23\n- 修正魔法推送渠道：修复注册Bug，支持MagicPush两种认证方式\n\nv0.9.22\n- 增加魔法推送渠道(mof)支持",
+    "changelog": "v0.9.31\n- 修复勿扰阶段消息汇总功能失效问题\n- 修复魔法推送响应判断逻辑\n- 修复 Bark/PushPlus JSON 解析健壮性\n- 修复 Webhook POST 字段名（content → msg）\n- 修复 Webhook 渠道缺少 enabled 属性问题\n- 修复禁用渠道静默失败\n\nv0.9.30\n- 修复推送渠道配置热重载失效\n- 修复禁用渠道静默失败\n- 修复update_config竞态条件和configure_from_config线程安全问题\n- 修复登录过期返回302重定向而非JSON\n- 新增SSH登录认证失败/登出、Docker初始化异常事件\n- 新增系统分区使用率告警/恢复事件\n- 新增34个测试用例覆盖核心逻辑\n\nv0.9.29\n- 新版发布（见 manifest）：删除重复损坏的div片段\n\nv0.9.25\n- 修复HTML结构：删除损坏的重复div片段\n\nv0.9.24\n- 修复魔法推送无法保存：删除重复的损坏HTML片段\n\nv0.9.23\n- 修正魔法推送渠道：修复注册Bug，支持MagicPush两种认证方式\n\nv0.9.22\n- 增加魔法推送渠道(mof)支持",
     "history": {
+      "v0.9.31": "修复勿扰阶段消息汇总/推送响应判断/JSON解析健壮性/Webhook字段名/Webhook enabled属性",
       "v0.9.30": "修复推送渠道热重载失效/禁用渠道静默失败/线程安全/登录过期，新增5个事件类型，新增34个测试",
       "v0.9.9": "同步至最新代码版本",
       "v0.9.5": "丰富推送信息、分享优化、备份监控优化、系统状态卡片优化",
