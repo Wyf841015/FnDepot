@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-0.9.30-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-0.9.33-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -55,6 +55,15 @@
 2. 或访问 [Gitee发布页](https://gitee.com/wyf1015/FNLogPush/releases) 下载FPK
 
 ## 版本历史
+
+### v0.9.33 (2026-05-10)
+- 🐛 **修复勿扰阶段消息汇总功能失效** - Docker监控事件在DND期间正确缓存，结束后统一推送汇总
+- 🐛 **修复推送渠道响应判断** - DND汇总推送时正确判断推送成功/失败
+- 🐛 **修复 Webhook enabled 属性缺失** - 渠道启用/禁用状态正确保存和加载
+- 🐛 **修复 Bark/PushPlus JSON 解析** - 增强健壮性，处理多种响应格式
+- 🐛 **修复 Webhook POST 字段名** - content → msg 符合标准格式
+- ✨ **新增 Docker 容器监控** - 自动检测并修复 Docker Socket 权限，支持容器启停事件推送
+- ✨ **Docker 事件支持 DND** - 免打扰期间缓存，结束后汇总推送
 
 ### v0.9.30 (2026-05-09)
 - 🐛 **修复推送渠道配置热重载失效** - LogMonitor注册热重载回调，热重载时同步更新push_service和push_coordinator.config
