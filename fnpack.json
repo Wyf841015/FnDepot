@@ -2,7 +2,7 @@
   "fnlogpush": {
     "display_name": "日志哨兵",
     "platform": "all",
-    "version": "0.9.35",
+    "version": "0.9.40",
     "desc": "飞牛NAS日志监控与多渠道推送工具，支持Docker容器监控、WebSocket实时推送健康状态，实时监控系统日志和备份进度，支持企业微信、钉钉、飞书、Bark、PushPlus、魔法推送、MeoW等推送渠道",
     "labels": "工具,效率,监控,日志,Docker",
     "author": "再见一零一二",
@@ -12,10 +12,11 @@
     "bug_report_url": "https://gitee.com/wyf1015/FNLogPush/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": "1.5",
+    "size": "4.4",
     "download_url": "",
-    "changelog": "v0.9.35\\n- 🔒 API 响应格式统一：/api/health 添加 success: true 字段\\n- ✅ XSS 防护确认：用户数据已使用 escapeHtml() 转义\\n- ✅ 路由分析完成：/api/agg/stats 与 /api/alert-aggregation/stats 返回不同数据，非冗余\\n- ✅ 刷新逻辑分析：stats.js 无 setInterval，仅手动刷新，无重复请求\\n- ✅ 无障碍优化：aria 属性已完善\\n\\n\\nv0.9.34\\n- CORS 配置修复：从环境变量 CORS_ORIGINS 读取，不再使用 * 通配符\\n- Docker subprocess 防护：添加容器 ID 格式验证，防止命令注入\\n- ConfigManager 修复：删除重复的 validate_config 方法定义\\n- DND 缓存修复：get_cached_messages 返回副本，update_config 合并配置\\n- 新增 MagicPush 渠道单元测试（10 个测试用例）\\n\\n\\nv0.9.33\\n- 修复勿扰阶段消息汇总功能失效\\n- 修复推送渠道响应判断（DND汇总推送）\\n- 修复 Webhook enabled 属性缺失\\n- 修复 Bark/PushPlus JSON 解析健壮性\\n- 修复 Webhook POST 字段名（content → msg）\\n- 新增 Docker 容器监控（自动检测并修复 Socket 权限）\\n- Docker 事件支持 DND 免打扰期间缓存汇总\\n\\n\\nv0.9.31\\n- 修复勿扰阶段消息汇总功能失效问题\\n- 修复魔法推送响应判断逻辑\\n- 修复 Bark/PushPlus JSON 解析健壮性\\n- 修复 Webhook POST 字段名（content → msg）\\n- 修复 Webhook 渠道缺少 enabled 属性问题\\n- 修复禁用渠道静默失败\\n\\n\\nv0.9.30\\n- 修复推送渠道配置热重载失效\\n- 修复禁用渠道静默失败\\n- 修复update_config竞态条件和configure_from_config线程安全问题\\n- 修复登录过期返回302重定向而非JSON\\n- 新增SSH登录认证失败/登出、Docker初始化异常事件\\n- 新增系统分区使用率告警/恢复事件\\n- 新增34个测试用例覆盖核心逻辑\\n\\n\\nv0.9.29\\n- 新版发布（见 manifest）：删除重复损坏的div片段\\n\\n\\nv0.9.25\\n- 修复HTML结构：删除损坏的重复div片段\\n\\n\\nv0.9.24\\n- 修复魔法推送无法保存：删除重复的损坏HTML片段\\n\\n\\nv0.9.23\\n- 修正魔法推送渠道：修复注册Bug，支持MagicPush两种认证方式\\n\\n\\nv0.9.22\\n- 增加魔法推送渠道(mof)支持 — 自定义HTTP POST推送",
+    "changelog": "v0.9.40\\n- 同步最新代码版本\\n\\nv0.9.35\\n- 🔒 API 响应格式统一：/api/health 添加 success: true 字段\\n- ✅ XSS 防护确认：用户数据已使用 escapeHtml() 转义\\n- ✅ 路由分析完成：/api/agg/stats 与 /api/alert-aggregation/stats 返回不同数据，非冗余\\n- ✅ 刷新逻辑分析：stats.js 无 setInterval，仅手动刷新，无重复请求\\n- ✅ 无障碍优化：aria 属性已完善\\n\\n\\nv0.9.34\\n- CORS 配置修复：从环境变量 CORS_ORIGINS 读取，不再使用 * 通配符\\n- Docker subprocess 防护：添加容器 ID 格式验证，防止命令注入\\n- ConfigManager 修复：删除重复的 validate_config 方法定义\\n- DND 缓存修复：get_cached_messages 返回副本，update_config 合并配置\\n- 新增 MagicPush 渠道单元测试（10 个测试用例）\\n\\n\\nv0.9.33\\n- 修复勿扰阶段消息汇总功能失效\\n- 修复推送渠道响应判断（DND汇总推送）\\n- 修复 Webhook enabled 属性缺失\\n- 修复 Bark/PushPlus JSON 解析健壮性\\n- 修复 Webhook POST 字段名（content → msg）\\n- 新增 Docker 容器监控（自动检测并修复 Socket 权限）\\n- Docker 事件支持 DND 免打扰期间缓存汇总\\n\\n\\nv0.9.31\\n- 修复勿扰阶段消息汇总功能失效问题\\n- 修复魔法推送响应判断逻辑\\n- 修复 Bark/PushPlus JSON 解析健壮性\\n- 修复 Webhook POST 字段名（content → msg）\\n- 修复 Webhook 渠道缺少 enabled 属性问题\\n- 修复禁用渠道静默失败",
     "history": {
+      "v0.9.40": "同步最新代码版本",
       "v0.9.35": "API响应格式统一/XSS防护确认/前后端优化，81个测试用例",
       "v0.9.34": "CORS配置/Docker防护/ConfigManager/DND缓存修复，MagicPush测试10个",
       "v0.9.33": "修复勿扰阶段消息汇总/推送响应判断/Webhook enabled属性/Docker容器监控/DND缓存汇总",
@@ -38,15 +39,9 @@
       "v0.6.7": "Web界面优化",
       "v0.6.6": "WebSocket实时推送",
       "v0.6.0": "新增钉钉、飞书、Bark、PushPlus推送渠道",
-      "v0.5.0": "初始版本",
-      "v0.9.17": "彻底修复侧边栏：暗夜紫/暗夜绿/夕阳橙三主题全部去掉毛玻璃+清晰文字",
-      "v0.9.18": "彻底修复侧边栏：暗夜紫/暗夜绿/夕阳橙全主题去掉毛玻璃+纯白底+清晰文字+主题色装饰",
-      "v0.9.19": "彻底修复侧边栏：main.css sidebar改用CSS变量+三主题全部纯白底+主题色装饰",
-      "v0.9.20": "彻底修复侧边栏：main.css sidebar改用CSS变量+三主题全部纯白底+侧边栏装饰色恢复",
-      "v0.9.21": "彻底修复侧边栏：三主题全部纯白底+各自品牌色完整装饰",
-      "v0.9.22": "增加魔法推送渠道(mof)支持 — 自定义HTTP POST推送"
+      "v0.5.0": "初始版本"
     },
-    "checksum": "4fe90dffd3f8fc838f333cd9f082b5a086d660791377f20d546cdefec0f3c945"
+    "checksum": "2219e6bed6dce204fb5087356ad1e54a"
   },
   "usbrsync": {
     "display_name": "USB自动同步",
@@ -87,7 +82,7 @@
     "install_type": "存储空间",
     "size": "0.4",
     "download_url": "",
-    "changelog": "v0.6.3\\n- 新增安装统计：首次安装/升级成功推送消息到企业微信\\n\\nv0.6.2\\n- 新增 tmp 选项卡：扫描 /tmp 和 /var/tmp 下 24 小时以上未访问的文件/目录\\n- Tab 名称改为 tmp\\n- 目录删除改用 shutil.rmtree()\\n- 首次切换 tmp Tab 自动扫描\\n\\nv0.6.1\\n- Docker 网络清理功能完善（tab 头部删除按钮恢复）；系统资源概览",
+    "changelog": "v0.6.3\\n- 新增 tmp 选项卡：扫描 /tmp 和 /var/tmp 下 24 小时以上未访问的文件/目录\\n- Tab 名称改为 tmp\\n- 目录删除改用 shutil.rmtree()\\n- 首次切换 tmp Tab 自动扫描\\n\\nv0.6.1\\n- Docker 网络清理功能完善（tab 头部删除按钮恢复）；系统资源概览",
     "history": {
       "v0.6.3": "新增安装统计：首次安装/升级成功推送消息到企业微信",
       "v0.6.2": "新增 tmp 选项卡：扫描 /tmp 和 /var/tmp 下 24 小时以上未访问的文件/目录",
