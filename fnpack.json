@@ -94,5 +94,25 @@
       "v0.3.0": "前端优化、docker 残余卷清理"
     },
     "checksum": "cf3fb587c496b6728d959fcb503ab75674f6dce490a47371ab4ab5461d1c5b2f"
+  },
+  "fnm3u8": {
+    "display_name": "m3u8下载器",
+    "platform": "all",
+    "version": "0.1.0",
+    "desc": "支持多线程、多任务、断点续传的m3u8视频下载器，支持AES解密、批量下载、直播录制",
+    "labels": "工具,效率,下载,视频",
+    "author": "再见一零一二",
+    "author_url": "https://gitee.com/wyf1015",
+    "distributor": "再见一零一二",
+    "distributor_url": "https://gitee.com/wyf1015",
+    "bug_report_url": "https://gitee.com/wyf1015/fnm3u8/issues",
+    "isdocker": "false",
+    "install_type": "存储空间",
+    "size": "0.4",
+    "download_url": "",
+    "changelog": "v0.1.0\\n- 初始版本：m3u8视频下载，支持多线程/断点续传/AES解密/批量下载/直播录制\\n- 状态筛选：全部/进行中/已完成/失败\\n- 批量操作：全暂停/全开始/删除已完成\\n- 浅色主题切换\\n- 赞助功能\\n- 安装/升级统计上报",
+    "history": {
+      "v0.1.0": "初始版本：m3u8视频下载，支持多线程/断点续传/AES解密/批量下载/直播录制，浅色主题，安装统计上报"
+    }
   }
 }
