@@ -42,7 +42,7 @@
 | 服务端主题持久化 | ❌ | ✅ |
 | 状态栏汇总 | ❌ | ✅ |
 | 搜索任务 | ❌ | ✅ |
-| 测试覆盖 | 无 | **163 个 TDD 测试** |
+| 测试覆盖 | 无 | **165 个 TDD 测试** |
 
 ## 技术架构
 
@@ -94,7 +94,7 @@ m3u8DL 专业视频下载器
 │       ├── http-util.js      # HTTP 编码检测
 │       └── binary-check.js   # 二进制内容检测
 │
-├── tests/                    # TDD 测试套件（163 个）
+├── tests/                    # TDD 测试套件（165 个）
 │   ├── test_comprehensive.js # 42 个综合测试 + API 集成测试
 │   ├── test_modules.js       # 31 个模块单元测试
 │   └── test_new_modules.js   # 91 个新模块测试
@@ -145,6 +145,13 @@ PORT=43940 node server.js
 
 ## 版本历史
 
+### v0.2.0 (2026-05-29)
+
+- 修复 HLSExtractor.loadM3u8FromUrl 方法缺失（新增公开方法别名，内部调用 _loadM3u8FromUrlAsync）
+- 修复 DASH/MPD 解析路径：改用 fetch() 直接获取 MPD 内容，ExtractStreamsAsync 已能处理原始 XML
+- 修复 MSS/ISM 解析路径：同样改用 fetch() + ExtractStreamsAsync
+- 165 个 TDD 测试通过（3 个跳过为网络相关）
+
 ### v0.1.0 (2026-05-26)
 
 - 完整重写 N_m3u8DL-RE C# 项目
@@ -158,7 +165,7 @@ PORT=43940 node server.js
 - 批量操作（暂停/继续/停止/清理/删除含文件）
 - 首次设置引导
 - 赞助支持
-- 163 个 TDD 测试覆盖
+- 163 个 TDD 测试覆盖（v0.1.0 初版）
 
 ## 测试
 
