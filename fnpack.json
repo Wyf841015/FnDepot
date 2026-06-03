@@ -72,7 +72,7 @@
   "fnclearup": {
     "display_name": "清理精灵",
     "platform": "all",
-    "version": "0.7.2",
+    "version": "0.7.10",
     "desc": "智能扫描系统，精准识别已卸载应用、网盘挂载和 Docker 的残留目录及重复文件，一键安全清理 - Node.js 版",
     "labels": "工具,清理,维护",
     "author": "一零一二",
@@ -84,8 +84,9 @@
     "install_type": "存储空间",
     "size": "0.4",
     "download_url": "",
-    "changelog": "v0.7.2\n- 新增「去空」选项卡：扫描空目录，支持批量/单个删除（回收站/永久）\n- 实时扫描目录显示 + 进度条\n- 移动端自适应：空目录列表水平滚动 + 路径自动换行\n- 单遍遍历算法 + 符号链接安全（lstatSync）\n- 错误防护：uncaughtException + 进程退出码检测\n- 跳过 .@#local 回收站目录\n\nv0.7.1\n- 版本号对齐\n\nv0.7.0\n- 全面重构：基于 ui-ux-pro-max 设计系统，前后端分离（Node.js ESM）\n- 新增去重功能：文件去重（SHA-256 10线程哈希）+ 音乐去重\n- 新增目录浏览选择器\n- 新增顶部版本号显示 + 启动时自动检查 FnDepot 新版本\n- Docker 镜像管理：查看未使用镜像，一键批量删除\n- tmp 清理：扫描 /tmp 和 /var/tmp 下 24h+ 未访问的文件\n- 回收站路径纠正 + 原子化状态写入\n- 修复：删除失败时显示具体错误信息；移动端长内容截断",
+    "changelog": "v0.7.10\\n- 新增「🗑 回收站」Tab：批量清理 /vol*/UID/.@#local/trash/，按 mtime 30/90/365 天分级清理，root 权限包含全部用户\\n- 新增「🧹 系统清理」Tab：17 项扫描目标（apt/syslog/journal/包管理器缓存/浏览器/Playwright/旧内核），三档风险过滤 + 一键推荐清理 + 清理前 manifest 备份\\n- 启动警告弹窗（每次打开应用强制阅读 3 秒，红底警示 + 强制确认项）\\n- 安全加固：4 个删除端点 isSafePath 白名单、CSV 注入防护、3 个 docker 删除加 modal 确认\\n- empty_dir 重写：stop API、跳过 @app*、流式扫描 + state file 修复 complete 状态保留\\n- 回收站 Tab 移动端自适应（480px 按钮 2 列 + 表格切卡片 + modal 全屏）\\n- 测试 60/60 通过\\n\\nv0.7.2\n- 新增「去空」选项卡：扫描空目录，支持批量/单个删除（回收站/永久）\n- 实时扫描目录显示 + 进度条\n- 移动端自适应：空目录列表水平滚动 + 路径自动换行\n- 单遍遍历算法 + 符号链接安全（lstatSync）\n- 错误防护：uncaughtException + 进程退出码检测\n- 跳过 .@#local 回收站目录\n\nv0.7.1\n- 版本号对齐\n\nv0.7.0\n- 全面重构：基于 ui-ux-pro-max 设计系统，前后端分离（Node.js ESM）\n- 新增去重功能：文件去重（SHA-256 10线程哈希）+ 音乐去重\n- 新增目录浏览选择器\n- 新增顶部版本号显示 + 启动时自动检查 FnDepot 新版本\n- Docker 镜像管理：查看未使用镜像，一键批量删除\n- tmp 清理：扫描 /tmp 和 /var/tmp 下 24h+ 未访问的文件\n- 回收站路径纠正 + 原子化状态写入\n- 修复：删除失败时显示具体错误信息；移动端长内容截断",
     "history": {
+      "v0.7.10": "新增回收站/系统清理 Tab + 启动警告弹窗 + 安全加固（isSafePath/CSV注入/docker modal确认） + empty_dir重写 + 移动端自适应",
       "v0.7.2": "新增空目录清理选项卡 + 实时进度 + 移动端适配 + 错误防护 + 跳过回收站",
       "v0.7.1": "版本号对齐",
       "v0.7.0": "Node.js 重写：去重模块（文件SHA-256+音乐元数据）、目录浏览选择、版本号检查、Docker镜像管理、tmp清理、统计上报",
@@ -98,7 +99,7 @@
       "v0.5.3": "网盘挂载残余目录清理",
       "v0.3.0": "前端优化、docker 残余卷清理"
     },
-    "checksum": "93baabd2ecd7471e48b169a2b36a40c8b563ec6a28988ae6f6f017518f7c39c2"
+    "checksum": "a102cde3ea415daa8cf53718290329761e413978773dc8b86a5933b76a93cb9c"
   },
   "fnm3u8": {
     "display_name": "m3u8下载器",
