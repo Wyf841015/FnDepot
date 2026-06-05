@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.1.0-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.1.5-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -56,6 +56,12 @@
 2. **手动安装**：下载 `fnlogpush.fpk` → 应用中心 → 手动安装
 
 ## 版本历史
+
+### v1.1.5 (2026-06-05)
+- 🎨 主题系统 P0 5 项全修复 - 白名单单一真理源 / CSS 选择器前缀统一 / race condition 修复 / ReduceMotionManager 拆分 / 同主题跳过
+- ✨ 主题系统 P1 4 项全完成 - transition 0.3s / themeClasses 缓存 / debounce + requestIdleCallback / beforeunload flush
+- 🐛 真正修复"最后推送为空"bug - bundle.js 数据传递 + syncKpiFromStatus 端到端验证
+- 🧹 重打干净 fpk - 加清理脚本，fpk 体积 -38%
 
 ### v1.1.0 (2026-06-05)
 - ⚡ **alert_aggregator 防 OOM** - 单 group 日志累积 cap 在 500 条，长期运行不再内存累积
