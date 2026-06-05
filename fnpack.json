@@ -2,7 +2,7 @@
   "fnlogpush": {
     "display_name": "日志哨兵",
     "platform": "all",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "desc": "飞牛NAS日志监控与多渠道推送工具，支持Docker容器监控、WebSocket实时推送健康状态，实时监控系统日志和备份进度，支持企业微信、钉钉、飞书、Bark、PushPlus、魔法推送、MeoW等推送渠道",
     "labels": "工具,效率,监控,日志,Docker",
     "author": "一零一二",
@@ -12,10 +12,12 @@
     "bug_report_url": "https://gitee.com/wyf1015/FNLogPush/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": "1.4",
+    "size": "1.5",
     "download_url": "",
-    "changelog": "v1.0.1\n- 修复移动端底部菜单active状态不同步\n- 修复WebSocket连接失败（URL改用GATEWAY_BASE构造，兼容fnOS网关）\n- 修复统计图表不显示（switchNavPanel主动调用initStatsPanel）\n- 修复测试推送确认框无反应（HTML id 命名修正）\n- 修复备份数据库连接测试缺少参数\n- 修复Webhook渠道测试端点错误\n- 全面优化：删除字体死代码/修3处XSS/main.js重构（删15个重复函数，2886→2496行）/CSS自动构建/补58个单测\n- fpk体积从1.95MB降至1.39MB\n\nv1.0.0\n- 暗夜紫主题全面重写（对照暮色橙结构，浅色紫色系）\n- 删除无用的 legacy 树（cmd/logmonitor/logmonitor/）\n- 版本号统一为 1.0.0\n\nv0.9.40\n- 同步最新代码版本\n\nv0.9.35\n- 🔒 API 响应格式统一：/api/health 添加 success: true 字段\n- ✅ XSS 防护确认：用户数据已使用 escapeHtml() 转义\n- ✅ 路由分析完成：/api/agg/stats 与 /api/alert-aggregation/stats 返回不同数据，非冗余\n- ✅ 刷新逻辑分析：stats.js 无 setInterval，仅手动刷新，无重复请求\n- ✅ 无障碍优化：aria 属性已完善\n\n\nv0.9.34\n- CORS 配置修复：从环境变量 CORS_ORIGINS 读取，不再使用 * 通配符\n- Docker subprocess 防护：添加容器 ID 格式验证，防止命令注入\n- ConfigManager 修复：删除重复的 validate_config 方法定义\n- DND 缓存修复：get_cached_messages 返回副本，update_config 合并配置\n- 新增 MagicPush 渠道单元测试（10 个测试用例）\n\n\nv0.9.33\n- 修复勿扰阶段消息汇总功能失效\n- 修复推送渠道响应判断（DND汇总推送）\n- 修复 Webhook enabled 属性缺失\n- 修复 Bark/PushPlus JSON 解析健壮性\n- 修复 Webhook POST 字段名（content → msg）\n- 新增 Docker 容器监控（自动检测并修复 Socket 权限）\n- Docker 事件支持 DND 免打扰期间缓存汇总\n\n\nv0.9.31\n- 修复勿扰阶段消息汇总功能失效问题\n- 修复魔法推送响应判断逻辑\n- 修复 Bark/PushPlus JSON 解析健壮性\n- 修复 Webhook POST 字段名（content → msg）\n- 修复 Webhook 渠道缺少 enabled 属性问题\n- 修复禁用渠道静默失败",
+    "changelog": "v1.1.0\n- alert_aggregator防OOM（单group日志累积cap 500）\n- photo_monitor状态写盘优化（dirty+60s后台flush）\n- loguru console级别调整为WARNING（info.log不再暴涨）\n- 新增事件APP_INSTALL_FAILED_INSTALL_INIT_EXCEPTION\n- 修复Invalid Date显示等若干内部缺陷\n\nv1.0.2\n- update_config走pydantic严格校验\n- 热重载同步所有service（DND+alert_agg+5 monitor）\n- 备份恢复路径穿越-严格文件名白名单\n- 根治KPI卡片-bundle.js build链路修复\n- 渠道配置字典化（8渠道从if/elif改为dict）\n- push_channels目录拆分（push_service.py 1538→883行）\n- 10个写/读敏感端点加@login_required\n- chart_data N+1→Counter优化\n- 裸except→except Exception、删死代码\n- 测试 92→112\n\nv1.0.1\n- 修复移动端底部菜单active状态不同步\n- 修复WebSocket连接失败（URL改用GATEWAY_BASE构造，兼容fnOS网关）\n- 修复统计图表不显示（switchNavPanel主动调用initStatsPanel）\n- 修复测试推送确认框无反应（HTML id 命名修正）\n- 修复备份数据库连接测试缺少参数\n- 修复Webhook渠道测试端点错误\n- 全面优化：删除字体死代码/修3处XSS/main.js重构（删15个重复函数，2886→2496行）/CSS自动构建/补58个单测\n- fpk体积从1.95MB降至1.39MB\n\nv1.0.0\n- 暗夜紫主题全面重写（对照暮色橙结构，浅色紫色系）\n- 删除无用的 legacy 树（cmd/logmonitor/logmonitor/）\n- 版本号统一为 1.0.0\n\nv0.9.40\n- 同步最新代码版本\n\nv0.9.35\n- 🔒 API 响应格式统一：/api/health 添加 success: true 字段\n- ✅ XSS 防护确认：用户数据已使用 escapeHtml() 转义\n- ✅ 路由分析完成：/api/agg/stats 与 /api/alert-aggregation/stats 返回不同数据，非冗余\n- ✅ 刷新逻辑分析：stats.js 无 setInterval，仅手动刷新，无重复请求\n- ✅ 无障碍优化：aria 属性已完善\n\n\nv0.9.34\n- CORS 配置修复：从环境变量 CORS_ORIGINS 读取，不再使用 * 通配符\n- Docker subprocess 防护：添加容器 ID 格式验证，防止命令注入\n- ConfigManager 修复：删除重复的 validate_config 方法定义\n- DND 缓存修复：get_cached_messages 返回副本，update_config 合并配置\n- 新增 MagicPush 渠道单元测试（10 个测试用例）\n\n\nv0.9.33\n- 修复勿扰阶段消息汇总功能失效\n- 修复推送渠道响应判断（DND汇总推送）\n- 修复 Webhook enabled 属性缺失\n- 修复 Bark/PushPlus JSON 解析健壮性\n- 修复 Webhook POST 字段名（content → msg）\n- 新增 Docker 容器监控（自动检测并修复 Socket 权限）\n- Docker 事件支持 DND 免打扰期间缓存汇总\n\n\nv0.9.31\n- 修复勿扰阶段消息汇总功能失效问题\n- 修复魔法推送响应判断逻辑\n- 修复 Bark/PushPlus JSON 解析健壮性\n- 修复 Webhook POST 字段名（content → msg）\n- 修复 Webhook 渠道缺少 enabled 属性问题\n- 修复禁用渠道静默失败",
     "history": {
+      "v1.1.0": "alert_aggregator防OOM+photo_monitor写盘优化+loguru console级别调整为WARNING+新增事件APP_INSTALL_FAILED_INSTALL_INIT_EXCEPTION+修复Invalid Date等",
+      "v1.0.2": "update_config走pydantic严格校验+热重载同步所有service+备份恢复路径穿越+根治KPI卡片+push_channels目录拆分(1538→883行)+10个端点加login_required+chart_data N+1→Counter+测试92→112",
       "v1.0.1": "移动端底部菜单修复+WebSocket修复+统计图表修复+全面优化（删字体死代码/修XSS/main.js重构/CSS自动构建/补单测），fpk 1.95→1.39MB",
       "v1.0.0": "暗夜紫主题重写/删除legacy树/版本号统一为1.0.0",
       "v0.9.40": "同步最新代码版本",
@@ -43,7 +45,7 @@
       "v0.6.0": "新增钉钉、飞书、Bark、PushPlus推送渠道",
       "v0.5.0": "初始版本"
     },
-    "checksum": "2219e6bed6dce204fb5087356ad1e54a"
+    "checksum": "9dbb04ffa39c123a325c9840ecb33a91"
   },
   "usbrsync": {
     "display_name": "USB自动同步",

@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.0.1-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.1.0-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -57,8 +57,27 @@
 
 ## 版本历史
 
+### v1.1.0 (2026-06-05)
+- ⚡ **alert_aggregator 防 OOM** - 单 group 日志累积 cap 在 500 条，长期运行不再内存累积
+- ⚡ **photo_monitor 状态写盘优化** - dirty + 60s 后台 flush 替代每次轮询都写 config.json
+- 🔧 **loguru console 级别调整为 WARNING** - `info.log` 不再被 INFO 噪声灌满（之前 27MB+ 增长，现在只写 WARN/ERROR/CRITICAL）
+- ✨ **新增事件 `APP_INSTALL_FAILED_INSTALL_INIT_EXCEPTION`** - 用于 app 安装初始化失败场景
+- 🐛 修复 Invalid Date 显示 + 若干内部缺陷
+
+### v1.0.2 (2026-06-05)
+- 🔧 update_config 走 pydantic 严格校验
+- 🔧 热重载同步所有 service（DND + alert_agg + 5 monitor 不再漏更新）
+- 🔧 备份恢复路径穿越 - 严格文件名白名单
+- 🔧 根治 KPI 卡片 - bundle.js build 链路修复
+- 🏗️ 渠道配置字典化（8 渠道从 124 行 if/elif 改为 dict 循环）
+- 🏗️ push_channels/ 目录拆分 - push_service.py 1538 → 883 行
+- ♻️ 抽 push_and_record helper
+- 🔒 10 个写/读敏感端点加 @login_required
+- ⚡ chart_data N+1 → Counter 优化
+- 🧹 裸 except → except Exception、删死代码、CONFIG_DIR 注入 app.config
+- ✅ 测试 92 → 112
+
 ### v1.0.1 (2026-06-01)
-- ✨ **恢复飞书多维表格统计推送** - 提取公共库 `cmd/lib/feishu_push.sh`
 - 🐛 修复移动端底部菜单 active 状态不同步
 - 🐛 修复 WebSocket 连接失败（URL 用 `GATEWAY_BASE` 构造，兼容 fnOS 网关）
 - 🐛 修复统计图表不显示（`switchNavPanel` 主动调用 `initStatsPanel`）
