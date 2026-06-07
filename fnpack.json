@@ -12,7 +12,7 @@
     "bug_report_url": "https://gitee.com/wyf1015/FNLogPush/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": 0.9,
+    "size": 0.86,
     "download_url": "",
     "changelog": "v1.1.7\n- 修复勿扰模式汇总消息反复推送（5 monitor 共享 dnd_service 无锁 → DND 结束瞬间 5 monitor 同时 flush 同一份汇总推到企业 IM 多次，统一改走 monitor_core/dnd.py DNDHandler.check_dnd_cache + threading.Lock 锁内原子清空）\n- 删 5 份重复 _check_dnd_flush 实现（-200+ 行死代码）\n- 新增 2 个并发回归测试（5 线程并发只推 1 次 + 失败时缓存保留）\n- 重打干净 fpk 905KB\n\nv1.1.5\n- 主题系统P0 5项全修复（白名单单一真理源/CSS选择器前缀统一/race condition修复/ReduceMotionManager拆分/同主题跳过）\n- 主题系统P1 4项全完成（transition 0.3s/themeClasses缓存/debounce+requestIdleCallback/beforeunload flush）\n- 真正修复\"最后推送为空\"bug（bundle.js数据传递+syncKpiFromStatus端到端验证）\n- 重打干净fpk（加清理脚本，fpk体积-38%）\n\nv1.1.0\n- alert_aggregator防OOM（单group日志累积cap 500）\n- photo_monitor状态写盘优化（dirty+60s后台flush）\n- loguru console级别调整为WARNING（info.log不再暴涨）\n- 新增事件APP_INSTALL_FAILED_INSTALL_INIT_EXCEPTION\n- 修复Invalid Date显示等若干内部缺陷\n\nv1.0.2\n- update_config走pydantic严格校验\n- 热重载同步所有service（DND+alert_agg+5 monitor）\n- 备份恢复路径穿越-严格文件名白名单\n- 根治KPI卡片-bundle.js build链路修复\n- 渠道配置字典化（8渠道从if/elif改为dict）\n- push_channels目录拆分（push_service.py 1538→883行）\n- 10个写/读敏感端点加@login_required\n- chart_data N+1→Counter优化\n- 裸except→except Exception、删死代码\n- 测试 92→112\n\nv1.0.1\n- 修复移动端底部菜单active状态不同步\n- 修复WebSocket连接失败（URL改用GATEWAY_BASE构造，兼容fnOS网关）\n- 修复统计图表不显示（switchNavPanel主动调用initStatsPanel）\n- 修复测试推送确认框无反应（HTML id 命名修正）\n- 修复备份数据库连接测试缺少参数\n- 修复Webhook渠道测试端点错误\n- 全面优化：删除字体死代码/修3处XSS/main.js重构（删15个重复函数，2886→2496行）/CSS自动构建/补58个单测\n- fpk体积从1.95MB降至1.39MB\n\nv1.0.0\n- 暗夜紫主题全面重写（对照暮色橙结构，浅色紫色系）\n- 删除无用的 legacy 树（cmd/logmonitor/logmonitor/）\n- 版本号统一为 1.0.0\n\nv0.9.40\n- 同步最新代码版本\n\nv0.9.35\n- 🔒 API 响应格式统一：/api/health 添加 success: true 字段\n- ✅ XSS 防护确认：用户数据已使用 escapeHtml() 转义\n- ✅ 路由分析完成：/api/agg/stats 与 /api/alert-aggregation/stats 返回不同数据，非冗余\n- ✅ 刷新逻辑分析：stats.js 无 setInterval，仅手动刷新，无重复请求\n- ✅ 无障碍优化：aria 属性已完善\n\n\nv0.9.34\n- CORS 配置修复：从环境变量 CORS_ORIGINS 读取，不再使用 * 通配符\n- Docker subprocess 防护：添加容器 ID 格式验证，防止命令注入\n- ConfigManager 修复：删除重复的 validate_config 方法定义\n- DND 缓存修复：get_cached_messages 返回副本，update_config 合并配置\n- 新增 MagicPush 渠道单元测试（10 个测试用例）\n\n\nv0.9.33\n- 修复勿扰阶段消息汇总功能失效\n- 修复推送渠道响应判断（DND汇总推送）\n- 修复 Webhook enabled 属性缺失\n- 修复 Bark/PushPlus JSON 解析健壮性\n- 修复 Webhook POST 字段名（content → msg）\n- 新增 Docker 容器监控（自动检测并修复 Socket 权限）\n- Docker 事件支持 DND 免打扰期间缓存汇总\n\n\nv0.9.31\n- 修复勿扰阶段消息汇总功能失效问题\n- 修复魔法推送响应判断逻辑\n- 修复 Bark/PushPlus JSON 解析健壮性\n- 修复 Webhook POST 字段名（content → msg）\n- 修复 Webhook 渠道缺少 enabled 属性问题\n- 修复禁用渠道静默失败",
     "history": {
@@ -46,7 +46,7 @@
       "v0.6.0": "新增钉钉、飞书、Bark、PushPlus推送渠道",
       "v0.5.0": "初始版本"
     },
-    "checksum": "742c2dc2d578113b68bfbf1c89e23cd0"
+    "checksum": "849fcb85db1e1d19d01ac956e15209dc"
   },
   "usbrsync": {
     "display_name": "USB自动同步",
@@ -85,7 +85,7 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnclearup/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": "0.4",
+    "size": 0.42,
     "download_url": "",
     "changelog": "v0.7.11\n- 系统清理忽略 /boot（移除旧内核扫描项）\n- 测试 60/60 通过\n\nv0.7.10\n- 新增「🗑 回收站」Tab：批量清理 /vol*/UID/.@#local/trash/，按 mtime 30/90/365 天分级清理，root 权限包含全部用户\n- 新增「🧹 系统清理」Tab：17 项扫描目标（apt/syslog/journal/包管理器缓存/浏览器/Playwright/旧内核），三档风险过滤 + 一键推荐清理 + 清理前 manifest 备份\n- 启动警告弹窗（每次打开应用强制阅读 3 秒，红底警示 + 强制确认项）\n- 安全加固：4 个删除端点 isSafePath 白名单、CSV 注入防护、3 个 docker 删除加 modal 确认\n- empty_dir 重写：stop API、跳过 @app*、流式扫描 + state file 修复 complete 状态保留\n- 回收站 Tab 移动端自适应（480px 按钮 2 列 + 表格切卡片 + modal 全屏）\n- 测试 60/60 通过\n\nv0.7.2\n- 新增「去空」选项卡：扫描空目录，支持批量/单个删除（回收站/永久）\n- 实时扫描目录显示 + 进度条\n- 移动端自适应：空目录列表水平滚动 + 路径自动换行\n- 单遍遍历算法 + 符号链接安全（lstatSync）\n- 错误防护：uncaughtException + 进程退出码检测\n- 跳过 .@#local 回收站目录\n\nv0.7.1\n- 版本号对齐\n\nv0.7.0\n- 全面重构：基于 ui-ux-pro-max 设计系统，前后端分离（Node.js ESM）\n- 新增去重功能：文件去重（SHA-256 10线程哈希）+ 音乐去重\n- 新增目录浏览选择器\n- 新增顶部版本号显示 + 启动时自动检查 FnDepot 新版本\n- Docker 镜像管理：查看未使用镜像，一键批量删除\n- tmp 清理：扫描 /tmp 和 /var/tmp 下 24h+ 未访问的文件\n- 回收站路径纠正 + 原子化状态写入\n- 修复：删除失败时显示具体错误信息；移动端长内容截断",
     "history": {
@@ -103,7 +103,7 @@
       "v0.5.3": "网盘挂载残余目录清理",
       "v0.3.0": "前端优化、docker 残余卷清理"
     },
-    "checksum": "af6f75381779bb0c7e745543d3edcd215de0a9735ff60f0e345475b57de2f7da"
+    "checksum": "36394a59469943c4c0ee65198edb881379d5fe80a3f2895378df82a6bd081699"
   },
   "fnm3u8": {
     "display_name": "m3u8下载器",
@@ -138,7 +138,7 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnm3u8dl/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": "0.4",
+    "size": 0.44,
     "download_url": "",
     "changelog": "v0.2.0\n- 修复 HLSExtractor.loadM3u8FromUrl 方法缺失（新增公开方法别名）\n- 修复 DASH/MSS 解析路径（改用 fetch 获取内容 + ExtractStreamsAsync）\n- 165 个 TDD 测试通过（3 个跳过为网络相关）\n\nv0.1.1\n- 完整重写 N_m3u8DL-RE C# 项目\n- HLS / DASH / MSS 三大协议解析\n- AES-128-CBC 自动解密\n- 多线程并发下载 + 断点续传\n- 批量添加（粘贴多链接）\n- 直播录制（可配刷新间隔）\n- 实时速度 / ETA / 加密标注\n- 响应式 UI + 浅色/深色主题（服务端持久化）\n- 批量操作（暂停/继续/停止/清理/删除含文件）\n- 首次设置引导\n- 赞助支持\n- 163 个 TDD 测试覆盖",
     "history": {
