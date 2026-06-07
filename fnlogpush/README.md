@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.1.5-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.1.7-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -56,6 +56,12 @@
 2. **手动安装**：下载 `fnlogpush.fpk` → 应用中心 → 手动安装
 
 ## 版本历史
+
+### v1.1.7 (2026-06-07)
+- 🐛 修复勿扰模式汇总消息反复推送 - 5 monitor 共享 `dnd_service.cached_messages` 但各自 flush 无锁，DND 结束瞬间 5 monitor 同时 flush 同一份汇总推到企业 IM 多次。统一改走 `monitor_core/dnd.py DNDHandler.check_dnd_cache` + `threading.Lock` 锁内原子清空
+- 🧹 删 5 份重复 `_check_dnd_flush` 实现（-200+ 行死代码）
+- 🧪 新增 2 个并发回归测试（5 线程并发只推 1 次 + 失败时缓存保留）
+- 📦 重打干净 fpk 905KB
 
 ### v1.1.5 (2026-06-05)
 - 🎨 主题系统 P0 5 项全修复 - 白名单单一真理源 / CSS 选择器前缀统一 / race condition 修复 / ReduceMotionManager 拆分 / 同主题跳过
