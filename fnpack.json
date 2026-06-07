@@ -46,7 +46,7 @@
       "v0.6.0": "新增钉钉、飞书、Bark、PushPlus推送渠道",
       "v0.5.0": "初始版本"
     },
-    "checksum": "254f7b3b3bf86dea84849d5eb166c086"
+    "checksum": "742c2dc2d578113b68bfbf1c89e23cd0"
   },
   "usbrsync": {
     "display_name": "USB自动同步",
