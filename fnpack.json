@@ -140,7 +140,7 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnm3u8dl/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": 0.51,
+    "size": 0.48,
     "download_url": "",
     "changelog": "v0.6.0\n- 新增: 定时录制列表编辑和真删除功能\n- 修复: 工具栏 ghost 按钮背景色统一\n- 优化: 设置/搜索按钮移入工具栏，顶部 header 精简对齐",
     "history": {
@@ -150,6 +150,6 @@
       "v0.2.0": "修复 HLSExtractor.loadM3u8FromUrl 方法缺失 + DASH/MSS 解析路径修复，165 个测试",
       "v0.1.1": "初始版本：完整重写 N_m3u8DL-RE，HLS/DASH/MSS 三协议、AES-128 解密、批量添加、直播录制、163个测试"
     },
-    "checksum": "38a8d9ace5c09b0360889c2225c6e64260f1294e7d8a7e78bb359e083b0adf03"
+    "checksum": "977ff6891addcc2a4a1419d05d5b9374ca4aea88221a60172ecb328ec7104e9f"
   }
 }
