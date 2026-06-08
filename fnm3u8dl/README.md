@@ -188,3 +188,19 @@ node --test tests/test_new_modules.js
 ---
 
 > 如果这个项目对您有帮助，欢迎赞助支持 ❤️
+
+## 更新日志
+
+### v0.5.1
+- 修复: formatDuration 秒→毫秒单位不匹配 (录制时长显示错误)
+- 修复: 0 秒录制显示为 '-' 而非 '0秒'
+- 安全加固: SSRF 白名单校验 / IPv4映射IPv6绕过修复 / fetch超时控制 / CORS同源回退
+- 测试 432/435 通过
+
+### v0.5.0
+- 直播 3 维度启发式检测 (URL关键词 + EXT-X-ENDLIST + 短playlist)
+- 直播实时合并 livePipeMux (纯JS模拟，360倍IO减少)
+- C# 10/10 直播参数完整对应
+- 动态直播源 (PHP url-resolver) 支持
+- 8 项 UI 现代化重构 + 移动端响应式适配
+- 测试 432/435 通过
