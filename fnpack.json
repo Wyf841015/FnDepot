@@ -128,7 +128,7 @@
   "fnm3u8dl": {
     "display_name": "m3u8DL 专业下载器",
     "platform": "all",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "desc": "N_m3u8DL-RE 完整 Node.js 重写版，HLS+DASH+MSS 三协议解析、AES-128-CBC 自动解密、多线程并发下载、断点续传、批量添加、直播录制、直播实时合并、实时速度/ETA显示、432个TDD测试覆盖",
     "labels": "工具,效率,下载,视频",
     "author": "一零一二",
@@ -138,14 +138,16 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnm3u8dl/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": 0.48,
+    "size": 0.51,
     "download_url": "",
-    "changelog": "v0.5.1\n- 修复: formatDuration 秒→毫秒单位不匹配 (录制时长显示错误)\n- 修复: 0 秒录制显示为 '-' 而非 '0秒'\n- P0-3: file:// SSRF 白名单校验\n- P1-1: IPv4映射IPv6内网地址绕过修复\n- P1-5: batchDelete 异步 await 修复\n- P1-6: addTask 重复 ID 去重\n- P1-7: fetch 超时控制 (30s)\n- P1-9: CORS_ORIGINS 空值时同源回退\n- 测试 432/435 通过 (3 跳过为网络相关)\n\nv0.5.0\n- 直播 3 维度启发式检测 (URL关键词 + EXT-X-ENDLIST + 短playlist)\n- 直播实时合并 livePipeMux (纯JS模拟ffmpeg pipe mux, 360倍IO减少)\n- C# 10/10 直播参数完整对应\n- 动态直播源 (PHP url-resolver) 支持\n- 8 项 UI 现代化重构 (Sparkline/KPI Dashboard/三段式任务卡/侧边栏 Modal)\n- 移动端响应式适配 (5轮迭代)\n- 配置路径注册鸡生蛋 bug 修复\n- 测试 432/435 通过\n\nv0.2.0\n- 修复 HLSExtractor.loadM3u8FromUrl 方法缺失（新增公开方法别名）\n- 修复 DASH/MSS 解析路径（改用 fetch 获取内容 + ExtractStreamsAsync）\n- 165 个 TDD 测试通过（3 个跳过为网络相关）\n\nv0.1.1\n- 完整重写 N_m3u8DL-RE C# 项目\n- HLS / DASH / MSS 三大协议解析\n- AES-128-CBC 自动解密\n- 多线程并发下载 + 断点续传\n- 批量添加（粘贴多链接）\n- 直播录制（可配刷新间隔）\n- 实时速度 / ETA / 加密标注\n- 响应式 UI + 浅色/深色主题（服务端持久化）\n- 批量操作（暂停/继续/停止/清理/删除含文件）\n- 首次设置引导\n- 赞助支持\n- 163 个 TDD 测试覆盖",
+    "changelog": "v0.6.0\n- 新增: 定时录制列表编辑和真删除功能\n- 修复: 工具栏 ghost 按钮背景色统一\n- 优化: 设置/搜索按钮移入工具栏，顶部 header 精简对齐",
     "history": {
+      "v0.6.0": "定时录制编辑/真删除 + UI工具栏按钮统一 + ghost背景色修复",
       "v0.5.1": "formatDuration修复 + P0-3/P1-1/P1-5/P1-6/P1-7/P1-9安全加固，432个测试",
       "v0.5.0": "直播3维度检测+直播实时合并(livePipeMux)+C# 10/10参数对应+动态直播源+8项UI重构+移动端适配+432测试",
       "v0.2.0": "修复 HLSExtractor.loadM3u8FromUrl 方法缺失 + DASH/MSS 解析路径修复，165 个测试",
       "v0.1.1": "初始版本：完整重写 N_m3u8DL-RE，HLS/DASH/MSS 三协议、AES-128 解密、批量添加、直播录制、163个测试"
-    }
+    },
+    "checksum": "38a8d9ace5c09b0360889c2225c6e64260f1294e7d8a7e78bb359e083b0adf03"
   }
 }
