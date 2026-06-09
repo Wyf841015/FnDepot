@@ -145,6 +145,26 @@ PORT=43940 node server.js
 
 ## 版本历史
 
+### v0.6.1 (2026-06-09)
+
+- **安全加固**（前端全面审查 8 项修复）
+  - file:// SSRF 白名单校验
+  - IPv4 映射 IPv6 内网地址绕过修复
+  - fetch 超时控制（30s）
+  - 错误信息路径泄露过滤
+  - url-resolver 流式 body 读取限 1MB
+  - AbortSignal.any try/catch 兜底
+  - 默认日志级别从 info 改为 warn，避免 fnOS info.log 膨胀
+- **代码质量**
+  - batchDelete 异步 await 修复
+  - addTask 重复 ID 去重
+  - CORS_ORIGINS 空值时同源回退
+  - textarea CSS 独立类（textarea-mono）
+  - sparkline 颜色格式扩展（hsl/rgba）
+  - 删除死代码 sampleData
+  - 删除多余 CSS 大括号
+- **测试**：270/270 通过，0 失败
+
 ### v0.2.0 (2026-05-29)
 
 - 修复 HLSExtractor.loadM3u8FromUrl 方法缺失（新增公开方法别名，内部调用 _loadM3u8FromUrlAsync）
@@ -190,6 +210,11 @@ node --test tests/test_new_modules.js
 > 如果这个项目对您有帮助，欢迎赞助支持 ❤️
 
 ## 更新日志
+
+### v0.6.1 (2026-06-09)
+- **安全加固**: SSRF/IPv6绕过/超时控制/路径泄露/流式body限流/日志级别warn
+- **代码质量**: batchDelete await/去重/CORS回退/CSS优化/死代码清理
+- **测试** 270/270 通过，0 失败
 
 ### v0.6.0
 - 新增: 定时录制列表编辑和真删除功能
