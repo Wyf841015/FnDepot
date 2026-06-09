@@ -145,6 +145,23 @@ PORT=43940 node server.js
 
 ## 版本历史
 
+### v0.7.0 (2026-06-09)
+
+- **下载路径浏览对话框**（参照 fnytdlp）
+  - 服务端新增 `GET /api/browse?path=...` 端点（不限制白名单，可任意浏览后选目录）
+  - 设置面板下载路径输入框右侧加 `📂 浏览` 按钮
+  - 弹窗显示当前路径 + 上级目录 + 子目录列表 + 选择当前目录
+- **页脚版权信息**（参照 fnytdlp）
+  - 页面底部居中显示 `fnm3u8dl v0.7.0 · © 2026 一零一二`
+  - server.js 新增 `VERSION` 常量，`/api/health` 暴露版本号给前端动态渲染
+- **时钟 / 速度 KPI 修复**
+  - 时钟 `--:--:--` 不显示：`sparkline.js` 使用 ESM export，script 标签缺 `type="module"` 导致脚本不执行 → 修复
+  - 实时速度 KPI 数值换行：字号 1.1→0.95rem + `white-space: nowrap` + ellipsis
+- **错误处理强化**
+  - `r.pipeThrough is not a function` 500 bug 修复（ArrayBuffer 没 pipeThrough API）
+  - 浏览端点拒绝未注册路径导致无法选目录 → 改为不限制白名单
+- **测试**：单元测试 132/132 全过；端到端 4 场景浏览验证通过
+
 ### v0.6.1 (2026-06-09)
 
 - **安全加固**（前端全面审查 8 项修复）
@@ -210,6 +227,15 @@ node --test tests/test_new_modules.js
 > 如果这个项目对您有帮助，欢迎赞助支持 ❤️
 
 ## 更新日志
+
+### v0.7.0 (2026-06-09)
+- 新增: 下载路径浏览对话框 (📂 按钮 + 弹窗选择)
+- 新增: 页脚版权信息 (动态版本号 + 自动年份)
+- 修复: 时钟 --:--:-- 不显示 (sparkline.js ESM 模块加载)
+- 修复: 实时速度 KPI 换行 (字号 + nowrap)
+- 修复: r.pipeThrough TypeError 500 (ArrayBuffer API 误用)
+- 优化: 浏览端点不限制白名单 (可任意浏览后选目录)
+- 测试 132/132 通过
 
 ### v0.6.1 (2026-06-09)
 - **安全加固**: SSRF/IPv6绕过/超时控制/路径泄露/流式body限流/日志级别warn

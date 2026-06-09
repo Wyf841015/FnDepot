@@ -130,7 +130,7 @@
   "fnm3u8dl": {
     "display_name": "m3u8DL 专业下载器",
     "platform": "all",
-    "version": "0.6.1",
+    "version": "0.7.0",
     "desc": "N_m3u8DL-RE 完整 Node.js 重写版，HLS+DASH+MSS 三协议解析、AES-128-CBC 自动解密、多线程并发下载、断点续传、批量添加、直播录制、直播实时合并、实时速度/ETA显示、432个TDD测试覆盖",
     "labels": "工具,效率,下载,视频",
     "author": "一零一二",
@@ -142,8 +142,9 @@
     "install_type": "存储空间",
     "size": 0.49,
     "download_url": "",
-    "changelog": "v0.6.1\n- 安全加固: SSRF/IPv6绕过/超时控制/路径泄露/流式body限流/日志级别warn\n- 代码质量: batchDelete await/去重/CORS回退/CSS优化/死代码清理\n- 测试 270/270 通过，0 失败\n\nv0.6.0\n- 新增: 定时录制列表编辑和真删除功能\n- 修复: 工具栏 ghost 按钮背景色统一\n- 优化: 设置/搜索按钮移入工具栏，顶部 header 精简对齐",
+    "changelog": "v0.7.0\n- 新增: 下载路径浏览对话框 (📂 按钮 + 弹窗选择)\n- 新增: 页脚版权信息 (动态版本号 + 自动年份)\n- 修复: 时钟 --:--:-- 不显示 (sparkline.js ESM 模块加载)\n- 修复: 实时速度 KPI 换行 (字号 + nowrap)\n- 修复: r.pipeThrough TypeError 500 (ArrayBuffer API 误用)\n- 优化: 浏览端点不限制白名单 (可任意浏览后选目录)\n- 测试 132/132 通过\n\nv0.6.1\n- 安全加固: SSRF/IPv6绕过/超时控制/路径泄露/流式body限流/日志级别warn\n- 代码质量: batchDelete await/去重/CORS回退/CSS优化/死代码清理\n- 测试 270/270 通过，0 失败\n\nv0.6.0\n- 新增: 定时录制列表编辑和真删除功能\n- 修复: 工具栏 ghost 按钮背景色统一\n- 优化: 设置/搜索按钮移入工具栏，顶部 header 精简对齐",
     "history": {
+      "v0.7.0": "下载路径浏览对话框 + 页脚版权 + 时钟/SpeedKPI修复 + r.pipeThrough TypeError修复, 132测试",
       "v0.6.1": "安全加固8项(SSRF/IPv6绕过/超时控制/路径泄露/流式限流/日志warn)+代码质量+CORS+死代码清理, 270测试通过",
       "v0.6.0": "定时录制编辑/真删除 + UI工具栏按钮统一 + ghost背景色修复",
       "v0.5.1": "formatDuration修复 + P0-3/P1-1/P1-5/P1-6/P1-7/P1-9安全加固，432个测试",
