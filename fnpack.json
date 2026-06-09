@@ -153,5 +153,25 @@
       "v0.1.1": "初始版本：完整重写 N_m3u8DL-RE，HLS/DASH/MSS 三协议、AES-128 解密、批量添加、直播录制、163个测试"
     },
     "checksum": "cf5326f88797d2fdba627af936066acc1a945c71041c219aca64cd90f70c959c"
+  },
+  "fnytdlp": {
+    "display_name": "视频下载器",
+    "platform": "all",
+    "version": "0.1.0",
+    "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过",
+    "labels": "工具,效率,下载,视频",
+    "author": "一零一二",
+    "author_url": "https://gitee.com/wyf1015",
+    "distributor": "一零一二",
+    "distributor_url": "https://gitee.com/wyf1015",
+    "bug_report_url": "https://gitee.com/wyf1015/fnytdlp/issues",
+    "isdocker": "false",
+    "install_type": "存储空间",
+    "size": 6.21,
+    "download_url": "",
+    "changelog": "v0.1.0\n- 集成 yt-dlp 1872+ 站点支持\n- 自适应 x86_64 + aarch64 双 binary\n- KPI Dashboard + Sparkline 实时趋势\n- SSE 实时进度推送\n- 任务详情弹窗（13 字段）\n- 下载路径浏览对话框\n- 多网站 Cookie 任务级透传\n- SponsorBlock 广告跳过\n- 5 主题 + 响应式布局\n- 20+ TDD 测试套件\n- sparkline ESM 加载修复 / Speed KPI 换行修复 / pipeThrough TypeError 修复",
+    "history": {
+      "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
+    }
   }
 }
