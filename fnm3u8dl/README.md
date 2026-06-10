@@ -145,6 +145,14 @@ PORT=43940 node server.js
 
 ## 版本历史
 
+### v0.7.1-hotfix1 (2026-06-10)
+
+- **修复: 定时录制按钮没反应**
+  - 根因：`// ===== Schedule (定时录制) =====` 段 6 个函数（`showScheduleModal` / `switchScheduleTab` / `editSchedule` / `submitSchedule` / `loadScheduleList` / `deleteSchedule`）前一次重排时多缩进 2 空格，JS 不会抛错（语法合法）但函数变成 `document.addEventListener('keydown', ...)` 回调内的局部变量，window 上找不到
+  - inline `onclick="showScheduleModal()"` 调用失败
+  - 修法：6 个函数全部去前导空格变顶层声明 + 补全 4 个缺失的 `window.X = X` export（原只 export `editSchedule` / `deleteSchedule`）
+  - git commit e5e3fba
+
 ### v0.7.1 (2026-06-10)
 
 - **前端代码审查修复 12 项**
@@ -244,6 +252,9 @@ node --test tests/test_new_modules.js
 > 如果这个项目对您有帮助，欢迎赞助支持 ❤️
 
 ## 更新日志
+
+### v0.7.1-hotfix1 (2026-06-10)
+- 修复: 定时录制按钮没反应 (schedule 段 6 函数错误缩进成嵌套 + 补全 4 个 window export)
 
 ### v0.7.1 (2026-06-10)
 - 修复: 浏览目录 onclick 单引号 XSS (改用 data-path + this.dataset)
