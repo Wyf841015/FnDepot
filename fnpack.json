@@ -159,7 +159,7 @@
   "fnytdlp": {
     "display_name": "视频下载器",
     "platform": "all",
-    "version": "0.2.0",
+    "version": "0.2.5",
     "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过",
     "labels": "工具,效率,下载,视频",
     "author": "一零一二",
@@ -169,12 +169,14 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnytdlp/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": 6.22,
+    "size": 6.23,
     "download_url": "",
-    "changelog": "v0.2.0\n- fix: Destination 封面图过滤（实时解析 + 旧任务兜底）\n- fix: toolbar 清理按钮加 showConfirm 确认框\n- fix: 赞助大图点击不放大（inline onclick this 关键字修复）\n\nv0.1.0\n- 集成 yt-dlp 1872+ 站点支持\n- 自适应 x86_64 + aarch64 双 binary\n- KPI Dashboard + Sparkline 实时趋势\n- SSE 实时进度推送\n- 任务详情弹窗（13 字段）\n- 下载路径浏览对话框\n- 多网站 Cookie 任务级透传\n- SponsorBlock 广告跳过\n- 5 主题 + 响应式布局\n- 20+ TDD 测试套件\n- sparkline ESM 加载修复 / Speed KPI 换行修复 / pipeThrough TypeError 修复",
+    "changelog": "v0.2.5\n- fix: 多流下载两段子进度条（video cap 50% 防两次 100%）\n- fix: 临时文件名暂存，合并后才覆盖 task.filename\n- fix: 任务详情存储位置包含子目录\n- fix: 格式显示人类可读（formatId → 1080p HEVC + 128k mp4a）\n- fix: 部署目录新增文件权限（install -m 644 防 admin 私有权限）\n\nv0.2.0\n- fix: Destination 封面图过滤（实时解析 + 旧任务兜底）\n- fix: toolbar 清理按钮加 showConfirm 确认框\n- fix: 赞助大图点击不放大（inline onclick this 关键字修复）\n\nv0.1.0\n- 集成 yt-dlp 1872+ 站点支持\n- 自适应 x86_64 + aarch64 双 binary\n- KPI Dashboard + Sparkline 实时趋势\n- SSE 实时进度推送\n- 任务详情弹窗（13 字段）\n- 下载路径浏览对话框\n- 多网站 Cookie 任务级透传\n- SponsorBlock 广告跳过\n- 5 主题 + 响应式布局\n- 20+ TDD 测试套件\n- sparkline ESM 加载修复 / Speed KPI 换行修复 / pipeThrough TypeError 修复",
     "history": {
       "v0.2.0": "Bug 修复: Destination 封面图过滤/toolbar 清理确认框/赞助大图不放大",
-      "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
-    }
+      "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试",
+      "v0.2.5": "多流下载双段进度/格式人类可读/存储位置子目录/部署权限修复"
+    },
+    "checksum": "76d2ce29299ec70e89cbcf31642cc2c7071b9fbf088f71e6684334ab4fbcf6cb"
   }
 }
