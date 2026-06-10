@@ -145,6 +145,23 @@ PORT=43940 node server.js
 
 ## 版本历史
 
+### v0.7.1 (2026-06-10)
+
+- **前端代码审查修复 12 项**
+  - **P0-1** 浏览目录 onclick 单引号 XSS：改用 `data-path` + `this.dataset` 避免函数参数字符串注入
+  - **P1-1** 批量添加传 options：合并 `settings.maxConnections/timeout/retryCount` 全局默认值
+  - **P1-2** `deleteSchedule` 加 `window.confirm()` 二次确认
+  - **P1-3** 内联转义函数统一：3 处 `s.replace(/[&<>"]/g, ...)` 合并为 `escHtml()`
+  - **P1-4** 定时状态文本提取为 `SCHEDULE_STATUS_META` 常量（与 `STATUS_META` 分离）
+  - **P2-1** URL 截断改用 `[...str].slice(0,50).join('')` 防 surrogate pair 切断
+  - **P2-2** `loadTasks` 完成后启动 `setInterval(pollTasks)`，消除首次加载竞态
+  - **P2-3** 空状态 inline style 替换为 `.empty-state` 类
+  - **P2-4** server.js 浏览路径添加系统目录保护（`/proc` `/sys` `/dev` `/etc` `/boot` 拒绝）
+  - **P2-5** 定时列表时间显示统一用 `formatTime()` 辅助函数
+  - **P2-6** 合并 `escapeHtml` + `escHtml` 双函数为单一 `escHtml`（正则实现）
+  - **P3-1** 主题切换 CSS transition 平滑过渡（背景/文字 0.3s）
+- **测试**：语法 + 功能测试通过，git commit 2f6d4ad + 2bfbb54
+
 ### v0.7.0 (2026-06-09)
 
 - **下载路径浏览对话框**（参照 fnytdlp）
@@ -227,6 +244,20 @@ node --test tests/test_new_modules.js
 > 如果这个项目对您有帮助，欢迎赞助支持 ❤️
 
 ## 更新日志
+
+### v0.7.1 (2026-06-10)
+- 修复: 浏览目录 onclick 单引号 XSS (改用 data-path + this.dataset)
+- 修复: 批量添加不传 options (合并 settings 默认值)
+- 修复: deleteSchedule 无确认 (加 window.confirm)
+- 修复: 内联 HTML 转义函数重复 3 次 (统一 escHtml)
+- 修复: 定时状态文本硬编码 (提取 SCHEDULE_STATUS_META)
+- 修复: substring(0,50) 切断 surrogate pair ([...str].slice)
+- 修复: loadTasks/pollTasks 竞态 (then 后启动轮询)
+- 修复: 空状态 inline style (.empty-state 类)
+- 修复: server 浏览无系统目录保护 (/proc /sys /dev /etc /boot 拒绝)
+- 修复: 定时列表时间 toLocaleString (统一 formatTime)
+- 修复: escapeHtml/escHtml 双函数并存 (合并为 escHtml)
+- 优化: 主题切换 CSS transition (背景/文字 0.3s)
 
 ### v0.7.0 (2026-06-09)
 - 新增: 下载路径浏览对话框 (📂 按钮 + 弹窗选择)
