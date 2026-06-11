@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.1.8-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.2.0-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 ## 功能特性
@@ -56,6 +56,13 @@
 2. **手动安装**：下载 `fnlogpush.fpk` → 应用中心 → 手动安装
 
 ## 版本历史
+
+### v1.2.0 (2026-06-11)
+- 🐛 DND 模块级锁终结双重推送 - 5 monitor 各自 DNDHandler 实例竞争根本解决
+- 🔐 P0 安全加固：inline onclick 挂 window / XSS textContent / apiFetch 错误处理 / login_required 校验
+- ♻️ P0 稳定性：Socket reconnect 废弃 / chmod 666 拒绝 / sleep→Event.wait
+- ⚡ P1 优化 5 项：删重复装饰器 / setInterval clear / console.log 静默 / resize 防泄漏 / echarts dispose
+- ✅ 零回归测试全覆盖
 
 ### v1.1.8 (2026-06-08)
 - 🐛 修复 DND 退出轮内新日志合并 + 缓存消息乐观清空，彻底解决勿扰模式双推问题

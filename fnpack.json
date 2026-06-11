@@ -2,7 +2,7 @@
   "fnlogpush": {
     "display_name": "日志哨兵",
     "platform": "all",
-    "version": "1.1.8",
+    "version": "1.2.0",
     "desc": "飞牛NAS日志监控与多渠道推送工具，支持Docker容器监控、WebSocket实时推送健康状态，实时监控系统日志和备份进度，支持企业微信、钉钉、飞书、Bark、PushPlus、魔法推送、MeoW等推送渠道",
     "labels": "工具,效率,监控,日志,Docker",
     "author": "一零一二",
@@ -14,7 +14,7 @@
     "install_type": "存储空间",
     "size": 0.87,
     "download_url": "",
-    "changelog": "v1.1.8\n- 修复 DND 退出轮内新日志合并 + 缓存消息乐观清空，彻底解决勿扰模式双推问题\n- 重打干净 fpk 905KB\n\nv1.1.7\n- 修复勿扰模式汇总消息反复推送（5 monitor 共享 dnd_service 无锁 → DND 结束瞬间 5 monitor 同时 flush 同一份汇总推到企业 IM 多次，统一改走 monitor_core/dnd.py DNDHandler.check_dnd_cache + threading.Lock 锁内原子清空）\n- 删 5 份重复 _check_dnd_flush 实现（-200+ 行死代码）\n- 新增 2 个并发回归测试（5 线程并发只推 1 次 + 失败时缓存保留）\n- 重打干净 fpk 905KB",
+    "changelog": "v1.2.0\n- DND 组级锁代替实例级锁，5 monitor 共享状态竞争根本解决\n- P0 安全加固：inline onclick 挂 window / XSS textContent / apiFetch 错误处理 / login_required 校验\n- P0 稳定性：Socket reconnect 废弃 / chmod 666 拒绝 / sleep->Event.wait\n- P1 优化：删重复装饰器 / setInterval clear / console.log 静默 / resize 防泄漏 / echarts dispose\n- 零回归 测试全覆盖\n\nv1.1.8\n- 修复 DND 退出轮内新日志合并 + 缓存消息乐观清空，彻底解决勿扰模式双推问题\n- 重打干净 fpk 905KB\n\nv1.1.7\n- 修复勿扰模式汇总消息反复推送（5 monitor 共享 dnd_service 无锁 → DND 结束瞬间 5 monitor 同时 flush 同一份汇总推到企业 IM 多次，统一改走 monitor_core/dnd.py DNDHandler.check_dnd_cache + threading.Lock 锁内原子清空）\n- 删 5 份重复 _check_dnd_flush 实现（-200+ 行死代码）\n- 新增 2 个并发回归测试（5 线程并发只推 1 次 + 失败时缓存保留）\n- 重打干净 fpk 905KB",
     "history": {
       "v1.1.8": "彻底解决勿扰模式双推（退出轮内合并 + 缓存乐观清空）",
       "v1.1.5": "主题系统P0/P1共9项全完成+修复最后推送为空bug+干净fpk",
@@ -45,9 +45,10 @@
       "v0.6.7": "Web界面优化",
       "v0.6.6": "WebSocket实时推送",
       "v0.6.0": "新增钉钉、飞书、Bark、PushPlus推送渠道",
-      "v0.5.0": "初始版本"
+      "v0.5.0": "初始版本",
+      "v1.2.0": "DND 双重推送终结 + P0 安全加固（13 项修 9）+ P1 优化 5 项"
     },
-    "checksum": "a7567a475b265b6306128c6fbdf92281"
+    "checksum": "d1ae4e74090349640c02aee2d9e417f9"
   },
   "usbrsync": {
     "display_name": "USB自动同步",
