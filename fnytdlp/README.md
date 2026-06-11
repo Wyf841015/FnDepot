@@ -1,4 +1,4 @@
-# fnytdlp 视频下载器 (v0.2.5)
+# fnytdlp 视频下载器 (v0.2.2)
 
 > 集成 yt-dlp (1872+ 站点) 的 fnOS 视频下载工具，零依赖、纯 Node.js。
 
