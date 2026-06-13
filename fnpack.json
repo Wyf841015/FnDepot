@@ -179,5 +179,26 @@
       "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
     },
     "checksum": "362e95220929a916bdaf3c3bd6e97e48fce2c2b52c28e21abcfb861b28a83e5a"
+  },
+  "fngetcookie": {
+    "display_name": "Cookie 提取器",
+    "platform": "all",
+    "version": "0.1.0",
+    "desc": "通过代理方式自动捕获网站 Cookie 的工具。输入目标网站登录地址，在嵌入式浏览器中完成登录后自动提取 Cookie，支持复制 Netscape/JSON/Header 三种格式。",
+    "labels": "工具,效率,Cookie,代理",
+    "author": "一零一二",
+    "author_url": "https://gitee.com/wyf1015",
+    "distributor": "一零一二",
+    "distributor_url": "https://gitee.com/wyf1015",
+    "bug_report_url": "https://gitee.com/wyf1015/fngetcookie/issues",
+    "isdocker": "false",
+    "install_type": "存储空间",
+    "size": 0.26,
+    "download_url": "",
+    "changelog": "v0.1.0\n- 基础代理功能\n- Cookie 自动捕获（Set-Cookie → 内存 jar）\n- 复制 Netscape / JSON / Header 三种格式\n- 手动 Cookie 粘贴解析\n- 直连模式（抖音等 strict-dynamic CSP 站点）\n- Cookie 导入（JSON / Netscape / Set-Cookie）\n- 深色/浅色主题\n- KPI 仪表盘\n- 响应式布局（桌面 + 移动端）",
+    "history": {
+      "v0.1.0": "初始版本：代理捕获 + 三格式复制 + 直连模式 + 手动导入 + 主题切换"
+    },
+    "checksum": "fa9437688c2aad239e521b5cc23537e753cdb0e7eebd1c50245c5b76dcf55d51"
   }
 }
