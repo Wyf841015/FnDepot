@@ -130,33 +130,11 @@
     }
   },
   "fnm3u8dl": {
-    "display_name": "m3u8DL 专业下载器",
-    "platform": "all",
-    "version": "0.7.1",
-    "desc": "N_m3u8DL-RE 完整 Node.js 重写版，HLS+DASH+MSS 三协议解析、AES-128-CBC 自动解密、多线程并发下载、断点续传、批量添加、直播录制、直播实时合并、实时速度/ETA显示、432个TDD测试覆盖",
-    "labels": "工具,效率,下载,视频",
-    "author": "一零一二",
-    "author_url": "https://gitee.com/wyf1015",
-    "distributor": "一零一二",
-    "distributor_url": "https://gitee.com/wyf1015",
-    "bug_report_url": "https://gitee.com/wyf1015/fnm3u8dl/issues",
-    "isdocker": "false",
-    "install_type": "存储空间",
-    "size": 0.49,
-    "download_url": "",
-    "changelog": "v0.7.1-hotfix1\n- 修复: 定时录制按钮没反应 (6 个 schedule 函数被错误缩进成嵌套函数, JS 不抛错但 window 找不到, 补 4 个 window export)\nv0.7.1\n- 修复: 浏览目录 onclick 单引号 XSS (改用 data-path + this.dataset)\n- 修复: 批量添加不传 options (合并 settings 默认值)\n- 修复: deleteSchedule 无确认 (加 window.confirm)\n- 修复: 内联 HTML 转义函数重复 3 次 (统一 escHtml)\n- 修复: 定时状态文本硬编码 (提取 SCHEDULE_STATUS_META)\n- 修复: substring(0,50) 切断 surrogate pair ([...str].slice)\n- 修复: loadTasks/pollTasks 竞态 (then 后启动轮询)\n- 修复: 空状态 inline style (.empty-state 类)\n- 修复: server 浏览无系统目录保护 (/proc /sys /dev /etc /boot 拒绝)\n- 修复: 定时列表时间 toLocaleString (统一 formatTime)\n- 修复: escapeHtml/escHtml 双函数并存 (合并为 escHtml)\n- 优化: 主题切换 CSS transition (背景/文字 0.3s)\nv0.7.0\n- 新增: 下载路径浏览对话框 (📂 按钮 + 弹窗选择)\n- 新增: 页脚版权信息 (动态版本号 + 自动年份)\n- 修复: 时钟 --:--:-- 不显示 (sparkline.js ESM 模块加载)\n- 修复: 实时速度 KPI 换行 (字号 + nowrap)\n- 修复: r.pipeThrough TypeError 500 (ArrayBuffer API 误用)\n- 优化: 浏览端点不限制白名单 (可任意浏览后选目录)\n- 测试 132/132 通过\n\nv0.6.1\n- 安全加固: SSRF/IPv6绕过/超时控制/路径泄露/流式body限流/日志级别warn\n- 代码质量: batchDelete await/去重/CORS回退/CSS优化/死代码清理\n- 测试 270/270 通过，0 失败\n\nv0.6.0\n- 新增: 定时录制列表编辑和真删除功能\n- 修复: 工具栏 ghost 按钮背景色统一\n- 优化: 设置/搜索按钮移入工具栏，顶部 header 精简对齐",
-    "history": {
-      "v0.7.1-hotfix1": "定时录制按钮没反应 (schedule 段函数移出嵌套作用域 + 补全 window export)",
-      "v0.7.1": "前端代码审查修复12项(P0 XSS + P1 4项 + P2 6项 + P3-1主题transition), 3文件改动",
-      "v0.7.0": "下载路径浏览对话框 + 页脚版权 + 时钟/SpeedKPI修复 + r.pipeThrough TypeError修复, 132测试",
-      "v0.6.1": "安全加固8项(SSRF/IPv6绕过/超时控制/路径泄露/流式限流/日志warn)+代码质量+CORS+死代码清理, 270测试通过",
-      "v0.6.0": "定时录制编辑/真删除 + UI工具栏按钮统一 + ghost背景色修复",
-      "v0.5.1": "formatDuration修复 + P0-3/P1-1/P1-5/P1-6/P1-7/P1-9安全加固，432个测试",
-      "v0.5.0": "直播3维度检测+直播实时合并(livePipeMux)+C# 10/10参数对应+动态直播源+8项UI重构+移动端适配+432测试",
-      "v0.2.0": "修复 HLSExtractor.loadM3u8FromUrl 方法缺失 + DASH/MSS 解析路径修复，165 个测试",
-      "v0.1.1": "初始版本：完整重写 N_m3u8DL-RE，HLS/DASH/MSS 三协议、AES-128 解密、批量添加、直播录制、163个测试"
-    },
-    "checksum": "6408047077c735f0388d3b19e1027e787877759a3172175f7d0eddb82392553f"
+    "version": "0.8.0",
+    "changelog": "v0.8.0\n- 视觉重构: 蓝紫色系主题 + 交互动效 + 任务卡状态色条 + 骨架屏\n- 新增: 网页嗅探 m3u8 + yt-dlp 下载模式 + Cookie 管理模块\n- 安全: Cookie 上传 1MB 限制 + 路径穿越校验\n- 测试: 493+ pass，inline onclick 全量覆盖\nv0.7.1-hotfix1\n- 修复: 定时录制按钮没反应 (6 个 schedule 函数被错误缩进成嵌套函数, JS 不抛错但 window 找不到, 补 4 个 window export)\nv0.7.1\n- 修复: 浏览目录 onclick 单引号 XSS (改用 data-path + this.dataset)\n- 修复: 批量添加不传 options (合并 settings 默认值)\n- 修复: deleteSchedule 无确认 (加 window.confirm)\n- 修复: 内联 HTML 转义函数重复 3 次 (统一 escHtml)\n- 修复: 定时状态文本硬编码 (提取 SCHEDULE_STATUS_META)\n- 修复: substring(0,50) 切断 surrogate pair ([...str].slice, 50)\n- 修复: loadTasks/pollTasks 竞态 (then 后启动轮询)\n- 修复: 空状态 inline style (替换为 .empty-state 类)\n- 修复: server 浏览无系统目录保护 (/proc /sys /dev /etc /boot 拒绝)\n- 修复: 定时列表时间 toLocaleString (统一 formatTime)\n- 修复: escapeHtml/escHtml 双函数并存 (合并为 escHtml, 正则实现)\n- 优化: 主题切换 CSS transition 平滑过渡 (背景/文字 0.3s)",
+    "desc": "N_m3u8DL-RE 完整 Node.js 重写版，HLS+DASH+MSS 三协议解析、AES-128-CBC 自动解密、多线程并发下载、断点续传、批量添加、直播录制、直播实时合并、网页嗅探、yt-dlp 下载、Cookie 管理、493个TDD测试覆盖",
+    "size": 6.34,
+    "checksum": "edd4bfb57c42ac9c31de6b53c23c337e4b1fd93e1e6fb7db2a7be6b2e9fcc128"
   },
   "fnytdlp": {
     "display_name": "视频下载器",
