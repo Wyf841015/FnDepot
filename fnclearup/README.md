@@ -4,10 +4,22 @@
 
 ![清理精灵 FnClearup](../ICON_256.png)
 
-## v0.8.1 更新
+## v0.9.1 更新
 
-- **修复：定时清理全面代码审计** — 审查发现并修复多项 API 字段不匹配、路径提取错误、HTML 属性注入问题，定时清理全功能可用
-- **新增：定时清理执行记录文件清单** — 每次清理记录具体文件路径，🧾 按钮弹窗查看
+- **修复：P0 文件名截断损坏** — trash 重命名 `slice(0, ext.length)` → `slice(0, -ext.length)`，修复 `data.bin.gz` → `dat_1.gz`
+- **修复：execCmd 超时不杀进程** — SIGTERM → 5s 宽限期 → SIGKILL 兜底
+- **修复：bigfiles 测试假阳性** — 独立测试 `TRM_FNCLEARUP_SIBLING_THRESHOLD=5` + 7 entry fixture，断言 `skipped_subtree===true`
+- **测试覆盖：85**（含 standalone sibling threshold 测试）
+
+## v0.9.0 更新
+
+- **🐳 新增：Docker 清理 Tab** — 一键清理已停止容器 + Docker Build Cache，dry_run 默认强制预览，容器 ID 严格 regex 防注入
+- **🐘 新增：大文件查找器 Tab** — 跨 `/vol*` 卷扫描 ≥ 100 MB 文件 Top 100，5min hard timeout + setImmediate yield
+- **🧹 修复：sysclean HOME 硬编码** — `getUserHomes()` 自动发现所有 `/vol<N>/<UID>` 目录，USER_CACHE_TEMPLATES × N 用户展开
+- **新增：bigfiles 三层确认删除** — UI checkbox → modal → `confirmed:true` 强制
+- **moveToTrash 统一 helper** — 抽入 trash.js，app/bigfiles/empty_dir 共享，`unlinkSync` 替代 `execCmd rm`
+- **SIBLING_THRESHOLD 环境变量可配置** — `TRM_FNCLEARUP_SIBLING_THRESHOLD` 测试和生产可调
+- **测试覆盖：84**（+18 新增，含恶意 ID 注入防护测试）
 
 ## v0.8.0 更新
 
