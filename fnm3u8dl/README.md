@@ -145,6 +145,13 @@ PORT=43940 node server.js
 
 ## 版本历史
 
+### v0.8.1 (2026-07-04)
+
+- **修复: 非原子写入** — saveTask restart / cookie meta 改为 tmp+renameSync 原子模式，崩溃不丢数据
+- **修复: EncryptInfo 共享引用** — DASH 解析所有分片独立 clone，避免 KID 污染
+- **修复: Pipe hang** — merge-util 加 dest error/close 检测，文件流提前关闭不再挂死
+- **修复: 广告过滤双 pop** — hls-extractor YK 广告过滤 `else-if` 防重复弹出正常分片
+
 ### v0.8.0 (2026-06-16)
 
 - **视觉重构: 蓝紫色系主题** — 色板切换为蓝紫色系，header 蓝-青-靛渐变，交互动效 + 任务卡状态色条 + 骨架屏
@@ -261,6 +268,13 @@ node --test tests/test_new_modules.js
 > 如果这个项目对您有帮助，欢迎赞助支持 ❤️
 >
 ## 更新日志
+
+### v0.8.1 (2026-07-04)
+
+- **修复: 非原子写入** — saveTask restart / cookie meta 改为 tmp+renameSync 原子模式，崩溃不丢数据
+- **修复: EncryptInfo 共享引用** — DASH 解析所有分片独立 clone，避免 KID 污染
+- **修复: Pipe hang** — merge-util 加 dest error/close 检测，文件流提前关闭不再挂死
+- **修复: 广告过滤双 pop** — hls-extractor YK 广告过滤 `else-if` 防重复弹出正常分片
 
 ### v0.8.0 (2026-06-16)
 - **视觉重构**: 蓝紫色系主题 + 交互动效 + 任务卡状态色条 + 骨架屏
