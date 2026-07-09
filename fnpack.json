@@ -160,7 +160,7 @@
   "fnytdlp": {
     "display_name": "视频下载器",
     "platform": "all",
-    "version": "0.2.4",
+    "version": "0.3.0",
     "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过",
     "labels": "工具,效率,下载,视频",
     "author": "一零一二",
@@ -172,15 +172,16 @@
     "install_type": "存储空间",
     "size": 6.0,
     "download_url": "",
-    "changelog": "v0.2.4\n- 性能优化: SSE 增量更新(HTTP请求~80%减少) / 后备轮询 5s→30s\n- serveStatic 流式发送 >512KB 文件用 createReadStream\n- 删除重复 yt-dlp 版本检查 / 内联 CSS 迁移到组件文件\n\nv0.2.3\n- 更新 yt-dlp 至 v2026.07.04\n- 新增 59 个纯函数测试，104 用例全部通过\n- 服务端安全/API逻辑/前端纯函数覆盖\n\nv0.2.2\n- 代码审计安全加固 9 项\n- SSRF 防护 + 路径白名单 + Cookie 加密存储\n\nv0.2.5\n- fix: 多流下载两段子进度条 / 临时文件名暂存 / 格式显示人类可读\n\nv0.2.0\n- fix: Destination 封面图过滤 / toolbar 清理确认框 / 赞助大图点击\n\nv0.1.0\n- 集成 yt-dlp + 自适应架构 + KPI/SSE/详情弹窗/Cookie 多文件/5 主题 + 测试",
+    "changelog": "v0.3.0\n- UI 品牌色重绘：暖橙→亮蓝+青绿+暖金科技冷色系\n- 搜索栏与筛选标签合并为一行\n- 任务卡片重排：状态徽章移入标题行\n- 添加任务弹窗改进：URL 卡片化+实时验证+格式 pills\n- 空状态增强：光晕动效+快捷键提示\n- prefers-reduced-motion 动效尊重\n- 按钮加载态防双击 / 移动端 touch target ≥ 44px\n- 语义化标题层级 / 搜索无结果提示 / 错误恢复\n- 主题覆盖全面修复（12 处老配色/缺失类）\n\nv0.2.4\n- 性能优化: SSE 增量更新(HTTP请求~80%减少) / 后备轮询 5s→30s\n- serveStatic 流式发送 >512KB 文件用 createReadStream\n- 删除重复 yt-dlp 版本检查 / 内联 CSS 迁移到组件文件\n\nv0.2.3\n- 更新 yt-dlp 至 v2026.07.04\n- 新增 59 个纯函数测试，104 用例全部通过\n- 服务端安全/API逻辑/前端纯函数覆盖\n\nv0.2.2\n- 代码审计安全加固 9 项\n- SSRF 防护 + 路径白名单 + Cookie 加密存储\n\nv0.2.5\n- fix: 多流下载两段子进度条 / 临时文件名暂存 / 格式显示人类可读\n\nv0.2.0\n- fix: Destination 封面图过滤 / toolbar 清理确认框 / 赞助大图点击\n\nv0.1.0\n- 集成 yt-dlp + 自适应架构 + KPI/SSE/详情弹窗/Cookie 多文件/5 主题 + 测试",
     "history": {
+      "v0.3.0": "UI 全面重构：科技冷色系/搜索筛选合并/任务卡片重排/添加弹窗改进/空状态增强/无障碍/主题修复",
+      "v0.2.4": "性能优化: SSE 增量更新/流式静态/去重检查/CSS 迁移",
       "v0.2.3": "新增 59 个纯函数测试(104 用例) + 服务端安全/API逻辑/前端纯函数覆盖",
       "v0.2.2": "代码审计安全加固 9 项 + SSRF/路径白名单/Cookie 加密",
       "v0.2.0": "Bug 修复: Destination 封面图过滤/toolbar 清理确认框/赞助大图不放大",
-      "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试",
-      "v0.2.4": "性能优化: SSE 增量更新/流式静态/去重检查/CSS 迁移"
+      "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
     },
-    "checksum": "521bf3bd2e1621b180919dd0ccb16fa716e479a6bac5482fdc85a7f3746326f5"
+    "checksum": "b2a9a56f65cf22e4d28e6a23e14ac0a02e530460ed4fdd58edb4fcf24069a21a"
   },
   "fngetcookie": {
     "display_name": "Cookie 提取器",
