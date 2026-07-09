@@ -181,7 +181,7 @@
       "v0.2.0": "Bug 修复: Destination 封面图过滤/toolbar 清理确认框/赞助大图不放大",
       "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
     },
-    "checksum": "b2a9a56f65cf22e4d28e6a23e14ac0a02e530460ed4fdd58edb4fcf24069a21a"
+    "checksum": "1197d5e06de9b8853ccbb838c158f72c4631a639e8c6c345faf754669a281040"
   },
   "fngetcookie": {
     "display_name": "Cookie 提取器",
