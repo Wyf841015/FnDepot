@@ -160,9 +160,9 @@
   "fnytdlp": {
     "display_name": "视频下载器",
     "platform": "all",
-    "version": "0.3.0",
-    "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过",
-    "labels": "工具,效率,下载,视频",
+    "version": "0.3.1",
+    "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过 + 频道订阅自动检查新内容（增量下载 + 表格化 UI）",
+    "labels": "工具,效率,下载,视频,订阅",
     "author": "一零一二",
     "author_url": "https://gitee.com/wyf1015",
     "distributor": "一零一二",
@@ -170,10 +170,11 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnytdlp/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": 6.0,
+    "size": 6.1,
     "download_url": "",
-    "changelog": "v0.3.0\n- UI 品牌色重绘：暖橙→亮蓝+青绿+暖金科技冷色系\n- 搜索栏与筛选标签合并为一行\n- 任务卡片重排：状态徽章移入标题行\n- 添加任务弹窗改进：URL 卡片化+实时验证+格式 pills\n- 空状态增强：光晕动效+快捷键提示\n- prefers-reduced-motion 动效尊重\n- 按钮加载态防双击 / 移动端 touch target ≥ 44px\n- 语义化标题层级 / 搜索无结果提示 / 错误恢复\n- 主题覆盖全面修复（12 处老配色/缺失类）\n\nv0.2.4\n- 性能优化: SSE 增量更新(HTTP请求~80%减少) / 后备轮询 5s→30s\n- serveStatic 流式发送 >512KB 文件用 createReadStream\n- 删除重复 yt-dlp 版本检查 / 内联 CSS 迁移到组件文件\n\nv0.2.3\n- 更新 yt-dlp 至 v2026.07.04\n- 新增 59 个纯函数测试，104 用例全部通过\n- 服务端安全/API逻辑/前端纯函数覆盖\n\nv0.2.2\n- 代码审计安全加固 9 项\n- SSRF 防护 + 路径白名单 + Cookie 加密存储\n\nv0.2.5\n- fix: 多流下载两段子进度条 / 临时文件名暂存 / 格式显示人类可读\n\nv0.2.0\n- fix: Destination 封面图过滤 / toolbar 清理确认框 / 赞助大图点击\n\nv0.1.0\n- 集成 yt-dlp + 自适应架构 + KPI/SSE/详情弹窗/Cookie 多文件/5 主题 + 测试",
+    "changelog": "v0.3.1\n- 订阅 UI 表格化（8 列：开关/名称/URL/Cookie/间隔/格式/最新ID/操作）\n- iOS 风格开关 + 每行独立立即检查按钮\n- 增量逻辑修复（5 个 bug）：lastId 卡死 / 多页列表重下 / 顺序假设 / 重复添加 / URL 兜底重下\n- 单订阅检查支持（绕过 interval 节流）\n- POST /api/subscriptions 保留原 enabled/lastId/addedAt（修复 toggle 失效）\n- getLatestIds timeout 30s→60s, --playlist-end 500 限大频道\n\nv0.3.0\n- UI 品牌色重绘：暖橙→亮蓝+青绿+暖金科技冷色系\n- 搜索栏与筛选标签合并为一行\n- 任务卡片重排：状态徽章移入标题行\n- 添加任务弹窗改进：URL 卡片化+实时验证+格式 pills\n- 空状态增强：光晕动效+快捷键提示\n- prefers-reduced-motion 动效尊重\n- 按钮加载态防双击 / 移动端 touch target ≥ 44px\n- 语义化标题层级 / 搜索无结果提示 / 错误恢复\n- 主题覆盖全面修复（12 处老配色/缺失类）\n\nv0.2.4\n- 性能优化: SSE 增量更新(HTTP请求~80%减少) / 后备轮询 5s→30s\n- serveStatic 流式发送 >512KB 文件用 createReadStream\n- 删除重复 yt-dlp 版本检查 / 内联 CSS 迁移到组件文件\n\nv0.2.3\n- 更新 yt-dlp 至 v2026.07.04\n- 新增 59 个纯函数测试，104 用例全部通过\n- 服务端安全/API逻辑/前端纯函数覆盖\n\nv0.2.2\n- 代码审计安全加固 9 项\n- SSRF 防护 + 路径白名单 + Cookie 加密存储\n\nv0.2.5\n- fix: 多流下载两段子进度条 / 临时文件名暂存 / 格式显示人类可读\n\nv0.2.0\n- fix: Destination 封面图过滤 / toolbar 清理确认框 / 赞助大图点击\n\nv0.1.0\n- 集成 yt-dlp + 自适应架构 + KPI/SSE/详情弹窗/Cookie 多文件/5 主题 + 测试",
     "history": {
+      "v0.3.1": "订阅功能增强：表格化 UI + 增量逻辑修复 5 bug + 单订阅独立检查 + 后端 enabled 字段保留",
       "v0.3.0": "UI 全面重构：科技冷色系/搜索筛选合并/任务卡片重排/添加弹窗改进/空状态增强/无障碍/主题修复",
       "v0.2.4": "性能优化: SSE 增量更新/流式静态/去重检查/CSS 迁移",
       "v0.2.3": "新增 59 个纯函数测试(104 用例) + 服务端安全/API逻辑/前端纯函数覆盖",
@@ -181,7 +182,7 @@
       "v0.2.0": "Bug 修复: Destination 封面图过滤/toolbar 清理确认框/赞助大图不放大",
       "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
     },
-    "checksum": "1197d5e06de9b8853ccbb838c158f72c4631a639e8c6c345faf754669a281040"
+    "checksum": "b742ba884dec37d2460cc4f1cbfedf8cb38d3ec9d05e844d4b59af35a317c67f"
   },
   "fngetcookie": {
     "display_name": "Cookie 提取器",
