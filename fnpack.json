@@ -160,7 +160,7 @@
   "fnytdlp": {
     "display_name": "视频下载器",
     "platform": "all",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过 + 频道订阅自动检查新内容（增量下载 + 表格化 UI）",
     "labels": "工具,效率,下载,视频,订阅",
     "author": "一零一二",
@@ -170,10 +170,11 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnytdlp/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": 6.3,
+    "size": 6.1,
     "download_url": "",
-    "changelog": "v0.6.0\nAI 视频总结 + 缩略图代理 + 字幕提取 + 速度曲线 (借鉴 uvd 项目)\n\n- 🧠 AI 视频总结 (零依赖, Node 22 fetch 调 OpenAI 兼容 API)\n  支持 4 家提供商: OpenAI / 智谱 GLM / DeepSeek / 自定义\n  yt-dlp 自动提取字幕 (--skip-download --write-subs), fallback 到 description\n  4-Tab 展示: 智能总结 / 章节大纲 / 核心要点 / 思维导图\n  思维导图零依赖渲染 (Markdown 嵌套列表 → 树状 HTML), 无需 markmap CDN\n  复制 Markdown 全文到剪贴板\n  配置: 设置 → AI tab (环境变量 AI_API_KEY 覆盖)\n- 缩略图代理 (GET /api/proxy-thumbnail?url=...) — 解决防盗链/跨域\n- 字幕提取 (GET /api/tasks/:id/subtitle) — VTT/SRT → 纯文本\n- 单任务速度曲线 — canvas 折线, SSE 实时刷新\n- URL 预处理 — 抖音 modal_id/note URL 自动转标准 video 格式\n- 移除系统路径拦截 (isSystemPath) — 用户可设置任意下载路径\n- 移除 /opt 系统目录拦截\n- 新增 5 API 端点, 测试 273/273 全过\n\nv0.5.0\n8 项新功能 (yt-dlp 高级参数 + 体验增强)\n\n- 视频裁剪 (--download-sections) + 关键帧强制对齐\n- aria2c 集成 (自动检测 + 16 连接并发)\n- 转码 (--recode-video 指定容器)\n- 限速模板 (按时段自动切换, JSON 配置)\n- 主题跟随系统 (prefers-color-scheme)\n- 导入 yt-dlp 配置文件 (30 参数白名单)\n- 任务标签 (下载中/已完成/失败) + 筛选\n- 下载存档防重 (--download-archive)\n- 文件名模板预设 (5 种常用模板一键切换)\n- 内置 221 测试验证\n\nv0.4.0\n磁盘配额 + 下载历史统计 + 文件名模板预览 + 搜索增强\n\nv0.3.1\n订阅 UI 表格化 + 单订阅独立检查 + 增量 5 bug 修复",
+    "changelog": "v0.6.1\nYouTube 搜索 + 下载历史 + 时间范围 + 字幕语言 + 输出模板增强 (借鉴 ytDownloader)\n\n- 🔍 YouTube 搜索: /api/search 调 ytsearch30, 前端搜索弹窗结果卡片\n- 📜 下载历史持久化: history.json 独立存储, 完成/删除时自动存档\n- ⏱ 时间范围裁剪: 添加任务时可选起止时间, 任务级优先\n- 📝 字幕语言选择: 任务级 subLangs 覆盖配置级\n- 📁 输出模板任务级覆盖: opts.outputTemplate 优先于 config\n- 播放列表自动检测: 粘贴 URL 自动检测, 勾选集数下载\n- 新增 3 API 端点: /api/search /api/history (GET/DELETE)\n- 修复: addToHistory id 去重\n\nv0.6.0\nAI 视频总结 + 缩略图代理 + 字幕提取 + 速度曲线 (借鉴 uvd 项目)\n\n- 🧠 AI 视频总结 (零依赖, Node 22 fetch 调 OpenAI 兼容 API)\n  支持 4 家提供商: OpenAI / 智谱 GLM / DeepSeek / 自定义\n  yt-dlp 自动提取字幕 (--skip-download --write-subs), fallback 到 description\n  4-Tab 展示: 智能总结 / 章节大纲 / 核心要点 / 思维导图\n  思维导图零依赖渲染 (Markdown 嵌套列表 → 树状 HTML), 无需 markmap CDN\n  复制 Markdown 全文到剪贴板\n  配置: 设置 → AI tab (环境变量 AI_API_KEY 覆盖)\n- 缩略图代理 (GET /api/proxy-thumbnail?url=...) — 解决防盗链/跨域\n- 字幕提取 (GET /api/tasks/:id/subtitle) — VTT/SRT → 纯文本\n- 单任务速度曲线 — canvas 折线, SSE 实时刷新\n- URL 预处理 — 抖音 modal_id/note URL 自动转标准 video 格式\n- 移除系统路径拦截 (isSystemPath) — 用户可设置任意下载路径\n- 移除 /opt 系统目录拦截\n- 新增 5 API 端点, 测试 273/273 全过\n\nv0.5.0\n8 项新功能 (yt-dlp 高级参数 + 体验增强)\n\n- 视频裁剪 (--download-sections) + 关键帧强制对齐\n- aria2c 集成 (自动检测 + 16 连接并发)\n- 转码 (--recode-video 指定容器)\n- 限速模板 (按时段自动切换, JSON 配置)\n- 主题跟随系统 (prefers-color-scheme)\n- 导入 yt-dlp 配置文件 (30 参数白名单)\n- 任务标签 (下载中/已完成/失败) + 筛选\n- 下载存档防重 (--download-archive)\n- 文件名模板预设 (5 种常用模板一键切换)\n- 内置 221 测试验证\n\nv0.4.0\n磁盘配额 + 下载历史统计 + 文件名模板预览 + 搜索增强\n\nv0.3.1\n订阅 UI 表格化 + 单订阅独立检查 + 增量 5 bug 修复",
     "history": {
+      "v0.6.1": "YouTube 搜索 + 下载历史 + 时间范围 + 字幕语言 + 输出模板增强 + 播放列表检测",
       "v0.6.0": "AI 视频总结(4提供商/4-Tab/思维导图) + 缩略图代理 + 字幕提取 + 速度曲线 + URL 预处理 + 移除路径拦截",
       "v0.3.1": "订阅功能增强：表格化 UI + 增量逻辑修复 5 bug + 单订阅独立检查 + 后端 enabled 字段保留",
       "v0.3.0": "UI 全面重构：科技冷色系/搜索筛选合并/任务卡片重排/添加弹窗改进/空状态增强/无障碍/主题修复",
@@ -183,12 +184,12 @@
       "v0.2.0": "Bug 修复: Destination 封面图过滤/toolbar 清理确认框/赞助大图不放大",
       "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
     },
-    "checksum": "f25d5bde51b35578071a38d44120f1d2a8f6368197dc11cfca3fb7dc66c20282"
+    "checksum": "3d64a9cb92cd1e0dbb6960a782aba9939ecc55e79e751885283b987761076926"
   },
   "fngetcookie": {
     "display_name": "Cookie 提取器",
     "platform": "all",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "desc": "通过代理方式自动捕获网站 Cookie 的工具。输入目标网站登录地址，在嵌入式浏览器中完成登录后自动提取 Cookie，支持复制 Netscape/JSON/Header 三种格式。",
     "labels": "工具,效率,Cookie,代理",
     "author": "一零一二",
@@ -200,10 +201,10 @@
     "install_type": "存储空间",
     "size": 0.26,
     "download_url": "",
-    "changelog": "v0.1.0\n- 基础代理功能\n- Cookie 自动捕获（Set-Cookie → 内存 jar）\n- 复制 Netscape / JSON / Header 三种格式\n- 手动 Cookie 粘贴解析\n- 直连模式（抖音等 strict-dynamic CSP 站点）\n- Cookie 导入（JSON / Netscape / Set-Cookie）\n- 深色/浅色主题\n- KPI 仪表盘\n- 响应式布局（桌面 + 移动端）",
+    "changelog": "v0.2.0\nCookie 提取器全面增强\n\n- 站点预设：10 个主流网站一键配置（抖音/B站/微博/YouTube/X/知乎/斗鱼/虎牙/快手/爱奇艺）\n- 搜索过滤：按域名/名称/值实时过滤 Cookie\n- 批量操作：多选/全选/批量删除\n- 格式增强：新增 cURL / Python requests / JavaScript fetch 三种格式\n- 文件导入导出：支持上传 .txt/.json 文件，下载 Netscape 格式\n- 过期标记：已过期/即将过期彩色提示\n- 移动端适配：全面响应式布局，URL 输入栏垂直堆叠\n- 预设优化：改用首页 URL 替代 login 页，directMode 站点自动切换新窗口模式\n\nv0.1.0\n初始版本：代理捕获 + 三格式复制 + 直连模式 + 手动导入 + 主题切换",
     "history": {
       "v0.1.0": "初始版本：代理捕获 + 三格式复制 + 直连模式 + 手动导入 + 主题切换"
     },
-    "checksum": "fa9437688c2aad239e521b5cc23537e753cdb0e7eebd1c50245c5b76dcf55d51"
+    "checksum": "1ea85a7750f4e0832d836d2932d26a8545495034f53a633bad2b80eeb1d16020"
   }
 }
