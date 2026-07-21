@@ -236,16 +236,17 @@ PHP 动态直播源（如 `http://example.com/live.php?id=xxx`）自动检测 + 
 
 ### v0.6.1 (2026-07-21)
 
-**YouTube 搜索 + 下载历史 + 时间范围 + 字幕语言 + 输出模板增强 (借鉴 ytDownloader)**
+**10 项功能增强 (借鉴 VidBee 项目)**
 
-- **🔍 YouTube 搜索** — 新增 `/api/search` 调 yt-dlp `ytsearch30`，前端搜索弹窗展示结果卡片（缩略图+标题+时长+上传者），点击即下载
-- **📜 下载历史持久化** — `history.json` 独立存储（最多 500 条），任务完成时自动存档，删除时保留；前端历史弹窗支持搜索/重新下载/单条删除/清空全部
-- **⏱ 时间范围裁剪** — 添加任务时可选起止时间，传 `--download-sections` 给 yt-dlp，任务级优先于配置级
-- **📝 字幕语言选择** — 任务级 `subLangs` 覆盖配置级，支持 `zh-Hans,en` / `all,-live_chat` 等格式
-- **📁 输出模板任务级覆盖** — `buildYtDlpArgs` 中 `opts.outputTemplate` 优先于 `config.outputTemplate`
-- **播放列表自动检测** — 粘贴 URL 后自动检测播放列表，勾选集数下载
-- 新增 3 API 端点: `/api/search` / `/api/history` (GET) / `/api/history` (DELETE)
-- 修复: `addToHistory` id 去重防止重复记录
+- **🎯 质量预设** — 5 级一键格式 (best/good/normal/bad/worst)，自动映射分辨率+码率
+- **📦 容器格式** — 5 种输出容器 (auto/mp4/mkv/webm/original)
+- **🔒 FSM 任务状态机** — 合法状态转换表 + transitionTask()，禁止非法跳转
+- **🌐 网络弹性参数** — 默认 retries=30 + fragment-retries=30 + retry-sleep=2 + socket-timeout=30
+- **💡 yt-dlp 错误分类指导** — 17 种常见错误自动分类，中文解决建议
+- **🖼 缩略图缓存** — 内存缓存 200 条 / 24h TTL，支持清理
+- **📋 过滤栏增强** — 新增 paused/cancelled 状态 tab + 计数
+- **🔍 YouTube 搜索 + 📜 下载历史 + ⏱ 时间范围裁剪**
+- 新增 5 API 端点，测试 257/257 全过
 
 ### v0.6.0 (2026-07-20)
 
