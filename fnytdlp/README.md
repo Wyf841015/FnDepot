@@ -234,19 +234,38 @@ PHP 动态直播源（如 `http://example.com/live.php?id=xxx`）自动检测 + 
 
 ## 版本历史
 
+### v0.6.2 (2026-07-27)
+
+**UI/UX 全面优化 (依赖 ui-ux-pro-max 审计)**
+
+- **清理死代码** — 删除废弃的 `playerModal` (20 行死 HTML)
+- **播放器样式归一化** — `playerDialog` inline 样式迁移到 `components.css` CSS 类
+- **HTML 修复** — 详情弹窗 `info-value` div 未闭合嵌套断裂
+- **按钮绑定修复** — 关闭/删除按钮改用 DOM 0 onclick 传正确 `id` 变量
+- **z-index 层级系统** — `tokens.css` 新增 `--z-sticky/--z-modal/--z-dialog/--z-toast/--z-max`
+- **按钮 loading 状态** — `setLoading()` 辅助函数 + `.btn-loading` 防重复提交
+- **任务列表骨架屏** — `.skeleton` / `.skeleton-card` CSS 动画
+- **表单标签** — 搜索/设置输入框补 `<label>` (`.sr-only` 屏幕阅读器)
+- **aria-label 补充** — 任务列表播放/重试/停止/删除按钮
+- **基础字号** — 14px→16px 提升可读性
+- 测试 279/279 全过
+
 ### v0.6.1 (2026-07-21)
 
 **10 项功能增强 (借鉴 VidBee 项目)**
 
-- **🎯 质量预设** — 5 级一键格式 (best/good/normal/bad/worst)，自动映射分辨率+码率
-- **📦 容器格式** — 5 种输出容器 (auto/mp4/mkv/webm/original)
-- **🔒 FSM 任务状态机** — 合法状态转换表 + transitionTask()，禁止非法跳转
-- **🌐 网络弹性参数** — 默认 retries=30 + fragment-retries=30 + retry-sleep=2 + socket-timeout=30
-- **💡 yt-dlp 错误分类指导** — 17 种常见错误自动分类，中文解决建议
-- **🖼 缩略图缓存** — 内存缓存 200 条 / 24h TTL，支持清理
-- **📋 过滤栏增强** — 新增 paused/cancelled 状态 tab + 计数
-- **🔍 YouTube 搜索 + 📜 下载历史 + ⏱ 时间范围裁剪**
-- 新增 5 API 端点，测试 257/257 全过
+- **🎯 质量预设** — 5 级一键格式 (best/good/normal/bad/worst)，自动映射分辨率+码率，替代手动 format pill
+- **📦 容器格式** — 5 种输出容器 (auto/mp4/mkv/webm/original)，一键切换 `--merge-output-format`
+- **🔒 FSM 任务状态机** — 定义合法状态转换表 + `transitionTask()`，禁止非法状态跳转
+- **🌐 网络弹性参数** — 默认 `retries=30` + `fragment-retries=30` + `retry-sleep=2` + `socket-timeout=30`，弱网更稳定
+- **💡 yt-dlp 错误分类指导** — 17 种常见错误自动分类 (auth/warn/error/info)，中文解决建议，`/api/error-guidance` 端点
+- **🖼 缩略图缓存** — 内存缓存 200 条 / 24h TTL，避免重复请求，支持 `POST /api/thumbnail-cache/clear`
+- **📋 过滤栏增强** — 新增 `⏸ 暂停` / `⏹ 取消` 状态 tab + 计数
+- **🔍 YouTube 搜索** — 新增 `/api/search` 调 yt-dlp `ytsearch30`，前端搜索弹窗结果卡片
+- **📜 下载历史持久化** — `history.json` 独立存储，完成/删除时自动存档，前端历史弹窗
+- **⏱ 时间范围裁剪 + 字幕语言 + 输出模板任务级覆盖 + 播放列表自动检测**
+- 新增 5 API 端点: `/api/search` / `/api/history` (GET/DELETE) / `/api/error-guidance` / `/api/thumbnail-cache/clear`
+- 测试 257/257 全过 (+6 新测试覆盖新功能)
 
 ### v0.6.0 (2026-07-20)
 

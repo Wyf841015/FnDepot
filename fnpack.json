@@ -160,7 +160,7 @@
   "fnytdlp": {
     "display_name": "视频下载器",
     "platform": "all",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过 + 频道订阅自动检查新内容（增量下载 + 表格化 UI）",
     "labels": "工具,效率,下载,视频,订阅",
     "author": "一零一二",
