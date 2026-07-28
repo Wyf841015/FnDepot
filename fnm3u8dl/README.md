@@ -1,175 +1,66 @@
-# m3u8DL 专业视频下载器
+# fnm3u8dl - 专业视频下载工具
 
-> N_m3u8DL-RE 的 Node.js 原生重写版 —— 功能完全对照 C# 参考项目，零外部依赖。
-> 支持多线程、多任务、断点续传的 m3u8 / MPD / ISM 视频下载，AES-128 解密、批量添加、直播录制。
+fnOS 系统下的 m3u8/HLS/DASH/MSS 视频下载器，零依赖、纯 Node.js 实现。
 
-![m3u8DL 专业视频下载器](ICON_256.PNG)
+## 特性
 
-## 功能特性
-
-- **多协议支持** — m3u8 (HLS)、MPD (DASH)、ISM (MSS) 三大流媒体协议全兼容
-- **多线程下载** — 支持多线程并发下载，智能分片加速下载体验
-- **断点续传** — 任务失败后可继续下载，不重复下载已完成分片
-- **AES 解密** — 自动识别并解密 AES-128-CBC 加密的流媒体分片
-- **批量添加** — 支持粘贴多个链接（每行一个），一键批量创建下载任务
-- **直播录制** — 支持直播流录制，可设置刷新间隔持续录制
-- **状态筛选** — 按状态筛选任务：全部 / 进行中 / 已完成 / 失败
-- **批量操作** — 全暂停、全开始、全停止、清理已完成、批量删除（可选删除文件）
-- **速度显示** — 实时显示下载速度、ETA、已用时间、平均速度
-- **加密标注** — 加密流自动标注 🔒 徽章，详情面板显示加密方式
-- **输出格式** — 支持 .ts 原生 / 自动合并 / 不合并保留分片
-- **错误重试** — 可配置重试次数、超时、并发数
-- **代理支持** — 支持 HTTP 代理、自定义 Referer、User-Agent、请求头
-- **速度限制** — 支持全局下载速度限制
-- **首次引导** — 首次运行时自动弹出设置引导，提示配置下载目录
-- **明暗主题** — 支持浅色/深色双主题切换，设置持久化到服务端
-- **赞助支持** — 内置支付宝/微信赞助二维码，支持全屏查看
-- **响应式布局** — 适配桌面端与移动端，移动端工具栏自动图标化
-
-## 与 FnM3u8 对比
-
-| 特性 | FnM3u8 (旧版) | m3u8DL (新版) |
-|------|--------------|--------------|
-| 底层 | Flask + 少量模块 | **Node.js ESM 零依赖** |
-| 协议解析 | 仅 HLS | **HLS + DASH + MSS** |
-| 解密 | 基础 AES | **AES-128-CBC + ChaCha20** |
-| 直播录制 | 基础 | **可配刷新间隔** |
-| 速度/ETA 显示 | ❌ | ✅ |
-| 批量添加 | ❌ | ✅ |
-| 拖选批量操作 | ❌ | ✅ |
-| 删除确认弹窗 | ❌ | ✅ |
-| 首次设置引导 | ❌ | ✅ |
-| 服务端主题持久化 | ❌ | ✅ |
-| 状态栏汇总 | ❌ | ✅ |
-| 搜索任务 | ❌ | ✅ |
-| 测试覆盖 | 无 | **165 个 TDD 测试** |
-
-## 技术架构
-
-```
-m3u8DL 专业视频下载器
-├── app/ui/                    # 前端界面（HTML/CSS/JS）+ 后端服务
-│   ├── server.js             # HTTP + UNIX Socket 双服务器
-│   ├── index.html            # 主页面（响应式）
-│   ├── main.js               # 前端逻辑（任务管理/主题/搜索/赞助）
-│   │
-│   ├── parser/               # 流媒体解析器
-│   │   ├── hls-extractor.js  # HLS m3u8 解析（主/媒体播放列表）
-│   │   ├── dash-extractor.js # DASH MPD 解析（SegmentTemplate/Timeline/List/Base）
-│   │   ├── mss-extractor.js  # MSS ISM 解析
-│   │   └── util/             # 工具方法（ParserUtil）
-│   │
-│   ├── processor/            # 内容处理器流水线
-│   │   ├── hls-content-processor.js   # HLS 修复（KEY/INF 顺序、换行符）
-│   │   ├── dash-content-processor.js  # DASH 修复（cenc namespace）
-│   │   ├── default-url-processor.js   # URL 修复（双编码、协议相对）
-│   │   └── key-processor.js           # 密钥处理
-│   │
-│   ├── downloader/           # 下载引擎
-│   │   ├── simple-downloader.js       # 单段下载器
-│   │   └── download-result.js         # 下载结果
-│   │
-│   ├── download-manager/     # 下载管理器
-│   │   └── simple-download-manager.js # 并发管理/限速/取消
-│   │
-│   ├── merge/                # 合并工具
-│   │   └── merge-util.js     # 批量合并 + 大文件分批
-│   │
-│   ├── crypto/               # 加解密
-│   │   ├── aes-util.js       # AES-128-CBC 加解密
-│   │   └── cha-cha20-util.js # ChaCha20 加解密
-│   │
-│   ├── mp4/                  # MP4 解析
-│   │   ├── binary-reader.js  # 二进制读取器
-│   │   ├── mp4-parser.js     # MP4 Box 解析
-│   │   └── mp4-init-util.js  # fMP4 init segment 解析
-│   │
-│   ├── entities/             # 数据模型
-│   │   ├── playlist.js, media-segment.js, media-part.js
-│   │   ├── stream-spec.js, encrypt-info.js
-│   │   └── subtitle/
-│   │
-│   └── util/                 # 工具函数
-│       ├── global-util.js    # 格式化/时间工具
-│       ├── http-util.js      # HTTP 编码检测
-│       └── binary-check.js   # 二进制内容检测
-│
-├── tests/                    # TDD 测试套件（165 个）
-│   ├── test_comprehensive.js # 42 个综合测试 + API 集成测试
-│   ├── test_modules.js       # 31 个模块单元测试
-│   └── test_new_modules.js   # 91 个新模块测试
-│
-├── cmd/                      # FnOS 生命周期脚本
-├── config/                   # 权限配置
-└── wizard/                   # 安装向导
-```
-
-- **后端**：Node.js v24 ESM（零外部 npm 依赖，仅用内置 `node:http`/`node:fs`/`node:crypto`）
-- **前端**：原生 HTML/CSS/JS，无框架依赖
-- **数据存储**：JSON 文件存储（config.json + 任务文件）
-- **通信方式**：UNIX Socket（fnOS Gateway）+ HTTP 双通道
-- **fnOS Gateway**：自动挂载 `/app/fnm3u8dl` 前缀
-
-## API 端点
-
-| 端点 | 方法 | 描述 |
-|------|------|------|
-| `/health` | GET | 健康检查 |
-| `/api/config` | GET | 获取配置 |
-| `/api/config` | POST | 保存配置（含主题偏好） |
-| `/api/tasks` | GET | 获取任务列表 |
-| `/api/tasks` | POST | 添加下载任务 |
-| `/api/tasks/:id` | GET | 获取单个任务 |
-| `/api/tasks/:id` | DELETE | 删除任务（支持 ?deleteTempFiles=1&deleteOutputFile=1） |
-| `/api/tasks/:id/pause` | POST | 暂停任务 |
-| `/api/tasks/:id/resume` | POST | 继续任务 |
-| `/api/tasks/:id/stop` | POST | 停止任务 |
-| `/api/parse` | GET | 解析 m3u8/MPD/ISM URL |
+- **多格式支持**：m3u8/HLS、DASH/MPD、MSS/ISM
+- **加密下载**：AES-128 / SAMPLE-AES 解密
+- **自动合并**：分片下载完成后自动合并为完整视频
+- **直播录制**：m3u8 直播流自动检测 + 持续录制，支持实时合并
+- **现代 UI**：自适应桌面/移动端、KPI 卡片、批量操作、搜索、键盘快捷键
 
 ## 安装
 
-### 在 FnOS 应用中心安装
+1. 在 fnOS 应用中心上传 `fnm3u8dl.fpk` 包
+2. 启用应用，浏览器访问 fnOS 桌面图标
+3. 首次打开会进入"下载设置"页，配置下载路径
 
-1. 下载 `fnm3u8dl.fpk`
-2. 在飞牛NAS应用中心 → 手动安装
-3. 首次使用会自动弹出设置引导，配置下载保存路径
+## 快速开始
 
-### 直接运行
+1. 点击 **+** 按钮
+2. 输入 m3u8 地址（如 `http://example.com/video.m3u8`）
+3. 点击"添加任务"
+4. 如果是直播流，会弹"录制设置"对话框
+5. 任务会自动下载并在完成时合并
 
-```bash
-cd /path/to/fnm3u8dl/app/ui
-PORT=43940 node server.js
-```
+## 设置
 
-然后访问 `http://localhost:43940` 即可。
+⚙️ 图标打开设置弹窗：
+- **基本**：下载路径、并发数、超时、重试、User-Agent
+- **下载**：线程数、HTTP 超时
+- **合并**：合并格式、字幕处理
+- **网络**：HTTP 代理、Referer
+- **高级**：ffmpeg 路径、检查分片数
 
 ## 版本历史
 
-### v0.8.1 (2026-07-04)
+### 0.8.1 (2026-07-28)
 
-- **修复: 非原子写入** — saveTask restart / cookie meta 改为 tmp+renameSync 原子模式，崩溃不丢数据
-- **修复: EncryptInfo 共享引用** — DASH 解析所有分片独立 clone，避免 KID 污染
-- **修复: Pipe hang** — merge-util 加 dest error/close 检测，文件流提前关闭不再挂死
-- **修复: 广告过滤双 pop** — hls-extractor YK 广告过滤 `else-if` 防重复弹出正常分片
+**格式修复 + Code Review 重构**
 
-### v0.8.0 (2026-06-16)
+- **修复: 输出格式始终为 .ts** — `muxFormat='auto'` 时等价于 `mp4`，不再跳过混流。默认输出改为 `mp4`
+- **修复: ffmpeg 只映射第一路流** — `-map 0:0` → `-map 0`，保留所有视频/音频/字幕流
+- **修复: 混流后 `finalSize` 仍读 .ts** — 改为读取混流后文件大小，日志正确显示最终文件路径
+- **修复: 混流后 .ts 源文件残留** — 成功混流后自动删除 .ts 源文件
+- **修复: yt-dlp 硬编码 .mp4** — 动态使用配置的 `muxFormat` 扩展名
+- **修复: ffmpeg/mkvmerge 无超时** — 加 `timeout: 300000` 防止进程泄漏
+- **Code Review 发现并修复 5 个严重问题** (大小/日志/扩展名/残留/超时)
 
-- **视觉重构: 蓝紫色系主题** — 色板切换为蓝紫色系，header 蓝-青-靛渐变，交互动效 + 任务卡状态色条 + 骨架屏
+### 0.8.0 (2026-06-16)
+
+- **视觉重构: 蓝紫色系主题** — 整体色板从绿色切换为蓝紫色系 (hsl(220, 60%, 55%))，header 蓝-青-靛渐变
+- **交互动效增强** — 按钮按压缩放 (0.97)、hover 上浮、弹窗 backdrop blur 渐入 + scale 入场、Toast spring 弹性动画
+- **任务卡片状态视觉** — 左侧状态色条 (蓝/绿/红/黄)、骨架屏 loading
+- **CSS 变量补齐** — 新增 `--radius-md`、`--transition-normal`、`--text-subtle`，统一圆角层级 (xs/sm/md/lg)
 - **新增: 网页嗅探 m3u8** — 输入网页 URL（B站、YouTube 等），服务端抓取页面 HTML 正则搜索媒体链接，B站/YouTube 走 yt-dlp --dump-json 回退
 - **新增: yt-dlp 下载模式** — 嗅探/手动添加任务可选择 yt-dlp 下载，支持格式选择、实时进度、cookie 传入
 - **新增: Cookie 管理模块** — 上传/管理 Netscape 格式 cookies.txt，添加任务时按域名匹配或手动选择
-- **安全加固**: Cookie 上传大小限制 (1MB)、路径穿越校验增强
-- **测试**: 493+ pass，inline onclick 全量覆盖
+- **安全加固: Cookie 上传大小限制 (1MB)、路径穿越校验增强**
+- **测试: 新增 Cookie API + Sniff + yt-dlp + inline onclick 测试覆盖**
+- **版本: 0.8.0 (视觉重构 + 嗅探 + yt-dlp + Cookie 四大模块)**
 
-### v0.7.1-hotfix1 (2026-06-10)
-
-- **修复: 定时录制按钮没反应**
-  - 根因：`// ===== Schedule (定时录制) =====` 段 6 个函数（`showScheduleModal` / `switchScheduleTab` / `editSchedule` / `submitSchedule` / `loadScheduleList` / `deleteSchedule`）前一次重排时多缩进 2 空格，JS 不会抛错（语法合法）但函数变成 `document.addEventListener('keydown', ...)` 回调内的局部变量，window 上找不到
-  - inline `onclick="showScheduleModal()"` 调用失败
-  - 修法：6 个函数全部去前导空格变顶层声明 + 补全 4 个缺失的 `window.X = X` export（原只 export `editSchedule` / `deleteSchedule`）
-  - git commit e5e3fba
-
-### v0.7.1 (2026-06-10)
+### 0.7.1 (2026-06-10)
 
 - **前端代码审查修复 12 项**
   - **P0-1** 浏览目录 onclick 单引号 XSS：改用 `data-path` + `this.dataset` 避免函数参数字符串注入
@@ -186,12 +77,13 @@ PORT=43940 node server.js
   - **P3-1** 主题切换 CSS transition 平滑过渡（背景/文字 0.3s）
 - **测试**：语法 + 功能测试通过，git commit 2f6d4ad + 2bfbb54
 
-### v0.7.0 (2026-06-09)
+### 0.7.0 (2026-06-09)
 
-- **下载路径浏览对话框**（参照 fnytdlp）
-  - 服务端新增 `GET /api/browse?path=...` 端点（不限制白名单，可任意浏览后选目录）
+- **下载路径浏览对话框**（参照 fnm3u8dl → fnytdlp 同款）
+  - 服务端新增 `GET /api/browse?path=...` 端点（不限制白名单，用户可任意浏览后选目录）
   - 设置面板下载路径输入框右侧加 `📂 浏览` 按钮
   - 弹窗显示当前路径 + 上级目录 + 子目录列表 + 选择当前目录
+  - 选择后通过 `POST /api/config` 保存，触发 `registerPathPrefix` 提前注册
 - **页脚版权信息**（参照 fnytdlp）
   - 页面底部居中显示 `fnm3u8dl v0.7.0 · © 2026 一零一二`
   - server.js 新增 `VERSION` 常量，`/api/health` 暴露版本号给前端动态渲染
@@ -203,7 +95,22 @@ PORT=43940 node server.js
   - 浏览端点拒绝未注册路径导致无法选目录 → 改为不限制白名单
 - **测试**：单元测试 132/132 全过；端到端 4 场景浏览验证通过
 
-### v0.6.1 (2026-06-09)
+### 0.5.0 (2026-06-07)
+
+- **直播录制功能完整补齐**（对照 C# N_m3u8DL-RE 10 个直播参数）
+  - `livePipeMux` 增量追加模式（用 `appendFileSync` 模拟 ffmpeg pipe mux）
+  - 增强直播检测：URL 关键词 + 短 playlist 启发式 + 缺失 ENDLIST
+  - 添加任务时自动检测直播，弹"录制设置"对话框
+  - 修复 5 个直播录制 bug：参数丢失 / 录制只下 1 分片 / 实时合并误改 status / addTask 双层包装 / 直播状态显示
+- **设置保存修复**：`isSafePath` 不再拒绝新下载路径，前端检查响应状态
+- **UI 移动端适配**：KPI 2 列布局 / 弹窗全屏 / 480px 断点 / 按钮紧凑
+- **8 项视觉重构**：Header / KPI / Toolbar / Task Card / Badge / Empty / Batch / Sidebar / Sparkline
+- **前端 6 个新 UI**：autoSelect / subOnly / baseUrl / allowHlsMultiExtMap / muxImport / taskStartAt
+- **URL 自动解码**：用户从聊天复制 percent-encoded URL 自动识别
+- **15 个新 TDD 测试**：live_detect / live_pipe_mux / live_status / addTask body structure 等
+- **总数 188+ 测试通过**
+
+### 0.6.1 (2026-06-09)
 
 - **安全加固**（前端全面审查 8 项修复）
   - file:// SSRF 白名单校验
@@ -223,54 +130,41 @@ PORT=43940 node server.js
   - 删除多余 CSS 大括号
 - **测试**：270/270 通过，0 失败
 
-### v0.2.0 (2026-05-29)
+## 项目结构
 
-- 修复 HLSExtractor.loadM3u8FromUrl 方法缺失（新增公开方法别名，内部调用 _loadM3u8FromUrlAsync）
-- 修复 DASH/MPD 解析路径：改用 fetch() 直接获取 MPD 内容，ExtractStreamsAsync 已能处理原始 XML
-- 修复 MSS/ISM 解析路径：同样改用 fetch() + ExtractStreamsAsync
-- 165 个 TDD 测试通过（3 个跳过为网络相关）
-
-### v0.1.0 (2026-05-26)
-
-- 完整重写 N_m3u8DL-RE C# 项目
-- HLS / DASH / MSS 三大协议解析
-- AES-128-CBC 自动解密
-- 多线程并发下载 + 断点续传
-- 批量添加（粘贴多链接）
-- 直播录制（可配刷新间隔）
-- 实时速度 / ETA / 加密标注
-- 响应式 UI + 浅色/深色主题（服务端持久化）
-- 批量操作（暂停/继续/停止/清理/删除含文件）
-- 首次设置引导
-- 赞助支持
-- 163 个 TDD 测试覆盖（v0.1.0 初版）
-
-## 测试
-
-```bash
-# 运行全部测试
-node --test tests/*.js
-
-# 运行特定测试文件
-node --test tests/test_comprehensive.js
-node --test tests/test_modules.js
-node --test tests/test_new_modules.js
+```
+app/ui/
+├── server.js              # HTTP server + API routes
+├── main.js                # 前端逻辑
+├── index.html             # HTML
+├── live/                  # 直播录制
+│   └── http-live-record-manager.js
+├── parser/                # m3u8/MPD 解析
+├── downloader/            # 下载器
+├── merge/                 # 合并工具
+└── util/                  # 工具函数
+cmd/                      # fpk 命令行入口
+config/                   # fpk 配置
+manifest                  # fpk manifest
 ```
 
-## 维护者
+## 开发
 
-- 作者：[@再见一零一二](https://gitee.com/wyf1015)
-- GitHub：[@Wyf841015](https://github.com/Wyf841015)
-- Gitee：[@wyf1015](https://gitee.com/wyf1015)
+```bash
+# 运行测试
+npm test
 
----
+# 打包 fpk
+fnpack build .
+```
 
-> 如果这个项目对您有帮助，欢迎赞助支持 ❤️
->
+## 许可
+
+MIT
+
 ## 更新日志
 
 ### v0.8.1 (2026-07-04)
-
 - **修复: 非原子写入** — saveTask restart / cookie meta 改为 tmp+renameSync 原子模式，崩溃不丢数据
 - **修复: EncryptInfo 共享引用** — DASH 解析所有分片独立 clone，避免 KID 污染
 - **修复: Pipe hang** — merge-util 加 dest error/close 检测，文件流提前关闭不再挂死
@@ -281,9 +175,6 @@ node --test tests/test_new_modules.js
 - **新增**: 网页嗅探 m3u8 + yt-dlp 下载模式 + Cookie 管理模块
 - **安全**: Cookie 上传 1MB 限制 + 路径穿越校验
 - **测试**: 493+ pass，inline onclick 全量覆盖
-
-### v0.7.1-hotfix1 (2026-06-10)
-- 修复: 定时录制按钮没反应 (schedule 段 6 函数错误缩进成嵌套 + 补全 4 个 window export)
 
 ### v0.7.1 (2026-06-10)
 - 修复: 浏览目录 onclick 单引号 XSS (改用 data-path + this.dataset)
@@ -313,21 +204,18 @@ node --test tests/test_new_modules.js
 - **代码质量**: batchDelete await/去重/CORS回退/CSS优化/死代码清理
 - **测试** 270/270 通过，0 失败
 
-### v0.6.0
+### v0.6.0 (2026-06-08)
 - 新增: 定时录制列表编辑和真删除功能
-- 修复: 工具栏 ghost 按钮背景色统一
+- 修复: 工具栏 ghost 按钮背景色与其他按钮一致，边框样式统一
 - 优化: 设置/搜索按钮移入工具栏，顶部 header 精简对齐
 
-### v0.5.1
+### v0.5.1 (2026-06-08)
 - 修复: formatDuration 秒→毫秒单位不匹配 (录制时长显示错误)
 - 修复: 0 秒录制显示为 '-' 而非 '0秒'
-- 安全加固: SSRF 白名单校验 / IPv4映射IPv6绕过修复 / fetch超时控制 / CORS同源回退
-- 测试 432/435 通过
-
-### v0.5.0
-- 直播 3 维度启发式检测 (URL关键词 + EXT-X-ENDLIST + 短playlist)
-- 直播实时合并 livePipeMux (纯JS模拟，360倍IO减少)
-- C# 10/10 直播参数完整对应
-- 动态直播源 (PHP url-resolver) 支持
-- 8 项 UI 现代化重构 + 移动端响应式适配
-- 测试 432/435 通过
+- P0-3: file:// SSRF 白名单校验
+- P1-1: IPv4映射IPv6内网地址绕过修复
+- P1-5: batchDelete 异步 await 修复
+- P1-6: addTask 重复 ID 去重
+- P1-7: fetch 超时控制 (30s)
+- P1-9: CORS_ORIGINS 空值时同源回退
+- 测试 432/435 通过 (3 跳过为网络相关)
