@@ -133,7 +133,7 @@
   "fnm3u8dl": {
     "display_name": "m3u8下载器",
     "platform": "all",
-    "version": "0.8.1",
+    "version": "0.8.2",
     "desc": "专业视频下载工具，N_m3u8DL-RE 完整 Node.js 重写版，HLS+DASH+MSS 三协议解析、AES-128/SAMPLE-AES 自动解密、多线程并发下载、断点续传、批量添加、直播录制、网页嗅探、yt-dlp 下载、Cookie 管理、格式选择、实时速度/ETA显示、493个TDD测试覆盖",
     "labels": "工具,效率,下载,视频",
     "author": "一零一二",
@@ -145,8 +145,9 @@
     "install_type": "存储空间",
     "size": "6.34",
     "download_url": "",
-    "changelog": "v0.8.1\n- 修复: 非原子写入（saveTask restart / cookie meta 改 tmp+renameSync）\n- 修复: EncryptInfo 共享引用（DASH 分片独立 clone, 防 KID 污染）\n- 修复: Pipe hang（merge-util 加 dest error/close 检测）\n- 修复: 广告过滤双 pop（hls-extractor else-if 防重复 pop）\n- 测试: 159/159 pass\n\nv0.8.0\n- 视觉重构: 蓝紫色系主题 + 交互动效 + 任务卡状态色条 + 骨架屏\n- 新增: 网页嗅探 m3u8 + yt-dlp 下载模式 + Cookie 管理模块\n- 新增: yt-dlp 格式下拉框选择 + 显示网站名/18+标签/播放量等\n- 安全: Cookie 上传 1MB 限制 + 路径穿越校验\n- 优化: KPI 速度完成后归零 + 嗅探 fallback 去重\n- 测试: 493+ pass，inline onclick 全量覆盖",
+    "changelog": "v0.8.2\n10 项功能增强 + Code Review 5 项修复\n\n- O1: SSE 实时推送替代 3s 轮询\n- O2: per-task 实时速度 sparkline 折线图\n- O3: 智能 ETA — 30s 加权平均速度\n- O4: 断点续传 v2 — 跳过已下载 segment\n- O5: 多 part 并发下载 — worker pool\n- O6: aria2c 后端支持（检测到时自动启用）\n- O7: 批量操作面板 — 全选/反选/导出/重试/暂停/恢复/删除\n- O8: 拖拽排序 + 任务标签\n- O9: 内置视频播放器（HTTP Range 边下边播）\n- O10: M3U 列表导入 + 下载历史（删除前归档 + 重新下载）\n- Code Review 5 项修复（混流/大小/扩展名/残留/超时）\n- 修复: 页面底部版本号硬编码 0.8.0 → 0.8.2\n\nv0.8.1\n格式修复 + Code Review 重构\n\n- 修复: 输出格式始终为 .ts（muxFormat='mp4' 默认）\n- 修复: ffmpeg 只映射第一路流（-map 0 保留所有流）\n- 修复: 混流后 finalSize 仍读 .ts\n- 修复: 混流后 .ts 源文件残留\n- 修复: yt-dlp 硬编码 .mp4（动态使用 muxFormat）\n- 修复: ffmpeg/mkvmerge 无超时（加 timeout: 300000）\n- 测试: 159/159 pass\n\nv0.8.0\n- 视觉重构: 蓝紫色系主题 + 交互动效 + 任务卡状态色条 + 骨架屏\n- 新增: 网页嗅探 m3u8 + yt-dlp 下载模式 + Cookie 管理模块\n- 新增: yt-dlp 格式下拉框选择 + 显示网站名/18+标签/播放量等\n- 安全: Cookie 上传 1MB 限制 + 路径穿越校验\n- 优化: KPI 速度完成后归零 + 嗅探 fallback 去重\n- 测试: 493+ pass，inline onclick 全量覆盖",
     "history": {
+      "v0.8.2": "10 项功能增强 (O1-O10) + Code Review 5 项修复 + 页面版本号修复",
       "v0.8.0": "视觉重构+嗅探+yt-dlp+Cookie 四大模块，格式下拉选择，KPI 修复",
       "v0.7.1": "前端代码审查 12 项修复（XSS/竞态/死代码/系统路径保护）",
       "v0.7.0": "下载路径浏览 + 页脚版权 + 时钟KPI修复 + 132测试全过",
@@ -155,7 +156,7 @@
       "v0.2.0": "三协议解析（HLS/DASH/MSS）+ 多线程 + 断点续传 + 直播录制 + 165测试",
       "v0.1.0": "完整重写 N_m3u8DL-RE C# 项目"
     },
-    "checksum": "2259dec7482999f7629fa0a88eb41a842ef34a6392b32e0b5cb780634e2274d0"
+    "checksum": "42d70ef2a0f5650ec810386af58a3d7ac5cf4edabebe8afcb8935318e3941f2c"
   },
   "fnytdlp": {
     "display_name": "视频下载器",
