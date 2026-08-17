@@ -57,6 +57,12 @@
 
 ## 版本历史
 
+### v1.2.2 (2026-08-17)
+- 测试覆盖 88% — 新增 17 个测试文件，覆盖 52 个源码模块
+- 修复 DND 汇总统计为 0
+- 修复时区偏移（CST epoch 差 8h）
+- 2 个 P1 稳定性修复
+
 ### v1.2.0 (2026-06-11)
 - 🐛 DND 模块级锁终结双重推送 - 5 monitor 各自 DNDHandler 实例竞争根本解决
 - 🔐 P0 安全加固：inline onclick 挂 window / XSS textContent / apiFetch 错误处理 / login_required 校验
