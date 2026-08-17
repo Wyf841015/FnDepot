@@ -4,6 +4,10 @@
 
 ![清理精灵 FnClearup](ICON_256.png)
 
+## v0.9.6 更新
+
+- **修复：应用残余卸载失败** — `@appcenter` 路径含 `@` 字符不匹配回收站路径 regex，改为永久删除（系统应用目录，非用户数据）
+
 ## v0.9.5 更新
 
 - **修复：去重浏览弹窗 ENOENT 报错** — `showDupBrowseModal` 默认从 `DupState.paths` 最后一个路径开始浏览，当路径不存在（如 `/vol1/1000/music`）时 API 返回 500 ENOENT，弹窗显示错误。改为从 `/` 根目录开始浏览
@@ -240,6 +244,10 @@
 | `/api/trash/clean` | POST | 清理 trash（按 mtime 阈值 + manifest 备份） |
 
 ## 版本历史
+
+### v0.9.6 (2026-08-17)
+
+- 修复：应用残余卸载失败（@appcenter 路径不匹配回收站 regex，改为永久删除）
 
 ### v0.9.5 (2026-08-12)
 
