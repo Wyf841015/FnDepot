@@ -209,5 +209,26 @@
       "v0.1.0": "初始版本：代理捕获 + 三格式复制 + 直连模式 + 手动导入 + 主题切换"
     },
     "checksum": "1ea85a7750f4e0832d836d2932d26a8545495034f53a633bad2b80eeb1d16020"
+  },
+  "netwatch": {
+    "display_name": "网络监控",
+    "platform": "all",
+    "version": "0.1.0",
+    "desc": "实时网络流量监控工具，监控接口带宽、活跃连接、进程流量、协议分布等网络状态",
+    "labels": "工具,网络,监控",
+    "author": "一零一二",
+    "author_url": "https://gitee.com/wyf1015",
+    "distributor": "一零一二",
+    "distributor_url": "https://gitee.com/wyf1015",
+    "bug_report_url": "https://gitee.com/wyf1015/netwatch/issues",
+    "isdocker": "false",
+    "install_type": "存储空间",
+    "size": "0.22",
+    "download_url": "",
+    "changelog": "v0.1.0\n初始版本：实时网络流量监控\n\n- 总流量 + 接口带宽 KPI\n- 活跃连接（TCP/UDP 列表）\n- 进程级流量（nethogs TCP+UDP 完整统计，不丢 UDP）\n- App 流量排行（KPI 与表格数据一致）\n- Top 主机 + IP 归属地\n- 协议分布 + 历史流量趋势\n- 深色/浅色主题 + 排序表格\n- SSE 实时刷新",
+    "history": {
+      "v0.1.0": "初始版本：实时网络流量监控（总流量/连接/进程流量/App排行/Top主机/历史/主题/排序/SSE）"
+    },
+    "checksum": "5ea26e9251144007b2129487b6e2aef932686b72b0cac3c09ee259efc558fdca"
   }
 }
