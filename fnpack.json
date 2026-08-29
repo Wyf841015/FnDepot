@@ -163,7 +163,7 @@
   "fnytdlp": {
     "display_name": "视频下载器",
     "platform": "all",
-    "version": "0.6.2",
+    "version": "0.6.3",
     "desc": "集成 yt-dlp 的飞牛 NAS 视频下载工具，支持 1872+ 视频站（YouTube/B站/抖音/西瓜/微博/推特 等），自适应 x86_64/aarch64 双 binary，KPI Dashboard + SSE 实时进度 + 任务详情弹窗 + 下载路径浏览 + 多网站 Cookie 任务级透传 + SponsorBlock 广告跳过 + 频道订阅自动检查新内容（增量下载 + 表格化 UI）",
     "labels": "工具,效率,下载,视频,订阅",
     "author": "一零一二",
@@ -173,10 +173,12 @@
     "bug_report_url": "https://gitee.com/wyf1015/fnytdlp/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": 6.1,
+    "size": 76.6,
     "download_url": "",
-    "changelog": "v0.6.1\n10 项功能增强 (借鉴 VidBee 项目)\n\n- 🎯 质量预设: 5 级一键格式 (best/good/normal/bad/worst)\n- 📦 容器格式: 5 种输出容器 (auto/mp4/mkv/webm/original)\n- 🔒 FSM 任务状态机: 合法状态转换表 + transitionTask()\n- 🌐 网络弹性参数: retries=30 + fragment-retries + socket-timeout\n- 💡 yt-dlp 错误分类指导: 17 种常见错误 + 中文解决建议\n- 🖼 缩略图缓存: 内存缓存 200 条 / 24h TTL\n- 📋 过滤栏增强: 新增 paused/cancelled tab\n- 🔍 YouTube 搜索 + 📜 下载历史 + ⏱ 时间范围裁剪\n- 新增 5 API 端点, 测试 257/257 全过\n\nv0.6.0\nAI 视频总结 + 缩略图代理 + 字幕提取 + 速度曲线 (借鉴 uvd 项目)\n\n- 🧠 AI 视频总结 (零依赖, Node 22 fetch 调 OpenAI 兼容 API)\n  支持 4 家提供商: OpenAI / 智谱 GLM / DeepSeek / 自定义\n  yt-dlp 自动提取字幕 (--skip-download --write-subs), fallback 到 description\n  4-Tab 展示: 智能总结 / 章节大纲 / 核心要点 / 思维导图\n  思维导图零依赖渲染 (Markdown 嵌套列表 → 树状 HTML), 无需 markmap CDN\n  复制 Markdown 全文到剪贴板\n  配置: 设置 → AI tab (环境变量 AI_API_KEY 覆盖)\n- 缩略图代理 (GET /api/proxy-thumbnail?url=...) — 解决防盗链/跨域\n- 字幕提取 (GET /api/tasks/:id/subtitle) — VTT/SRT → 纯文本\n- 单任务速度曲线 — canvas 折线, SSE 实时刷新\n- URL 预处理 — 抖音 modal_id/note URL 自动转标准 video 格式\n- 移除系统路径拦截 (isSystemPath) — 用户可设置任意下载路径\n- 移除 /opt 系统目录拦截\n- 新增 5 API 端点, 测试 273/273 全过\n\nv0.5.0\n8 项新功能 (yt-dlp 高级参数 + 体验增强)\n\n- 视频裁剪 (--download-sections) + 关键帧强制对齐\n- aria2c 集成 (自动检测 + 16 连接并发)\n- 转码 (--recode-video 指定容器)\n- 限速模板 (按时段自动切换, JSON 配置)\n- 主题跟随系统 (prefers-color-scheme)\n- 导入 yt-dlp 配置文件 (30 参数白名单)\n- 任务标签 (下载中/已完成/失败) + 筛选\n- 下载存档防重 (--download-archive)\n- 文件名模板预设 (5 种常用模板一键切换)\n- 内置 221 测试验证\n\nv0.4.0\n磁盘配额 + 下载历史统计 + 文件名模板预览 + 搜索增强\n\nv0.3.1\n订阅 UI 表格化 + 单订阅独立检查 + 增量 5 bug 修复",
+    "changelog": "v0.6.3\nyt-dlp 核心升级 + 双架构 native binary\n\n- yt-dlp 2026.07.04 → 2026.08.19: 升级下载内核，修复站点提取器、curl_cffi 0.16.x 支持、hls 分片等上游 bug\n- 双架构 native binary: x86_64 + aarch64 从 zipimport 平台无关脚本换成 PyInstaller native binary (每架构约 38MB)，启动更稳、兼容性更好\n\nv0.6.2\nUI/UX 全面优化 (ui-ux-pro-max 审计)\n\n- 清理死代码 playerModal / 播放器样式归一化 / HTML 嵌套断裂修复\n- 按钮绑定修复 (DOM 0 onclick 传正确 id) / z-index 层级系统 / 按钮 loading 状态\n- 任务列表骨架屏 / 表单标签 / aria-label 补充 / 基础字号 14→16px\n- 测试 279/279 全过\n\nv0.6.1\n10 项功能增强 (借鉴 VidBee 项目)\n\n- 🎯 质量预设: 5 级一键格式 (best/good/normal/bad/worst)\n- 📦 容器格式: 5 种输出容器 (auto/mp4/mkv/webm/original)\n- 🔒 FSM 任务状态机: 合法状态转换表 + transitionTask()\n- 🌐 网络弹性参数: retries=30 + fragment-retries + socket-timeout\n- 💡 yt-dlp 错误分类指导: 17 种常见错误 + 中文解决建议\n- 🖼 缩略图缓存: 内存缓存 200 条 / 24h TTL\n- 📋 过滤栏增强: 新增 paused/cancelled tab\n- 🔍 YouTube 搜索 + 📜 下载历史 + ⏱ 时间范围裁剪\n- 新增 5 API 端点, 测试 257/257 全过\n\nv0.6.0\nAI 视频总结 + 缩略图代理 + 字幕提取 + 速度曲线 (借鉴 uvd 项目)\n\n- 🧠 AI 视频总结 (零依赖, Node 22 fetch 调 OpenAI 兼容 API)\n  支持 4 家提供商: OpenAI / 智谱 GLM / DeepSeek / 自定义\n  yt-dlp 自动提取字幕 (--skip-download --write-subs), fallback 到 description\n  4-Tab 展示: 智能总结 / 章节大纲 / 核心要点 / 思维导图\n  思维导图零依赖渲染 (Markdown 嵌套列表 → 树状 HTML), 无需 markmap CDN\n  复制 Markdown 全文到剪贴板\n  配置: 设置 → AI tab (环境变量 AI_API_KEY 覆盖)\n- 缩略图代理 (GET /api/proxy-thumbnail?url=...) — 解决防盗链/跨域\n- 字幕提取 (GET /api/tasks/:id/subtitle) — VTT/SRT → 纯文本\n- 单任务速度曲线 — canvas 折线, SSE 实时刷新\n- URL 预处理 — 抖音 modal_id/note URL 自动转标准 video 格式\n- 移除系统路径拦截 (isSystemPath) — 用户可设置任意下载路径\n- 移除 /opt 系统目录拦截\n- 新增 5 API 端点, 测试 273/273 全过\n\nv0.5.0\n8 项新功能 (yt-dlp 高级参数 + 体验增强)\n\n- 视频裁剪 (--download-sections) + 关键帧强制对齐\n- aria2c 集成 (自动检测 + 16 连接并发)\n- 转码 (--recode-video 指定容器)\n- 限速模板 (按时段自动切换, JSON 配置)\n- 主题跟随系统 (prefers-color-scheme)\n- 导入 yt-dlp 配置文件 (30 参数白名单)\n- 任务标签 (下载中/已完成/失败) + 筛选\n- 下载存档防重 (--download-archive)\n- 文件名模板预设 (5 种常用模板一键切换)\n- 内置 221 测试验证\n\nv0.4.0\n磁盘配额 + 下载历史统计 + 文件名模板预览 + 搜索增强\n\nv0.3.1\n订阅 UI 表格化 + 单订阅独立检查 + 增量 5 bug 修复",
     "history": {
+      "v0.6.3": "yt-dlp 2026.08.19 升级 + 双架构 native binary (x86_64/aarch64)",
+      "v0.6.2": "UI/UX 全面优化 (ui-ux-pro-max 审计): 死代码清理/按钮绑定/z-index/骨架屏/无障碍",
       "v0.6.1": "10 项增强: 质量预设/容器格式/FSM/网络弹性/错误指导/缩略图缓存/过滤栏/搜索/历史/时间范围",
       "v0.6.0": "AI 视频总结(4提供商/4-Tab/思维导图) + 缩略图代理 + 字幕提取 + 速度曲线 + URL 预处理 + 移除路径拦截",
       "v0.3.1": "订阅功能增强：表格化 UI + 增量逻辑修复 5 bug + 单订阅独立检查 + 后端 enabled 字段保留",
@@ -187,7 +189,7 @@
       "v0.2.0": "Bug 修复: Destination 封面图过滤/toolbar 清理确认框/赞助大图不放大",
       "v0.1.0": "集成 yt-dlp 1872+ 站点 + 自适应架构 + KPI/SSE/详情弹窗/浏览对话框/Cookie 多文件/5 主题 + 20+ TDD 测试"
     },
-    "checksum": "7305fdaef744d83bcb3247b761467a1873daa86dc407a2518dc242af033e5bff"
+    "checksum": "bc100e7719df551c50bf21b90e0377a7c1fe95c26c4c3877443016ecbd337a84"
   },
   "fngetcookie": {
     "display_name": "Cookie 提取器",
