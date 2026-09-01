@@ -215,7 +215,7 @@
   "netwatch": {
     "display_name": "网络监控",
     "platform": "all",
-    "version": "0.2.0",
+    "version": "0.5.0",
     "desc": "实时网络流量监控工具，监控接口带宽、活跃连接、进程流量、协议分布等网络状态",
     "labels": "工具,网络,监控",
     "author": "一零一二",
@@ -225,13 +225,14 @@
     "bug_report_url": "https://gitee.com/wyf1015/netwatch/issues",
     "isdocker": "false",
     "install_type": "存储空间",
-    "size": "0.22",
+    "size": "5.07",
     "download_url": "",
-    "changelog": "v0.2.0\n性能与功能优化\n\n- 性能：ss 异步采样 + 采样缓存，消除事件循环阻塞\n- 进程流量新增实时速率列（累计 vs 当前速率分离）\n- Top 主机：IP 归属地 + 按流量/速率排序\n- 历史流量落盘持久化（跨重启累计）\n- 阈值告警（流量突发/连接激增 → 可选 webhook）\n- 带宽折线图 hover tooltip\n- 数据导出 CSV（连接/App流量/历史）\n- nethogs 缺失探测提示\n\nv0.1.0\n初始版本：实时网络流量监控\n\n- 总流量 + 接口带宽 KPI\n- 活跃连接（TCP/UDP 列表）\n- 进程级流量（nethogs TCP+UDP 完整统计，不丢 UDP）\n- App 流量排行（KPI 与表格数据一致）\n- Top 主机 + IP 归属地\n- 协议分布 + 历史流量趋势\n- 深色/浅色主题 + 排序表格\n- SSE 实时刷新",
+    "changelog": "v0.5.0\n进程级流量引擎升级 + 统计口径统一\n\n- 进程级流量引擎升级：nethogs → pktstat-bpf（eBPF 内核级计数，覆盖 TCP/UDP/ICMP/IPSec 全协议）\n- 内存优化：进程流量按需启停，运行时内存 400MB → ~120MB\n- App 流量卡片统一为网卡全量口径，新增可归因率指标\n- 进程流量累计跨重启持久化\n- 轮询健壮性：失败自动续排 + 30s watchdog 超时保护\n- CORS 收窄至同源\n\nv0.2.0\n性能与功能优化\n\n- 性能：ss 异步采样 + 采样缓存，消除事件循环阻塞\n- 进程流量新增实时速率列（累计 vs 当前速率分离）\n- Top 主机：IP 归属地 + 按流量/速率排序\n- 历史流量落盘持久化（跨重启累计）\n- 阈值告警（流量突发/连接激增 → 可选 webhook）\n- 带宽折线图 hover tooltip\n- 数据导出 CSV（连接/App流量/历史）\n- nethogs 缺失探测提示\n\nv0.1.0\n初始版本：实时网络流量监控\n\n- 总流量 + 接口带宽 KPI\n- 活跃连接（TCP/UDP 列表）\n- 进程级流量（nethogs TCP+UDP 完整统计，不丢 UDP）\n- App 流量排行（KPI 与表格数据一致）\n- Top 主机 + IP 归属地\n- 协议分布 + 历史流量趋势\n- 深色/浅色主题 + 排序表格\n- SSE 实时刷新",
     "history": {
+      "v0.5.0": "进程流量引擎升级 pktstat-bpf(eBPF)/内存优化 400→120MB/网卡口径统一+可归因率/跨重启持久化/轮询健壮性/CORS 收窄",
       "v0.2.0": "性能优化 + 功能增强：ss异步采样/实时速率列/IP归属地/历史持久化/阈值告警/tooltip/CSV导出/nethogs探测",
       "v0.1.0": "初始版本：实时网络流量监控（总流量/连接/进程流量/App排行/Top主机/历史/主题/排序/SSE）"
     },
-    "checksum": "7d2762e05bc983059dbbb200ae191a9b58fff04a64ee642a9d938272d6ea1721"
+    "checksum": "4f904f53ad12bf4c5bc011780ac63c7d771d010e42bb6d453d9709c734f2673a"
   }
 }
