@@ -65,13 +65,14 @@
       "distributor_url": "https://gitee.com/wyf1015",
       "bug_report_url": "https://gitee.com/wyf1015/usbrsync/issues",
       "releases": {
-        "0.1.0": {
-          "changelog": "v0.1.7\n- 安全与功能全面优化（见下方详情）\n\nv0.1.6\n- UI全面升级：霓虹暗夜风格现代设计\n- 同步进度实时显示：开始时间、百分比、速度、文件数\n- 暂停/继续/停止：支持同步过程控制\n- 多任务保存修复：不再覆盖已有任务\n- rsync返回码处理：无文件传输显示已最新",
+        "0.4.0": {
+          "changelog": "任务名称编辑、复制及按名称排序\n插入 USB 自动同步独立开关，支持按 UUID 绑定指定设备\n同步前试运行，统计新增、修改、删除项目并显示明细\n每日/每周定时同步，任务级排除规则、失败自动重试及重试间隔\n同步前目标空间检查，支持 rsync checksum 完整校验\n同步完成/失败后发送 fnOS 系统通知\n历史详情新增耗时、文件数、传输量、退出码和尝试次数\n配置导入/导出、日志查看/下载、历史清空\n存储空间仪表、同步统计 KPI 和移动端完整适配\nv0.2.0 起：修复 cmd/main 空壳、read_body stdin 丢失、路由 405、路径白名单、删除同步误删源等 20+ 项 P0/P1 安全与稳定性问题",
+          "updated_at": "2026-07-25",
           "packages": {
             "all": {
               "download_url": "usbrsync/usbrsync.fpk",
-              "sha256": "5f2dfd37a6edc3d924233a27685b40a65173c0374a90211811d9adaa31489bd5",
-              "size": 292797
+              "sha256": "1393969af99b75625d462791f3580327653232441043ba4fb744decf91f0f97a",
+              "size": 298492
             }
           }
         }
