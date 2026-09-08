@@ -9,12 +9,14 @@
 
 | 应用 | 版本 | 说明 |
 |------|------|------|
-| [日志哨兵](fnlogpush/) | v1.2.0 | 日志监控 + 多渠道推送 + 事件管理 |
-| [USB自动同步](usbrsync/) | v0.1.7 | USB存储设备自动同步工具 |
-| [清理精灵](fnclearup/) | v0.6.3 | 扫描FnOS所有vol目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除docker残余卷的残留目录，一键清理 |
+| [日志哨兵](fnlogpush/) | v1.3.0 | 日志监控 + 多渠道推送 + 事件管理 |
+| [USB自动同步](usbrsync/) | v0.1.0 | USB存储设备自动同步工具 |
+| [清理精灵](fnclearup/) | v0.9.7 | 扫描FnOS所有vol目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除docker残余卷的残留目录，一键清理 |
 | [m3u8下载器](fnm3u8/README.md) | v0.1.0 | m3u8视频下载，支持多线程/断点续传/AES解密/批量下载/直播录制 |
-| [m3u8DL 专业下载器](fnm3u8dl/README.md) | v0.8.1 | N_m3u8DL-RE 完整 Node.js 重写，HLS+DASH+MSS 三协议、AES-128 解密、批量添加、直播录制、速度显示、493 个 TDD 测试 |
-| [视频下载器](fnytdlp/README.md) | v0.6.0 | 集成 yt-dlp (1872+ 站点)，AI 视频总结 / 缩略图代理 / 字幕提取 / 速度曲线 / 频道订阅 / 自适应架构 |
+| [m3u8DL 专业下载器](fnm3u8dl/README.md) | v0.8.2 | N_m3u8DL-RE 完整 Node.js 重写，HLS+DASH+MSS 三协议、AES-128 解密、批量添加、直播录制、速度显示、493 个 TDD 测试 |
+| [视频下载器](fnytdlp/README.md) | v0.6.3 | 集成 yt-dlp (1872+ 站点)，AI 视频总结 / 缩略图代理 / 字幕提取 / 速度曲线 / 频道订阅 / 自适应架构 |
+| [Cookie 提取器](fngetcookie/README.md) | v0.2.0 | 通过代理方式自动捕获网站 Cookie，多格式导出，直连模式绕过 CSP 反代理站点 |
+| [网络监控](netwatch/README.md) | v0.5.0 | 实时网络流量监控，pktstat-BPF 引擎 + 进程级流量归因 |
 
 ## 安装说明
 
@@ -53,7 +55,7 @@
 
 USB存储设备自动同步工具，检测到USB设备插入后自动同步指定目录。
 
-**下载地址**: [USBRsync.fpk](usbrsync/USBRsync.fpk)
+**下载地址**: [usbrsync.fpk](usbrsync/usbrsync.fpk) (USBRsyncCgi)
 
 **功能**：
 - 单向同步 - 从源目录同步到目标目录
