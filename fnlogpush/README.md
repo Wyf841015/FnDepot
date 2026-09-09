@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.3.0-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.4.0-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
@@ -152,6 +152,15 @@ fnlogpush/
 ```
 
 ## 版本历史
+
+### v1.4.0 (2026-09-09)
+- 🆕 **新增 Gotify 推送渠道**（自托管）— 支持服务端地址 + 应用令牌（App Token）+ 优先级（0-10）配置；通过 REST API + `X-Gotify-Key` 认证推送
+- 📝 前端「通知设置」新增 Gotify 配置卡片；支持查看/保存/启用开关，令牌字段脱敏
+- 🧪 新增 6 个 Gotify 推送单元测试（成功/禁用/无令牌/无地址/HTTP错误/地址规范化）
+- 🔒 **修复 P0 认证绕过** — 31 个 API 路由 `@login_required` 写在 `@app.route` 之上导致装饰器失效，全部交换顺序恢复认证保护（events 增删改 / config 导入导出 / photo/download 配置等敏感端点不再可匿名访问）
+- 🔒 **修复 P0 数据库接口缺失** — `get_metrics`/`get_slow_queries` 等 5 个方法定义在 `SQLiteConnectionPool` 类，路由调用 `DatabaseService` 实例报 no attribute → 补转发方法，database 端点从 500 恢复正常
+- 📦 **修复打包 ui/config 路径** — 入口配置从 `app/ui/config` 错位改为 `ui/config`（app.tgz 顶层），解决安装后应用无法打开；`ui/config` 更新为 iframe 网关版
+- 🧪 **测试全绿** — Python 462 项 + 前端 26 项全部通过（修复 43 个 Python + 16 个前端测试坏文件）
 
 ### v1.3.0 (2026-08-18)
 - 新增：系统通知监控（notify_monitor）— 轮询 PostgreSQL trim.notify 表检测新系统通知并推送到已配置渠道

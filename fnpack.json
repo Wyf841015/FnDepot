@@ -40,6 +40,16 @@
               "size": 923554
             }
           }
+        },
+        "1.4.0": {
+          "changelog": "v1.4.0\n- 新增 Gotify 推送渠道（自托管）— 服务端地址 + 应用令牌 + 优先级，REST API + X-Gotify-Key 认证\n- 前端新增 Gotify 配置卡片（查看/保存/启用开关，令牌字段脱敏）\n- 新增 6 个 Gotify 推送单元测试\n- 修复 P0 认证绕过：31 个 API 路由 @login_required 顺序错误，恢复认证保护\n- 修复 P0 数据库接口缺失：DatabaseService 补 get_metrics 等 5 个转发方法\n- 修复打包 ui/config 路径（app.tgz 顶层），解决安装后无法打开\n- 测试全绿：Python 462 + 前端 26\n",
+          "packages": {
+            "all": {
+              "download_url": "fnlogpush/fnlogpush.fpk",
+              "sha256": "8f24b38f4bb3822cbbcdd11a10ec32a4b143bc731feea27ef6a61b32c38d8c05",
+              "size": 956719
+            }
+          }
         }
       }
     },
