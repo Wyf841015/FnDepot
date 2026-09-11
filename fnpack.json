@@ -271,6 +271,16 @@
               "size": 282356
             }
           }
+        },
+        "0.2.1": {
+          "changelog": "v0.2.1\n安全加固与稳定性优化\n\n- 安全加固：SSRF 防内网/云元数据访问，CORS 同源校验，静态资源白名单防源码泄露\n- Cookie 增强：SameSite / Max-Age 完整解析，严格域匹配 + 路径前缀匹配\n- Cookie 持久化：应用重启后自动恢复，原子写入 + 损坏备份回退\n- 单条删除 + 值显隐：悬停删除指定 Cookie，敏感值默认隐藏\n- 会话测试：用已捕获 Cookie 重放请求验证登录态\n- 过期处理：Max-Age=0 / 已过期 Set-Cookie 自动删除\n- 稳定性：async 路由异常兜底，请求体上限，上游超时与连接清理",
+          "packages": {
+            "all": {
+              "download_url": "fngetcookie/fngetcookie.fpk",
+              "sha256": "7440e696b3a41fa91ee850b1a4fff7f09c7aa92127137d4aea98fc80d5f17c6d",
+              "size": 289676
+            }
+          }
         }
       }
     },
