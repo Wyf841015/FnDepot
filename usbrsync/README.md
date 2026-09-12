@@ -1,138 +1,90 @@
-# USB Rsync CGI
+# USB Rsync — Node.js 版 (v0.4.1)
 
 > USB 存储设备自动同步工具，检测到 USB 设备插入后自动同步指定目录，支持单向和双向同步模式。
+> **Node.js 重写版** — 由 bash CGI + bash 守护架构迁移为纯 Node.js 单进程架构。
 
-[![Platform](https://img.shields.io/badge/platform-FnOS-blue)](https://www.fnnas.com/)
-[![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
+## 架构变化 (vs 原 CGI 版)
 
-## v0.4.0 更新
+| 原版 (usbrsync-cgi) | Node.js 版 (usbrsync) |
+|---------------------|----------------------|
+| bash CGI (`index.cgi` + `api.sh`) | **Node HTTP server** (`ui/server.js`) |
+| bash `cmd/main` 守护 (mount_monitor) | **Node 守护** (`ui/daemon.js`, 内嵌于 server) |
+| 状态文件共享 (sync.pid/status.json) | 进程内状态 + 磁盘持久化 |
+| 每请求起 bash 进程 | 常驻 HTTP server (socket 模式) |
+| `ui/server.js` 单进程 = HTTP + USB 监控 + 计划调度 | — |
+| rsync 执行 `ui/rsync.js` | — |
 
-- 任务名称编辑、复制及按名称排序
-- 插入 USB 自动同步独立开关，支持按 UUID 绑定指定设备
-- 同步前试运行，统计新增、修改、删除项目并显示明细
-- 每日/每周定时同步
-- 任务级排除规则、失败自动重试及重试间隔
-- 同步前目标空间检查，支持 rsync checksum 完整校验
-- 同步完成/失败后发送 fnOS 系统通知
-- 历史详情新增耗时、文件数、传输量、退出码和尝试次数
-- 配置导入/导出、日志查看/下载、历史清空
-- 存储空间仪表、同步统计 KPI 和移动端完整适配
+**核心优势**：
+- 单进程，无 CGI 进程开销，事件驱动并发安全
+- USB 监控、计划调度、HTTP 服务内存共享状态，无磁盘竞争
+- 原生 `spawn` 管理 rsync 子进程，进度/停止/双向更可靠
+- fnOS 标准 socket 模式部署
 
-## v0.2.0 更新
+## 功能 (与原版完全一致)
 
-- **修：P0-1 删除 `cmd/main` 空壳** — manifest 删 `service_port`（纯 CGI 不需要常驻进程）
-- **修：P0-2 `read_body` 走 `BODY_FILE` 环境变量** — 命令替换 stdin 丢失导致 POST body 永远空的 bug
-- **修：P0-3 `/api/tasks` 路由分 GET/POST** — 之前 GET 永远 405
-- **修：P0-4 `/api/browse` 路径白名单** — 之前可读任意系统路径（`/etc` 等），现在只允许 `/vol /mnt /media /tmp`
-- **修：P0-5 `/api/drives` 改 `/vol*` 路径** — 之前 `for vol in /mnt/vol*` 在 fnOS 上永远空
-- **修：P1-1 `dd bs=1` 改 `head -c`** — 1MB body 性能提升 100~500ms
-- **修：P1-2 `BASE_DIR` 用 `SCRIPT_FILENAME` 反推** — 不再硬编码 `/var/apps/USBRsyncCgi/target`
-- **修：P1-5 拆 `sync.pid`（实际 rsync PID）和 `sync_status.json`（同步状态）** — 新增 `POST /api/sync_stop` 接口
-- **修：P1-7 双向同步反向移除 `--delete`** — 之前反向时 `cmd[@]` 包含 --delete，会误删源
-- **修：P1-9 同步监控逻辑** — 初始 idle 不再立刻 `clearInterval`；UI 加"⏹ 停止同步"按钮
-- **修：P1-10 删除 `authToken` 死代码** — 后端不校验，前端发 token 无意义
-- **修：P1-11 `http_error` 改用 `exit 0` 一致** — body 仍输出但 status 头由 http_error 提供
-- **修：P1-12 `append_history` 加 `flock` 串行化** — 防并发写丢失
-- **修：同步时 status I/O 节流** — 进度变化 ≥1% 才写
-- **修：去 5 处 `python3` subprocess** — 用 `grep -oP` 提取 JSON 字段（exclusions/source/target）
-- **修：CSS `content:;` 改 `content:''` 伪元素语法** + 移动端 768/480 适配
-- **修：path traversal 用 `realpath` 解析后比对** — 不再依赖 `*..*` 字符串匹配
-- **修：删除 WeCom webhook 凭据** — install_callback / upgrade_callback 走 A 方案（停用推送）
-- **新增：TDD 测试 16/16 通过** — `tests/test_api.js` 覆盖所有关键 API
+- **任务 CRUD** — 添加/编辑/复制/删除/排序同步任务
+- **自动同步** — USB 插入检测 + UUID 绑定设备 + `auto_sync_on_insert`
+- **计划同步** — 每日/每周定时 (cmd 配置)
+- **同步模式** — 单向/双向、`--delete`、`--checksum`、重试+间隔、空间检查
+- **保留历史** — `--backup --backup-dir=.rsync-history/<时间戳>` (keep_history)
+- **反向恢复** — 任务卡「恢复」按钮，备份目标 → 源
+- **源/目标对比** — 「对比」按钮 + 同步后自动差异写入历史
+- **exFAT/NTFS 兼容** — 自动 `--modify-window=1`
+- **预览** — dry-run 统计新增/修改/删除
+- **日志** — sync.log 实时追踪 + 5MB 轮转
+- **历史** — 100 条上限 + 成功/失败/字节/耗时
+- **统计** — KPI 仪表盘
+- **fnOS 通知** — 同步完成/失败发桌面铃铛
+- **配置导出/导入** — JSON
+- **响应式 UI** — 桌面+移动端
 
-## v0.1.0 更新
-
-- **初始版本** — USB 自动同步工具，纯 Bash CGI 重写
-
-## 功能特性
-
-- **USB 自动检测** — 实时监控 `/proc/mounts` 和 `lsblk`，自动发现已挂载的 USB 存储设备（vfat/ntfs/exfat/ext4 等）
-- **多任务管理** — 支持创建、编辑、删除多个同步任务，灵活配置源目录和目标目录
-- **单向/双向同步** — 支持单向同步和双向同步模式
-- **删除同步** — 可选 `--delete` 模式，目标目录中与源不一致的文件将被删除
-- **目录浏览** — 内置目录浏览器，直接从文件系统选择同步目录
-- **实时进度** — 同步过程中实时显示传输进度、当前文件、速度
-- **同步历史** — 完整记录每次同步结果
-- **排除规则** — 支持自定义排除规则（临时文件、系统文件等）
-- **轻量架构** — 纯 Bash CGI 实现，无 Python/Flask 依赖（设备扫描和 rsync 进度解析除外）
-
-## 界面预览
-
-- KPI 卡片展示设备连接数和任务数
-- 设备列表展示已挂载 USB 设备（名称、挂载点、文件系统、大小）
-- 任务列表支持启用/禁用开关、目录选择、同步模式配置
-- 实时同步进度条（百分比、当前文件、传输速度）
-- 同步历史记录
-
-## 技术架构
+## 结构
 
 ```
-USBRsyncCgi/
-├── manifest               # FnOS 应用清单
-├── cmd/
-│   ├── main              # Shell 启动/停止脚本
-│   ├── install_init      # 安装钩子
-│   ├── install_callback  # 安装回调
-│   ├── upgrade_init      # 升级钩子
-│   ├── upgrade_callback  # 升级回调
-│   ├── uninstall_init    # 卸载钩子
-│   ├── uninstall_callback # 卸载回调
-│   ├── config_init       # 配置初始化
-│   └── config_callback   # 配置回调
-├── config/
-│   ├── privilege        # 权限配置
-│   └── resource         # 资源配置
-└── app/
-    ├── api.sh            # Bash CGI API（核心业务逻辑）
-    └── ui/
-        ├── index.cgi      # CGI 入口，路由 /api/* 和静态文件
-        ├── config         # FnOS URL 配置
-        ├── ICON*.PNG      # 应用图标
-        └── www/
-            ├── index.html       # 前端入口
-            ├── css/style.css    # 样式
-            └── js/main.js       # 前端逻辑
+├── manifest            # fnOS 应用清单 (desktop_uidir=ui, nodejs_v24)
+├── cmd/main            # 启动脚本 (bridge TRIM→TRM, 起 node server)
+├── ui/
+│   ├── config          # 网关 socket 配置 (/app/usbrsync)
+│   ├── server.js       # 入口: HTTP server + 路由 + 静态 + 启动
+│   ├── rsync.js        # rsync 核心: 命令构建/执行/进度/重试/双向/停止
+│   ├── daemon.js       # USB 监控守护 + 计划调度
+│   └── www/            # 前端 (index.html/css/js)
+├── config/             # fnOS 权限/资源
+└── tests/              # 测试套件
 ```
 
-### 后端 API
-
-| 接口 | 方法 | 说明 |
-|------|------|------|
-| `/api/status` | GET | 心跳检测，返回版本信息、设备数、任务数、同步状态 |
-| `/api/devices` | GET | 扫描已挂载 USB 设备 |
-| `/api/tasks` | POST | 保存同步任务配置 |
-| `/api/sync` | POST | 立即执行同步任务（后台） |
-| `/api/sync_status` | GET | 获取当前同步进度 |
-| `/api/history` | GET | 获取同步历史记录 |
-| `/api/browse` | GET | 浏览目录（path 参数） |
-| `/api/drives` | GET | 列出可用存储卷 |
-
-## 构建与打包
+## 开发与测试
 
 ```bash
-# 打包 fnpack（项目根目录执行，输出 FPK 到当前目录）
-fnpack build .
+# 本地运行 (端口模式)
+TRM_PKGVAR=/tmp/usbrsync PORT=47999 node ui/server.js
 
-# 输出文件
-USBRsyncCgi.fpk
+# 端到端测试
+node --test tests/
+
+# 打包
+fnpack build .
 ```
 
-## 安装
+## 数据目录
 
-将 `App.Native.USBRsyncCgi.fpk` 上传至 FnOS 应用中心安装。
+- 由 fnOS 注入 `TRIM_PKGVAR` (不改 `@appcenter`, 重装不丢)
+- `config/tasks.json` — 同步任务
+- `history.json` — 同步历史
+- `sync_status.json` — 实时状态
+- `logs/sync.log` — rsync 日志
 
 ## 版本历史
 
-| 版本 | 日期 | 变更 |
-|------|------|------|
-| v0.1.0 | 2026-04-30 | 初始版本，纯 Bash CGI 重写 |
-| v0.4.0 | 2026-07-25 | 增加设备绑定、计划、预览、重试、校验、通知、统计及配置管理 |
+### v0.4.1 (Node.js 重写)
+
+- **架构**: bash CGI + bash 守护 → 纯 Node 单进程（HTTP + daemon + USB 监控 + 计划调度，零 npm 依赖）
+- 保留全部功能: 任务/自动同步/计划/双向/恢复/对比/保留历史/exFAT/通知
+- **新增**: 源/目标可用性实时检测（USB 拔出判定）+ **中断自动补同步**（rsync 失败且非用户停止 → 记 pending，USB 重新挂载后 daemon 自动补同步，最多 3 次）
+- **修复**: rsync exit 23 的"部分传输"误判（USB 拔出导致源/目标不可用时正确判失败，不再误报完成）
 
 ## 维护者
 
-- 作者：[@一零一二](https://gitee.com/wyf1015)
-- 主页：https://gitee.com/wyf1015/usbrsynccgi
-
----
-
-> 如果这个项目对您有帮助，欢迎赞助支持 ❤️
+- 作者：[@再见一零一二](https://gitee.com/wyf1015)
+- GitHub：[@Wyf841015](https://github.com/Wyf841015)
+- Gitee：[@wyf1015](https://gitee.com/wyf1015)
