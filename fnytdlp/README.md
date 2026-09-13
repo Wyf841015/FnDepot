@@ -18,8 +18,10 @@
 - **下载路径浏览**：设置面板支持 📂 按钮 + 弹窗选择目录（不限制白名单，可任意浏览后选择）
 - **Cookie 多网站管理**：单文件 → 数组结构 + 任务级 cookieName 透传，浏览器扩展导入
 - **页脚版权**：动态版本号 + 自动年份，yt-dlp 加原项目链接
-- **安全**：SSRF 防护（只 http/https）/ 路径白名单 / Cookie 加密存储 / fetch 30s 超时 / 错误脱敏
+- **安全**：SSRF 防护（私网 IP 拦截）/ CORS 加固 / 路径白名单 / Cookie 加密存储 / fetch 超时 / 错误脱敏
 - **零运行时依赖**：纯 Node.js ESM 模块，fpk 解包即跑
+- **yt-dlp 版本显示** (v0.7.0)：顶部标题栏版本徽章，实时显示当前已安装版本
+- **yt-dlp 热更新** (v0.7.0)：🔄 检测按钮 → 发现新版 → 弹窗确认 → 下载对应架构 binary → 原子替换
 - **磁盘配额** (v0.4.0)：下载目录容量上限，超额自动清理最旧已完成任务
 - **下载历史统计** (v0.4.0)：4 个累计 KPI + 双 canvas 图表 (每日/按域名)，v0.4.1 移到独立 modal
 - **文件名模板预览** (v0.4.0)：输入 `%(title)s` 实时显示展开效果
@@ -30,7 +32,7 @@
 
 ### 在 FnOS 应用中心安装
 
-1. 下载 `fnytdlp.fpk`（约 76.6 MB，v0.6.3）
+1. 下载 `fnytdlp.fpk`（约 76.6 MB，v0.7.0）
 2. 在飞牛NAS应用中心 → 手动安装
 3. 首次进入"设置"，配置下载路径（建议 `/vol2/1000/fnytdlp/`）
 4. 点"+"粘贴视频链接开始下载
@@ -233,6 +235,22 @@ PHP 动态直播源（如 `http://example.com/live.php?id=xxx`）自动检测 + 
 `initXxxDashboard` (幂等) / `loadTasks` (全量，结构变化) / `pollTasks` (增量，改 textContent 不 innerHTML)。比 `setInterval(loadTasks)` 强：无 focus 丢失 / 无 scroll 位置重置 / GPU 加速。
 
 ## 版本历史
+
+### v0.7.0 (2026-09-13)
+
+**全栈安全审计修复 + yt-dlp 版本显示/热更新**
+
+- **🛡️ 全栈安全审计**（P0×5 / P1×6 / P2 多项）：
+  - **SSRF 防护** — `isValidUrl` 增加私网/回环/链路本地/云元数据 IP 拦截（RFC1918 + 127.0.0.0/8 + 169.254.0.0/16 + ::1 + ULA），覆盖所有 URL 入口
+  - **缩略图代理加固** — `/api/proxy-thumbnail` 复用 SSRF 校验 + 15s 超时 + 5MB 响应体上限
+  - **hot-update 并发锁** — 下载 binary 加互斥锁 + 唯一 tmp 文件（randomUUID）+ finally 清理残留
+  - **XSS ×3 修复** — 搜索缩略图 src / format 列表全字段 / 浏览路径单引号，全改转义 + 事件委托
+  - **CORS 加固** — 移除 `Access-Control-Allow-Origin: *`，HTTP 监听改 127.0.0.1
+  - **fetch 超时** — AI 总结请求 60s 超时
+- **✨ yt-dlp 版本显示** — 顶部标题栏 fnytdlp 后新增版本徽章（页面加载从 `/api/health` 读取真实 current 版本）
+- **✨ yt-dlp 热更新** — 赞助按钮后新增 🔄 检测按钮：检测到新版本 → 弹确认 → 下载对应架构 binary → atomically 替换 → 徽章即时更新
+- **🐛 修复** — 字幕复制按钮 `arguments[0]`→`this`（原必崩溃）、动态注入按钮 MutationObserver 自动 rewire、热更 current 缺失不误报、死代码清理
+- **✓ 验证** — 279 个测试全过，`node --check` 通过
 
 ### v0.6.3 (2026-08-29)
 
