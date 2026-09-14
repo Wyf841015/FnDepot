@@ -54,8 +54,8 @@
         "1.4.1": {
           "packages": {
             "all": {
-              "size": 1397167,
-              "sha256": "d1dac84f7ed95bce3368174c69371fd736654bc4440427014a129eb4aedf8c3b"
+              "size": 1397183,
+              "sha256": "cd89ed94bed038f43d404a5cfcf21c7fa87817b38260bcd4ecc9a0f970582c72"
             }
           },
           "changelog": "v1.4.1\n- 修复 loguru enqueue 序列化 KeyError: record[\"time\"] 损坏导致所有 INFO 日志被静默丢弃, 监控日志看似停止\n- 修复魔法推送 HTTP 429 限流退避重试, 限流恢复后自动重推\n- 放宽数据库路径白名单支持 /usr/trim/var (fnOS eventlogger_service 事件日志库监控)",
