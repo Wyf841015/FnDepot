@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.4.0-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.4.1-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
@@ -53,6 +53,7 @@
 - PushPlus 推送
 - MeoW 推送
 - 魔法推送（自定义 HTTP POST）
+- Gotify 推送（自托管）
 - Webhook 自定义
 
 ### 🔔 告警聚合
@@ -154,8 +155,9 @@ fnlogpush/
 ## 版本历史
 
 ### v1.4.1 (2026-09-14)
-- 🐛 修复 loguru enqueue KeyError 吞掉所有日志
-- 🚨 修复魔法推送 429 限流退避
+- 🐛 **修复 loguru enqueue 序列化 KeyError** — `JSONFormatter` 在 `enqueue=True` + pickle 后 `record["time"]` 损坏导致 `KeyError '"time"'`，所有 INFO 日志被静默丢弃 → info.log 停止增长、监控"看起来没反应"。修复：formatter 显式 `strftime` 兜底 + 记录 `time` 前缀字符串化
+- 🚨 **修复魔法推送 HTTP 429 退避重试** — 限流(429)不再立即丢弃，改指数退避重试，限流结束自动恢复推送，避免推送渠道静默失效
+- 🔓 **放宽数据库路径白名单支持 fnOS 事件日志库** — 新增 `/usr/trim/var` 前缀(内含 eventlogger_service/logger_data.db3 系统事件日志库)，日志库监控可正常连接
 
 ### v1.4.0 (2026-09-09)
 - 🆕 **新增 Gotify 推送渠道**（自托管）— 支持服务端地址 + 应用令牌（App Token）+ 优先级（0-10）配置；通过 REST API + `X-Gotify-Key` 认证推送
