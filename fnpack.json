@@ -56,6 +56,7 @@
         "1.4.1": {
           "packages": {
             "all": {
+              "download_url": "fnlogpush/fnlogpush.fpk",
               "size": 1397183,
               "sha256": "cd89ed94bed038f43d404a5cfcf21c7fa87817b38260bcd4ecc9a0f970582c72"
             }
