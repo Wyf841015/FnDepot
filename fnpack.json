@@ -145,6 +145,17 @@
               "size": 472101
             }
           }
+        },
+        "0.11.0": {
+          "changelog": "### v0.11.0\n- 安全修复：CSRF 跨站请求防护（POST 写操作需网关认证 X-Trim-Userid 或同源）\n- 安全修复：sysclean 裸目标 id 不再能直接清理，路径白名单支持 glob（/vol*/@appcenter）\n- 完善：所有扫描页面（空间/相似/异常/重名）统一添加目录浏览按钮\n- 新增：P2-3 去重双段预哈希（头+尾 4KB，替代单段头部）\n- 新增：P2-2 重名冲突检测（重名 Tab，跨目录同名分组）\n- 新增：P2-1 下载残留检测（.part/.crdownload/.download/.partial/.aria2）\n- 新增：P0-3 异常文件检测（空文件/无效软链/损坏媒体）\n- 新增：P0-2 相似图片/视频检测（dHash + ffmpeg）\n- 新增：P0-1 磁盘空间分析（空间 Tab，卷用量/目录下钻/类型分布/大文件）\n- 分类分组：系统清理 5 类分类浏览（对齐 MangoDisk）\n- 测试覆盖：124/124",
+          "updated_at": "2026-09-18T18:35:00+08:00",
+          "packages": {
+            "all": {
+              "download_url": "fnclearup/fnclearup.fpk",
+              "sha256": "3d467b219cf1cda2c5aec48cfb1552bd658fa586c56b5051b361716018346d3b",
+              "size": 497283
+            }
+          }
         }
       }
     },
