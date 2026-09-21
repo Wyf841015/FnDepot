@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.4.1-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.5.0-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
@@ -38,6 +38,12 @@
 
 ### 🎬 影视监控
 - 监控影视库更新（新增/删除/收藏/播放）
+
+### 🎵 音乐监控
+- 监控飞牛音乐曲库（`trim.music/db/music.db`）：音乐入库 / 播放 / 收藏 / 取消收藏 / 删除（文件·管理）
+- 歌单变更：新建歌单 / 歌单加歌 / 歌单移除歌曲
+- 用户登录监控
+- 支持重复播放检测（`play_count` 累加对比）、登录幂等、300s 去重、首次基线不推送已有数据
 
 ### 🐳 Docker 容器监控
 - 通过 `docker` CLI 监控容器状态（兼容无 Socket 权限环境）
@@ -153,6 +159,16 @@ fnlogpush/
 ```
 
 ## 版本历史
+
+### v1.5.0 (2026-09-21)
+- 🎵 **全新「音乐监控」面板** — 轮询飞牛音乐曲库 `trim.music/db/music.db`，支持 **9 类事件**推送：
+  - 音乐入库 / 音乐播放 / 音乐收藏 / 取消收藏 / 音乐删除（文件删除·管理删除）
+  - 新建歌单 / 歌单加歌 / 歌单移除歌曲 / 用户登录
+- 🧩 前端新增「音乐监控」配置面板（启用开关 / 库路径 + 检查连接 / 轮询间隔 / 事件类型勾选）+ 侧边栏入口 + 状态栏「音乐」指示
+- 🔧 后端新增 `MusicDBPoller` 轮询器 + `MusicMonitorService` 服务层 + 6 个 `/api/music/*` 路由（config/status/start/stop/db-check）
+- 🛡️ 支持重复播放检测（`play_history.play_count` 累加对比）+ 登录幂等 + 300s 去重 + 基线不推送已有数据
+- 🔒 数据库路径白名单新增 `/usr/local/apps/@appdata` 前缀（启用飞牛应用数据曲库）
+- 🧪 新增音乐监控测试 **17 项**（基线 / 各事件 / 去重 / 重复播放 / 登录幂等 / 状态持久化）
 
 ### v1.4.1 (2026-09-14)
 - 🐛 **修复 loguru enqueue 序列化 KeyError** — `JSONFormatter` 在 `enqueue=True` + pickle 后 `record["time"]` 损坏导致 `KeyError '"time"'`，所有 INFO 日志被静默丢弃 → info.log 停止增长、监控"看起来没反应"。修复：formatter 显式 `strftime` 兜底 + 记录 `time` 前缀字符串化
