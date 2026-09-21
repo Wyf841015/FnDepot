@@ -35,6 +35,21 @@ fnOS 系统下的 m3u8/HLS/DASH/MSS 视频下载器，零依赖、纯 Node.js �
 
 ## 版本历史
 
+### 0.9.0 (2026-09-20)
+
+**对标 N_m3u8DL-RE 等开源项目优化 6 项**（GitHub/Gitee 同类工具对比产出）
+
+- **save-pattern 命名模板**：支持 `<SaveName> <Id> <Resolution> <Bandwidth> <Codecs> <Language> <MediaType>` 占位符，多清晰度下载自动区分文件名
+- **custom-hls-method 加密覆盖**：手动指定 HLS 加密方式（AES_128_ECB / NONE 等）+ 自定义 KEY/IV（HEX/BASE64/文件路径），解不被播放列表声明的加密流
+- **批量任务导出/导入**：`GET /api/tasks/export` 导出完整任务配置（含 name/options），`POST /api/tasks/import` 批量导入；WebUI 批量栏新增 💾导出任务 / 📥导入任务 按钮
+- **任务快照**：JSON 快照保留每个任务独立参数，跨设备/换机迁移
+- **文件名兜底截断**：超 200 字符自动截断，防文件系统 ENAMETOOLONG
+- 添加任务弹窗新增：文件名模板 + 自定义加密方式/KEY/IV 输入
+- **新增「联系作者」按钮**（✉️，赞助按钮后）：弹窗显示 QQ 交流群 `745565752`，支持一键复制群号
+- 已实现（无需改动）：ad-keyword 广告过滤 / ENDLIST 自动停录 / 限速 / save-pattern 基础
+
+> 注：本次对标后发现 ad-keyword 广告过滤已在 v0.8.x 实现、ENDLIST 停录与限速已内置、日志走 fnOS 框架（无自写文件竞争），故不再重复实现。
+
 ### 0.8.2 (2026-07-28)
 
 **10 项功能增强 + 5 项 code review 修复**
