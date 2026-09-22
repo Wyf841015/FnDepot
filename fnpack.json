@@ -309,6 +309,17 @@
       }
      },
      "updated_at": "2026-09-19T16:04:39+08:00"
+    },
+    "0.7.2": {
+     "changelog": "v0.7.2\n\n质量预设/容器格式点击修复 + 单链接质量下拉框 + FFmpeg 路径设置\n\n- 🐛 修复质量预设/容器格式按钮点击无反应: 补齐缺失CSS(基础/hover/选中态)+DOM0级绑定兜底\n- ⬇️ 单链接质量下拉框: 粘单链接解析后按实际分辨率/音频档生成下拉框, video-only自动拼最佳音频\n- 🎞️ FFmpeg 路径设置+自动检测: 设置→高级新增路径输入框+🔍检测按钮, 检测到自动保存, 转码时 yt-dlp 收到 --ffmpeg-location 调用\n- 🗑 移除首页视频/音频分类 tab: 按ext筛选对下载中任务(ext为空)无效, 两个分类已删除\n",
+     "updated_at": "2026-09-22",
+     "packages": {
+      "all": {
+       "download_url": "fnytdlp/fnytdlp.fpk",
+       "sha256": "e8fd8f6f9bbc56a42825ad621271121188ea6753ca72e5e5d23ab36acb5ca34b",
+       "size": 80362039
+      }
+     }
     }
    }
   },
