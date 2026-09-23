@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.5.1-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.5.2-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
@@ -159,6 +159,9 @@ fnlogpush/
 ```
 
 ## 版本历史
+
+### v1.5.2 (2026-09-24)
+- 修复「音乐监控每次重启推送全库」：`failed_push` 失败重试队列在重启时自动补发历史积压导致每次重启推 412 首历史歌。修复：`load_pending()` 加时效过滤，重启只恢复窗口内近期失败、陈旧积压不重放
 
 ### v1.5.1 (2026-09-23)
 - 🎨 **修复主题切换无法持久化** — 根因 `requestIdleCallback` 空闲回调在页面繁忙/快速刷新/关闭时可能不触发，`beforeunload`/`pagehide` 在 fnOS WebView 也不总是触发 → 切换主题后保存从未发出，刷新/重开应用回退。修复：切主题改为**立即保存**（不再走 rIC 延迟）+ 后端保存请求补 GATEWAY_BASE 前缀

@@ -85,6 +85,17 @@
               "size": 1000100
             }
           }
+        },
+        "1.5.2": {
+          "changelog": "v1.5.2\n- 修复「音乐监控每次重启推送全库」：failed_push 失败重试队列在重启时自动补发历史积压（修复前某次 last_id 读小值把 412 首历史歌当新增推送、mof 渠道失败落库，每次重启 _restore_failed_tasks() 全部重放）。修复：load_pending() 加 max_age_hours=6 时效过滤，重启只恢复窗口内近期失败、陈旧积压不重放；已清空历史音乐失败积压\n- 新增 2 项 push_service 重放过滤测试（pending 时效过滤 + restore 跳过陈旧），推送相关 31 项全过",
+          "packages": {
+            "all": {
+              "download_url": "fnlogpush/fnlogpush.fpk",
+              "sha256": "f2dc7a66079e1d420056bc7582a196ff077b9f3063a8a4a3da7bd646ace74835",
+              "size": 1001199
+            }
+          },
+          "updated_at": "2026-09-24T06:09:29+08:00"
         }
       }
     },
