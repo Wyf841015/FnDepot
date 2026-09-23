@@ -3,7 +3,7 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.5.0-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.5.1-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
@@ -159,6 +159,11 @@ fnlogpush/
 ```
 
 ## 版本历史
+
+### v1.5.1 (2026-09-23)
+- 🎨 **修复主题切换无法持久化** — 根因 `requestIdleCallback` 空闲回调在页面繁忙/快速刷新/关闭时可能不触发，`beforeunload`/`pagehide` 在 fnOS WebView 也不总是触发 → 切换主题后保存从未发出，刷新/重开应用回退。修复：切主题改为**立即保存**（不再走 rIC 延迟）+ 后端保存请求补 GATEWAY_BASE 前缀
+- 📊 **免打扰统计纳入 7 类事件监控** — summary_only 统计模式先前只记录日志类，docker / backup / media / music / notify / photo / download 7 个事件监控在 DND 期间仅缓存原文、不生成统计记录，摘要 total=0。修复：各事件点补 `cache_event_record(LogRecord)`，完整纳入按级别/按分类/按事件类型三维统计
+- 📦 主题白名单单一真理源（`VALID_THEMES` 模块常量）+ 前端主题 radio 立即写 localStorage + sendBeacon 兜底
 
 ### v1.5.0 (2026-09-21)
 - 🎵 **全新「音乐监控」面板** — 轮询飞牛音乐曲库 `trim.music/db/music.db`，支持 **9 类事件**推送：
