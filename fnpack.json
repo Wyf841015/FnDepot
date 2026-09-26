@@ -96,6 +96,17 @@
             }
           },
           "updated_at": "2026-09-24T06:09:29+08:00"
+        },
+        "1.5.3": {
+          "changelog": "- 修复「Bark 推送配置保存不了」— pydantic 模型 BarkConfig 缺 device_key 字段，且 server_url 与前端/工厂期望的 server 字段名不符。pydantic 嵌套模型 extra 默认 ignore，model_validate + model_dump 会静默丢弃这两个字段，接口仍返回成功，导致配置保存后永不生效\n- 修复「PushPlus 主题配置保存不了」— PushPlusConfig 缺 topic 字段（同类问题，全项目扫描发现）\n- 新增 12 项渠道模型字段对齐测试，从机制上防止这一类「静默丢字段」问题复发\n- 同步 package-lock.json 版本号",
+          "packages": {
+            "all": {
+              "download_url": "fnlogpush/fnlogpush.fpk",
+              "sha256": "3ac02ce00551411c426caf000c4b85fb3fd1a3951f986fa8961af06a1eb4158e",
+              "size": 1001225
+            }
+          },
+          "updated_at": "2026-09-26"
         }
       }
     },

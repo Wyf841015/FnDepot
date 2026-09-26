@@ -160,6 +160,12 @@ fnlogpush/
 
 ## 版本历史
 
+### v1.5.3 (2026-09-26)
+- 修复「Bark 推送配置保存不了」：pydantic 模型 `BarkConfig` 缺 `device_key` 字段，且 `server_url` 与前端/工厂期望的 `server` 字段名不符。pydantic 嵌套模型 `extra` 默认 `ignore`，`model_validate` + `model_dump` 会**静默丢弃**这两个字段，接口仍返回成功 → 配置保存后永不生效。修复：字段名对齐为 `server` 并补上 `device_key`
+- 修复「PushPlus 主题配置保存不了」：`PushPlusConfig` 缺 `topic` 字段（同类问题，全项目扫描发现）
+- 新增 12 项渠道模型字段对齐测试，参数化遍历推送渠道工厂，从机制上防止这一类「静默丢字段」问题复发
+
+
 ### v1.5.2 (2026-09-24)
 - 修复「音乐监控每次重启推送全库」：`failed_push` 失败重试队列在重启时自动补发历史积压导致每次重启推 412 首历史歌。修复：`load_pending()` 加时效过滤，重启只恢复窗口内近期失败、陈旧积压不重放
 
