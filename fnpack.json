@@ -200,6 +200,17 @@
               "size": 497901
             }
           }
+        },
+        "0.11.1": {
+          "changelog": "v0.11.1\n- P0 修复「应用清理删除用户」守护失效：旧守护只判 uid<900，但 admin(1000)/polkitd(995)/systemd-network(998) 全部 ≥900，守护形同虚设；/volX/@appmeta|@appconf|@appdata|@apphome/<name> 全部匹配 @app[^/]+ 正则，第二段被直接当 username 传给 userdel -r，最坏可删掉用户全部数据或断网。改为三层判据：uid ∈ [900,1000) + gid == 901(fnOS 应用账号组) + 核心组件黑名单\n- 修复「QQ群号复制按钮点了没反应」：① copyQQNumber 未 export 到 window，IIFE 闭包导致 inline onclick 静默 ReferenceError；② fnOS WebView 走 http(非安全上下文) 时 navigator.clipboard 为 undefined，旧 fallback 的 ta.select() 未先 focus() 导致 CEF 下 select 失败，且失败时无任何 UI 反馈。改为三级降级链 + 成功/失败双路可见反馈\n- inline onclick 绑定方式改为 DOM-0 (el.onclick=)：fnOS WebView (CEF) 对动态重渲元素的 addEventListener 可能不触发，DOM-0 最可靠，并加 __rewired 幂等标记防重复绑定\n- 测试加固：移除导出检查里的 isBuiltin 白名单，新增删用户守护 26 项 + 复制降级链 14 项测试",
+          "updated_at": "2026-09-27",
+          "packages": {
+            "all": {
+              "download_url": "fnclearup/fnclearup.fpk",
+              "sha256": "6abc191f697f0090c34aa24e5c5ed7fc0a635be2318e1fd41fa617a55f4b0cb6",
+              "size": 499988
+            }
+          }
         }
       }
     },
