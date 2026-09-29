@@ -488,7 +488,7 @@
       "preview_urls": [
         "usbrsync1/Preview/预览.png"
       ],
-      "run_as": "package",
+      "run_as": "root",
       "install_type": "",
       "is_docker": false,
       "maintainer": "一零一二",
@@ -498,13 +498,13 @@
       "bug_report_url": "https://gitee.com/wyf1015/usbrsync1/issues",
       "releases": {
         "0.4.2": {
-          "changelog": "v0.4.2\n中断自动补同步 + 排除规则\n\n- 挂载中断自动补同步: USB拔出/同步中断时自动记录待补任务, 重新插入后自动补同步(最多3次)\n- rsync 23 误判修复: 源/目标不可用(USB拔出等)不再误报同步完成\n- 任务级排除规则: 每任务可配置排除文件/目录, 前端已支持",
-          "updated_at": "2026-09-12T16:07:03+08:00",
+          "changelog": "v0.4.2\n顶部交互: 新增联系作者按钮(主题按钮后)、全部按钮补齐图标并统一规格(34px 高/9999px 圆角/12px 字号/600 字重)、主题按钮带文字切换(🌙 主题 / ☀️ 浅色)\n设备识别: 修复把 NAS 自身 SATA 盘误报为 USB 设备(原判定仅匹配 /dev/sd* 与 ext/vfat, 导致 /dev/sdc2 系统盘被识别为 USB), 改用 /sys/block/<name>/removable 内核权威属性并排除 /volN 内部卷\n导出/下载: 导出配置与下载日志改为先选目录再保存到 NAS(不再落到浏览器默认下载目录), 文件名服务端固定防目录穿越, 保存后提示完整路径\n修复: 导出/下载无响应(触发下载的 <a> 未插入 DOM, CEF 不触发游离元素 click)\n修复: 目录浏览不可用 —— 尝试以 package 用户运行后确认不可行(fnOS 用户目录为 000+ACL 权限模型, package 无 readdir 权限), 已恢复 root 运行\nv0.4.1: Node.js 重写版(纯 Node 单进程), 保留任务/自动同步/计划/双向/恢复/对比/保留历史/exFAT/通知, 新增源/目标可用性实时检测与中断自动补同步",
+          "updated_at": "2026-09-29T20:47:17",
           "packages": {
             "all": {
               "download_url": "usbrsync1/usbrsync.fpk",
-              "sha256": "fa86898f4fd41798668cc3451ef16f50bed2feb82e8b11ed507248e2939c4354",
-              "size": 341729
+              "sha256": "b2b6e1b44e4c414dac05527ca53a2143b2e239ca0c551ad821c9c14a4b48d09d",
+              "size": 344621
             }
           }
         }
