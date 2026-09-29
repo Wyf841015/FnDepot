@@ -21,6 +21,34 @@ fnOS 系统下的实时网络流量监控工具，零依赖、纯 Node.js 实现
 
 ## 版本历史
 
+### v0.6.4
+
+**放弃降权运行，改回 `run-as: root`（实测决定）**
+
+- 现象：App 流量页进程列表只剩一条 `(kernel)`，无用户态进程明细
+- 根因：v0.6.3 曾尝试以 `netwatch` 用户运行、通过 file capability 授予 eBPF 能力。
+  实测确认 **fnOS 会把整个应用进程树（含 install/upgrade 回调与 `cmd/main`）都以
+  `run-as` 指定的用户运行**，这些脚本全部以 `uid=949` 执行，
+  `unable to set CAP_SETFCAP effective capability: Operation not permitted`
+  —— 降权后应用内没有任何代码路径能获得 root，capability 永远设不上，
+  pktstat 采集失败，只剩 ss 侧汇总的 `(kernel)`
+- 修复：`config/privilege` 改回 `run-as: root`，root 自带全部能力，开箱即用
+- 关键细节：`apply_capabilities.sh` 在 root 下直接早退。二进制一旦带 file
+  capability，内核会把执行它的进程能力集**截断到那几项**，root 反而丢失其余能力
+
+### v0.6.3
+
+**App 流量页实时刷新 + 速率修复**
+
+- 修复进程流量速率恒为 0：速率基准不再被每次读路径推进，最短 1 秒才推进一次并复用缓存
+- 修复采样盲区：pktstat 采集窗口按轮询间隔 +1 秒设置，消除约一半漏采
+- App 流量页新增「实时更新 HH:MM:SS」时间指示
+- 修复 `apply_capabilities` 静默失败：`chown`/`chmod`/`setfacl` 会清除 file capability，
+  已改为 `setcap` 最后执行；并修复 fnOS 回调环境下的二进制路径解析（经 `target` 软链）
+- 修复页面不自动刷新：`applyAll` 顺序裸调用，任一组件抛错会中断整链导致表格不更新，
+  已改为各子渲染独立 `try/catch` 隔离
+- 新增启动自检：缺 eBPF 能力时写 info.log，并在 App 流量页显示可操作告警条
+
 ### v0.6.2
 
 - 今日/本周统计卡区分上行与下行
