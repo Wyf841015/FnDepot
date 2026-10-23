@@ -542,6 +542,43 @@
           }
         }
       }
+    },
+    "tvboxhub": {
+      "display_name": "TvBox For Emby",
+      "desc": "把 TVBox 的点播源接入 Emby：跨站搜索、一键推送 strm、按站点建媒体库，内置 JRE 开箱即用",
+      "platform": [
+        "all"
+      ],
+      "categories": [
+        "影音娱乐"
+      ],
+      "icon_url": "tvboxhub/ICON_256.PNG",
+      "preview_urls": [
+        "tvboxhub/Preview/screenshot_overview.png",
+        "tvboxhub/Preview/screenshot_sites.png",
+        "tvboxhub/Preview/screenshot_sync.png"
+      ],
+      "run_as": "root",
+      "install_type": "",
+      "is_docker": false,
+      "maintainer": "一零一二",
+      "maintainer_url": "https://gitee.com/wyf1015",
+      "distributor": "一零一二",
+      "distributor_url": "https://gitee.com/wyf1015",
+      "bug_report_url": "https://gitee.com/wyf1015/tvboxhub/issues",
+      "releases": {
+        "0.1.1": {
+          "changelog": "v0.1.1\n把 TVBox 点播源接进 Emby——首个对外版本\n\n- 点播源接入：支持 TVBox 单仓 JSON / 多仓 urls / base64 / 本机绝对路径\n- 站点管理：站点列表 + 批量探测，只把「已确认可播」的站点加入同步（有列表 ≠ 能播）\n- 跨站搜索：并发搜索 → 详情 → 试播 →「一键推送」进 Emby 库\n- 同步入库：按站点建目录，<输出目录>/<站点>/movies 与 …/tv，生成 .strm + .nfo + 海报\n- 增量同步：已同步过的条目按小时窗口跳过；多线路源自动兜底换线\n- 播放代理：proxy / redirect / auto 三种流模式，自动补 Referer / User-Agent 并重写 HLS 分片\n- 删除历史数据：先统计再确认（需输入 DELETE），只删 .strm/.nfo/字幕/海报，不动其它文件\n- 孤儿清理有清单（.tvbox-manifest.json）+ 单次删除上限，防止命名规则变更误删整库\n- Emby 插件：Web 端一键安装 / 自更新，装完自动重启 Emby 并显示重启进度弹窗\n- 内置裁剪版 JRE（x64 / arm64），不依赖系统 Java\n- 界面：侧边栏 8 个页面（概览/使用说明/站点/搜索/同步/配置/Emby 插件/操作记录）、深浅主题、移动端适配\n- 首次使用向导 + 6 项自动检测的进度清单\n- 修复：搜索页推送会把片名当成站点目录名（文件写到 <输出目录>/<片名>/…）",
+          "updated_at": "2026-10-23T10:53:22+08:00",
+          "packages": {
+            "all": {
+              "download_url": "tvboxhub/tvboxhub.fpk",
+              "sha256": "9ae21bd114ea102a752b427929858985b97c3d0ace3e1a203f169ee6ef505df3",
+              "size": 64185482
+            }
+          }
+        }
+      }
     }
   }
 }
