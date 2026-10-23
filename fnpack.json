@@ -610,6 +610,17 @@
               "size": 64205370
             }
           }
+        },
+        "0.5.1": {
+          "changelog": "修 Emby 4.10 点开插件设置报 lifeCycleAbortSignal\n\n- 🐛 问题：Emby 里点「插件 → TvBox For Emby → 设置」，页面直接抛 Cannot read properties of undefined (reading 'lifeCycleAbortSignal')，根本进不去\n- 根因不在插件页面：Emby 4.10 的 viewmanager 在页面显示后执行 getResumeOptions(newView.controller, …)，该函数直接读 instance.lifeCycleAbortSignal 且没有空值保护；而 newView.controller 只在页面注册了控制器（根元素带 data-controller=\"__plugin/<名字>\"）时才存在\n- ✅ 补上配置页控制器页面（tvboxjs），配置页根元素加 data-controller=\"__plugin/tvboxjs\"\n- 细节：控制器故意不写 onResume/onPause —— Emby 只在两者都缺时才把 BaseView 混进来，而 lifeCycleAbortSignal 正是 BaseView 构造时创建的；自己写 onResume 会跳过混入并复现同一个报错\n- ✅ 配置页引导逻辑挪进控制器构造函数（Emby 用 innerHTML 插片段，内联 script 不执行；控制器是 require 加载的，一定会跑）\n- 实测（Emby 4.10.0.40）：/web/ConfigurationPage?name=tvboxjs 返回 200 application/x-javascript；配置页根元素含 data-controller；浏览器里 require 该模块返回构造函数、原型无 onResume/onPause、实例化不抛错",
+          "updated_at": "2026-10-18T18:10:00+08:00",
+          "packages": {
+            "all": {
+              "download_url": "tvboxhub/tvboxhub.fpk",
+              "sha256": "4fde34927831b87fbee80f731396b0716ac53a5c3eadb00dfecb63049d19529f",
+              "size": 64206931
+            }
+          }
         }
       }
     }
