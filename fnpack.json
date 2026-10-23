@@ -577,6 +577,17 @@
               "size": 64185482
             }
           }
+        },
+        "0.2.1": {
+          "changelog": "v0.2.1\n直链缓存不再被每轮同步清空 + 同步实测\n\n- 修复：同步开始时清空直链缓存，导致上一轮预热的地址全废（第二轮同步没有需要校验的分集时缓存会一直是空的）\n- 实测：单集于 m3u8 首播 11.0s → 命中缓存 0.36s（约 30 倍）\n- 实测同步：192 条目 / 43 分集 / 0 错误；第二轮 12s，192 条全部「内容未变」\n- 目录命名 74/76 带 (年份)，其余为源站未提供年份\n\nv0.2.0\n对齐 SmartStrm 的六类能力（12 项）\n\n- 播放：直链缓存（PlayCacheMinutes，逐集校验顺带预热）+ 播放签名（StreamSign / StreamSignRequired，Play 与 Stream 双校验）\n- 触发：Webhook（/TvBox/Webhook，支持 sync / sync_item / emby_item_removed）+ Emby 删除同步（监听 ItemRemoved，只动 movies/tv 子树）\n- 命名：NameTemplate / RenameRules（正则替换）/ SkipKeywords / 字幕落地\n- 元数据：TMDB 规范化（只改 nfo 的 title/year/tmdbid，不改目录名）+ nfo 写 tmdbid\n- 增量：UseItemTimeCursor（按 vod_time 判断）/ SyncPlans 多计划 / SiteFailThreshold 站点自动熔断\n- 修复：配置类使用 Dictionary 导致 XmlSerializer 保存整份配置失败（曾清空过 TvBox.xml）\n- 修复：UpdateConfig / ConfigResult 漏新字段，hub 改配置被静默丢弃\n- 修复：HubToken 未加入 hub 白名单，令牌无法写回插件",
+          "updated_at": "2026-10-23T12:47:34+08:00",
+          "packages": {
+            "all": {
+              "download_url": "tvboxhub/tvboxhub.fpk",
+              "sha256": "b667732682688c11f729563092611ff7e59ab1c21c0fe3728de8730ffff6e99f",
+              "size": 64198059
+            }
+          }
         }
       }
     }
