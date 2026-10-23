@@ -1,207 +1,206 @@
 # TvBox For Emby
 
-把 TVBox 的点播源接进 Emby：**搜索 → 试播 → 一键推送 → 在 Emby 里当普通影视看**。
+> 把 TVBox 的点播源接进 Emby：跨站搜索、一键推送 strm、按站点建媒体库，内置 JRE 开箱即用。
 
-一个 fnOS 应用（`tvboxhub.fpk`）+ 一个 Emby 插件（`TvBox.dll`），装完在浏览器里点点鼠标就能用，不用碰命令行。
+![TvBox For Emby](ICON_256.PNG)
 
-> 当前版本 **v0.1.0**（首个对外版本）。
-> 内部迭代期（0.5.x）的逐条开发记录保留在 [docs/CHANGELOG-internal.md](docs/CHANGELOG-internal.md)。
+## v0.1.1 更新
 
----
+**首个对外版本：点播源 → Emby 媒体库**
 
-## 为什么需要它
+- 填 TVBox 配置地址（单仓 JSON / 多仓 urls / base64 / 本机绝对路径）即可采集站点
+- 站点页批量探测，**只把「已确认可播」的站点加入同步**（有列表 ≠ 能播，实测不少源的播放地址返回的是解析接口 JSON）
+- 跨站并发搜索 → 详情 → 试播 →「一键推送」，单条也能直接进库
+- 同步按站点目录落盘，生成 `.strm` + `.nfo` + 海报，Emby 扫描后就是普通媒体库
+- 播放由插件代理：自动补 `Referer` / `User-Agent`、重写 HLS 分片，防盗链的源也能播
 
-TVBox 生态里的源是「苹果 CMS」接口：能搜、能看详情，但没有媒体库，看完就忘，也没法在电视上按海报浏览。
-
-这个项目做的事很简单：**把点播条目写成 `.strm` 文件**。Emby 把 `.strm` 当普通视频文件扫描入库，于是你得到海报墙、分类、继续观看、多端同步播放进度——而播放时真正拉流的还是源站。
-
-多源的情况也照顾到了：每个站点单独一个目录，同一部片在几个站能看就存几份，谁挂了都不影响。
-
----
-
-## 组成
-
-| 组件 | 位置 | 说明 |
-|---|---|---|
-| **fnOS 应用** | `fpk-src/` | 生命周期脚本 `cmd/main`、Web UI、**内置裁剪版 JRE（x64 / arm64 各约 46 MB）**，装到 NAS 上开箱即用 |
-| **spider-hub** | `spider-hub/` | Java 中转服务：跑 catvod spider、聚合搜索、代理播放、写 strm 的调度口 |
-| **Emby 插件** | `TvBox.Plugin/` | 在 Emby 里提供搜索/推送/播放代理，负责补 Referer/UA 与 HLS 分片重写 |
-| **spider 实验舱** | `spider-host/` | 验证「TVBox 的 dex 内 spider 能否直接在 JVM 跑」的探针工具，非运行时依赖 |
-
-hub 与插件之间的调用很薄：插件调 hub 的 `/api/*`，hub 通过插件反向更新媒体库。
-
----
-
-## 环境要求
-
-- fnOS（含应用中心）
-- Emby Server **4.9 / 4.10**（编译参考程序集同时带了这两版）
-- 磁盘：输出目录要放 `.strm` + `.nfo` + 海报，几千条量级约几十 MB
-- 网络：能访问你选的源站；源站大多在公网
-
----
-
-## 安装
-
-1. 在 fnOS 应用中心上传 `tvboxhub.fpk` 安装
-2. 打开应用 → 顶栏标题卡片右侧有 **💖 赞助 / 💬 联系 / ☾ 主题**，左侧 ☰ 收起展开侧边栏
-3. 首次进入会自动弹出**使用向导**；走完或跳过都可以在「使用说明」里重看
-
-`.fpk` 自带 JRE，不需要系统装 Java；x64 / arm64 自动选。
-
----
-
-## 首次使用（5 步）
-
-UI 的「使用说明」页有同样的清单，并且会**自动检测每一步是否完成**：
-
-1. **填点播源** —— 配置页填 TVBox 配置地址（单仓 JSON / 多仓 urls / base64 / 本机绝对路径都行）
-2. **选站点** —— 站点页勾选能用的源。建议先勾 3–5 个 ✅ 的试水
-3. **设输出目录** —— 默认在 Emby 数据目录下的 `tvbox/`，也可指到自己的媒体盘
-4. **装 Emby 插件** —— Emby 插件页一键安装，装完自动重启 Emby（有进度弹窗，恢复后自动关闭）
-5. **跑同步** —— 同步页点开始；跑完在 Emby 里加媒体库并扫描
-
-> 站点页的「**把可播站点全部加入同步**」只加**已确认可播**的站点。
-> 「有列表」不等于「能播」——有些源的播放地址返回的是解析接口 JSON。没验证过的站会提示你先点「批量探测当前」。
-
----
-
-## Emby 媒体库怎么加
-
-同步产物按站点分目录：
+**目录结构（本版定型）**
 
 ```
 <输出目录>/<站点名>/movies/<片名 (年份)>/<片名 (年份)>.strm
 <输出目录>/<站点名>/tv/<剧名 (年份)>/Season 01/<剧名 (年份)> - S01E01 - <集名>.strm
 ```
 
-所以媒体库也按站点建：
+站点层放在 `movies` / `tv` 的**外侧** —— Emby 靠「含 Season 目录的那层」认剧名，站点层放里面会让它拿站点名去刮削。
+代价是同一部剧在多个站点下各存一份（来源清晰、互不覆盖）。加媒体库时按站点建：
+电影 → `<输出目录>/<站点>/movies`，电视剧 → `<输出目录>/<站点>/tv`。
 
-| 库类型 | 路径 |
-|---|---|
-| 电影 | `<输出目录>/<站点>/movies` |
-| 电视剧 | `<输出目录>/<站点>/tv` |
+**🗑 删除历史数据（同步页新增）**
 
-站点多的话，也可以把 `<输出目录>/<站点>` 加成「**混合内容**」库，一个站点一个库。
+- 「先看看要删什么」只统计不删，弹窗显示目录结构、文件数、总大小、按扩展名分布
+- 执行需输入 `DELETE`（小写不认），已列入破坏性接口，强制令牌 / 同源校验
+- 边界写死：只进 `<站点>/movies`、`<站点>/tv` 两个子树，只删
+  `.strm .nfo .srt .ass .vtt .jpg .jpeg .png .webp .tbn`，**不跟随也不删符号链接**，站点根目录保留
 
-命名遵循 Emby 规范：片名带 `(年份)`、集文件名 `剧名 - SxxEyy - 集名`、季目录 `Season NN`。集号优先从源站集名解析（`第12集` / `EP12` / `S02E05` / 纯数字），解析不到才按顺序补。
+**🐛 修复**
 
----
+- **搜索页推送把片名当站点目录**：`PushOneAsync` 写盘时第一个参数（站点名）传成了条目名称，
+  推「集结号」会落到 `…/tvbox/集结号/movies/集结号 (2007)/`。现在由 hub 按 key 带 `siteName` 下去，
+  取不到才退回 site key，**绝不再退到片名**；与全量同步的 `site.DisplayName` 完全一致
+- **部署脚本指向不存在的 Emby 应用**：一直往旧应用目录装 DLL，而实际运行的是另一个 Emby，
+  插件从未真正更新到运行中的 Emby 上（目录不存在 → 静默跳过）。部署脚本改为遍历 `/vol3/@appdata/Emby*`
+  自动找带 `plugins/` 的应用，并按现有 DLL 属主 `install`
+- **`autoDetectOutputRoot()` 正则多转义**：写成 `\\/` 导致 `/` 被当成正则结束符，整个函数此前跑不起来
 
-## 播放是怎么走通的
+**测试**：沙箱夹具全流程通过（预览 → 无令牌拒绝 → 缺 confirm 拒绝 → 删除 4 项 → 非目标文件全部保留 → 再预览 0）；
+真实库只读预览 `layout=flat, files=2299`，推送实测落到 `金牌｜蓝光秒播/movies|tv/…`
 
-`.strm` 里写的不是源站直链，而是插件的代理地址：
+## 功能特性
+
+- **多格式采集源** — TVBox 单仓 JSON / 多仓 urls / base64 / 本机绝对路径
+- **站点管理** — 站点列表 + 批量探测，「可播 / 未验证 / 不可播」分列标注
+- **只要可播站点** — 批量加入同步严格只认 `playable === true`，无兜底；一个可播都没有时拒绝提交并提示先探测
+- **跨站并发搜索** — 关键词一次打全部同步站点，结果按站点分组
+- **一键推送** — 搜索/详情页把单条内容立刻写进库，与批量同步产物同名同结构
+- **增量同步** — 按小时窗口跳过已同步条目；多线路源自动兜底换线
+- **逐集校验** — 一个源常见「前几集能播、后面全是图片广告」，逐集验证后只写能播的那几集
+- **落盘三件套** — `.strm` + `.nfo` + 海报（webp/jpg，带体积上限）
+- **PlayUrl 解析** — 私有分集 id → 真播放地址（TVBox 客户端播放前做的同一件事）
+- **孤儿清理** — 「我们写过什么」记在 `.tvbox-manifest.json`，只删清单里出现过、这次又不需要的文件
+- **单次删除上限** — 一次要删超过 `MaxDeletePerRun`（默认 300）直接停手报错，防止命名规则一改把整库删空
+- **删除历史数据** — 先统计、再输入 `DELETE` 确认，只删 9 类扩展名，站点根目录保留
+- **三种流模式** — `proxy` 全中转 / `redirect` 直接 302 / `auto` 按域名白名单决定
+- **HLS 分片重写** — 播放时把分片地址改回代理，防盗链源的 `.ts` 也能拉
+- **Emby 插件一键装** — Web 端安装 / 卸载 / 自更新，装完自动重启 Emby 并显示重启进度弹窗（成功 1.6 秒自动关、失败保留原因）
+- **重启弹窗可续接** — 中途刷新页面会自动接上并续算秒数
+- **配置三入口对齐** — Web UI / 插件配置页 / API 三处 32 项字段完全一致，都落到同一份 `TvBox.xml`
+- **配置体检** — 概览页 10 项自动检测，单独把 `redirect` 模式标红提醒（最容易配错又最难自查的一项）
+- **使用向导** — 首次进入 7 屏向导 +「使用说明」里 6 项自动检测的进度清单
+- **操作记录** — 安装、同步、清理逐条留痕
+- **明暗主题** — 深色/浅色，服务端持久化（fnOS WebView 常禁用 localStorage）
+- **响应式布局** — 侧边栏 8 页，移动端默认收起成抽屉；桌面 / 平板 / 手机三档宽度
+- **内置运行时** — 包内自带裁剪版 JRE（x64 / arm64 各约 46 MB），不依赖系统 Java
+
+## 快速上手
+
+1. **配置 → 填点播源**：TVBox 配置地址（单仓 JSON / 多仓 / base64 / 本机路径）
+2. **站点 → 批量探测当前**，勾选几个 ✅ 的源加入同步（建议先 3~5 个试水）
+3. **配置 → 输出目录**：默认在 Emby 数据目录下的 `tvbox/`，也可指到自己的媒体盘
+4. **Emby 插件 → 安装插件到 Emby**，完成后自动重启 Emby（弹窗显示进度，恢复后自动关闭）
+5. **同步 → 开始同步**；跑完在 Emby 里把 `<输出目录>/<站点>/movies`、`…/tv` 加成媒体库并扫描
+
+> 站点多的话可以把 `<输出目录>/<站点>` 加成「混合内容」库，一个站点一个库。
+
+## 技术架构
 
 ```
-http://<你的Emby>/TvBox/Stream?...   →  插件补 Referer / User-Agent  →  m3u8 分片地址重写  →  源站
+TvBox For Emby
+
+├── fpk-src/                     # fnOS 应用包
+│   ├── cmd/                     # 生命周期脚本
+│   │   ├── main                 # start / stop / status（status 退出码是 fnOS 判活的唯一依据）
+│   │   ├── run-hub.sh           # 启动 hub（选 x64 / arm64 JRE）
+│   │   ├── install_callback     # 补 JRE 执行权限 + 安装统计
+│   │   ├── upgrade_callback     # 升级统计
+│   │   ├── uninstall_callback   # 卸载回调
+│   │   └── lib/feishu_push.sh   # 统计推送公共库（本机名单跳过）
+│   ├── ui/
+│   │   ├── index.html           # 单文件前端（侧边栏 8 页）
+│   │   ├── hub.jar              # spider-hub 产物
+│   │   ├── jre-x64 / jre-arm64  # 裁剪版 JRE
+│   │   └── plugin/TvBox.dll     # Emby 插件产物
+│   ├── config/                  # 权限配置（run-as: root）
+│   └── manifest
+├── spider-hub/                  # Java 中转服务
+│   └── src/hub/
+│       ├── Hub.java             # HTTP 44 路由 + 站点 / 搜索 / 同步 / purge
+│       ├── SpiderPool.java      # catvod spider 运行时与站点池
+│       └── …                    # MacCMS 适配层 / 播放解析
+├── TvBox.Plugin/                # Emby 插件（C# / .NET 8，零 NuGet）
+│   ├── Api/TvBoxApi.cs          # /TvBox/* 14 个路由
+│   ├── Core/StrmWriter.cs       # 站点目录 + strm/nfo/海报写入 + 孤儿清理
+│   ├── Core/SyncService.cs      # 同步主流程 / 单条推送
+│   ├── Tasks/SyncTask.cs        # 定时同步 + 媒体库变更通知
+│   └── Configuration/Web/       # 插件配置页（32 控件 / 5 分区）
+├── spider-host/                 # catvod spider 可移植性实验舱（非运行时依赖）
+├── deploy.sh                    # 部署：hub.jar + index.html + 插件 DLL，自动找活着的 Emby
+└── build.sh                     # 编译插件（首次自动拉取 Emby 参考程序集）
 ```
 
-这样防盗链的源也能播，同时播放进度、转码、多端同步都还是 Emby 原生的。
+- **后端**：Java（spider-hub，纯 JDK 无第三方依赖）；C# / .NET 8（Emby 插件，零 NuGet 依赖）
+- **前端**：原生 HTML/CSS/JS，无框架依赖；播放用内联 hls.js
+- **通信**：fnOS 网关 → UNIX Socket（`/vol3/@appcenter/tvboxhub/tvboxhub.sock`）；hub 的 TCP 只绑 `127.0.0.1`
+- **数据存储**：`TvBox.xml`（配置单一真相源）+ `.tvbox-manifest.json`（写过什么）+ `.tvbox-state.json`（增量状态）
+- **fnOS Gateway**：自动挂载 `/app/tvboxhub` 前缀
+- **安全**：写接口需令牌或同源证明；安装 / 卸载 / 保存 / 清缓存 / 删文件列入破坏性白名单强制校验
+- **兼容**：Emby Server 4.9 / 4.10（编译参考程序集同时带两套）
 
-三种流模式（配置页「播放流模式」）：
+## API 端点
 
-| 模式 | 行为 | 适用 |
-|---|---|---|
-| `proxy`（默认） | 全部经 NAS 中转 | 需要补 Referer/UA、需要改写 HLS 分片 |
-| `redirect` | 直接 302 到源站 | 省带宽；但防盗链的源会播不了 |
-| `auto` | 按「允许 302 的域名」决定，m3u8 仍走代理 | 混合场景 |
+> 读接口用 GET；写接口（`/api/save`、`/api/reload`、`/api/push`、`/api/emby/*`、`/api/sync/purge`、
+> `/api/cache/clear` 等）用 POST，且需带令牌或同源证明，否则直接拒绝。
 
-概览页的「配置检测」会单独把 `redirect` 标红提醒——这是最容易配错、又最难自查的一项。
+| 端点 | 描述 |
+|------|------|
+| `/api/status` | 应用与 Emby 状态（含 `pending` 缺失项） |
+| `/api/config` / `/api/save` / `/api/reload` | 读配置 / 写配置（33 项白名单）/ 重载 |
+| `/api/prefs` | 界面偏好（主题、向导已读，服务端持久化） |
+| `/api/sites` | 站点列表（含可播 / 未验证 / 不可播） |
+| `/api/sites/ok` · `/api/sites/fail` | 批量标记站点探测结果 |
+| `/api/sites/sync` · `/api/sync-sites` | 站点加入 / 移出同步 |
+| `/api/probe` | 单站点探测（homeContent / 分类 / 列表） |
+| `/api/home` · `/api/category` · `/api/detail` | 首页 / 分类 / 详情 |
+| `/api/search` · `/api/search-all` | 单站搜索 / 跨站并发搜索 |
+| `/api/play-resolve` | 私有分集 id → 真播放地址 |
+| `/api/stream` · `/api/stream/seg` · `/api/go` | 播放代理 / 分片代理 / 跳转 |
+| `/api/push` | 一键推送单条进 Emby 库（带 `siteName` 决定站点目录） |
+| `/api/netdisk` | 网盘类源（默认排除） |
+| `/api/history` · `/api/history/add` · `/api/history/clear` | 播放历史 |
+| `/api/emby/detect` | Emby 5 路检测 |
+| `/api/emby/status` | 含 `restart` 状态（active / done / ok / seconds） |
+| `/api/emby/docker` | Docker 方式安装 / 管理 Emby |
+| `/api/emby/install` · `/api/emby/uninstall` | 安装 / 卸载插件（卸载带两问向导） |
+| `/api/emby/self-update` | 插件自更新 |
+| `/api/emby/config` | 读写插件配置（与 Web UI 同源） |
+| `/api/emby/libraries` | 媒体库列表 |
+| `/api/emby/prepare-output` · `/api/emby/probe-as-emby` | 准备输出目录 / 以 Emby 身份试写 |
+| `/api/emby/write-check` | 写权限校验 |
+| `/api/emby/sync` · `/api/emby/sync/status` · `/api/emby/sync/stop` | 触发同步 / 进度 / 停止 |
+| `/api/sync/purge-preview` | 删除历史数据：只读统计（root / files / bytes / sites / layout / byExt） |
+| `/api/sync/purge` | 删除历史数据：`{"confirm":"DELETE"}` |
+| `/api/plugin/info` · `/api/plugin/dll` | 插件版本信息 / 下载 DLL |
+| `/api/cache/clear` | 清缓存 |
 
----
+插件侧 `/TvBox/*` 共 14 个路由：
 
-## 配置项（32 项）
-
-| 分组 | 关键项 |
-|---|---|
-| **采集源** | `ConfigUrl`、`SiteNameFilter`、`SiteWhitelist`/`SiteBlacklist`、`ExcludeCloudDrive` |
-| **同步范围** | `MaxPagesPerCategory`、`MaxItemsPerRun`、`Concurrency`、`TimeoutSeconds`、`RequestDelayMs` |
-| **输出** | `OutputRoot`、`WriteNfo`、`DownloadPoster`、`PosterMaxMb` |
-| **探测** | `VerifyPlayUrl`、`VerifyMaxEpisodes`、`DetailBatchSize`、`ResolveIndirectUrl` |
-| **播放** | `StreamMode`、`RedirectHosts`、`Referer`、`UserAgent`、`UseProxy`、`AllowPrivateHosts` |
-| **清理** | `CleanupOrphans`、`MaxDeletePerRun`（单次删除上限，默认 300） |
-| **定时** | `EnableScheduledSync`、`SyncIntervalHours` |
-| **增量** | `IncrementalSync`、`IncrementalHours` |
-
-同一份配置三个入口（Web UI / 插件页 / API）字段完全对齐，改哪个都落到同一份 `TvBox.xml`。
-
----
-
-## 同步与清理的安全边界
-
-- **只写不删**：正常情况下同步只写 `.strm` / `.nfo` / 海报
-- **孤儿清理有清单**：「我们写过什么」记在 `<输出目录>/.tvbox-manifest.json`，只删清单里出现过、这次又不需要的文件；别人放进去的文件不碰
-- **单次删除上限**：一次性要删超过 `MaxDeletePerRun`（默认 300）时直接停手并报错——防止命名规则一改就把整库删空
-- **删除历史数据**（同步页）：先统计再确认，必须输入 `DELETE`；只进 `<站点>/movies`、`<站点>/tv` 两个子树，只删 `.strm .nfo .srt .ass .vtt .jpg .jpeg .png .webp .tbn`，不跟随也不删符号链接
-
----
-
-## Web UI
-
-侧边栏 8 个页面：
-
-| 页面 | 用途 |
-|---|---|
-| 概览 | KPI + 10 项配置检测 |
-| 使用说明 | 首次向导 + 进度清单 + 工作原理 + 常见问题 |
-| 站点 | 站点列表、批量探测、加入/移出同步，「可播」单独一列 |
-| 搜索 | 跨站点搜索 → 详情 → 试播 → 推送 |
-| 同步 | 触发/停止同步、进度、同步范围、**删除历史数据** |
-| 配置 | 上面那 32 项 |
-| Emby 插件 | 检测 Emby、安装/卸载/自更新插件（带重启进度弹窗） |
-| 操作记录 | 每次安装/同步/清理的审计记录 |
-
-移动端：侧边栏默认收起，点 ☰ 打开覆盖式抽屉；标题卡片与动作按钮始终同一行不折。
-
----
-
-## HTTP API 概览
-
-hub 44 个路由（完整列表见 `spider-hub/src/hub/Hub.java`）：
-
-| 分组 | 代表接口 |
-|---|---|
-| 站点/配置 | `/api/sites`、`/api/sites/sync`、`/api/sync-sites`、`/api/config`、`/api/save`、`/api/reload`、`/api/prefs` |
-| 内容 | `/api/home`、`/api/category`、`/api/detail`、`/api/search`、`/api/search-all`、`/api/probe`、`/api/netdisk` |
-| 播放 | `/api/stream`、`/api/stream/seg`、`/api/play-resolve`、`/api/go` |
-| Emby | `/api/emby/detect`、`/api/emby/install`、`/api/emby/status`、`/api/emby/sync`、`/api/emby/self-update` |
-| 清理 | `/api/sync/purge-preview`、`/api/sync/purge` |
-| 其它 | `/api/status`、`/api/history`、`/api/push`、`/api/plugin/info` |
-
-插件 14 个路由（`/TvBox/*`）：`Status`、`Sources`、`Sync`、`Stop`、`SelfUpdate`、`ProbeWrite`、`Config`、`ConfigBoot`、`ConfigPublic`、`Probe`、`PushItem`、`Live`、`Kick`。
-
-**安全**：TCP 只绑 `127.0.0.1`（fnOS 网关走 Unix socket 进来）；写端点要求令牌或同源证明；破坏性端点（安装/卸载/保存/清缓存/删文件）单独列在白名单里强制校验。
-
----
-
-## 从源码构建
-
-```bash
-# 1) Emby 插件（首次会自动下载参考程序集 deb 并解包，不安装）
-./build.sh                       # 产物：fpk-src/ui/plugin/TvBox.dll
-
-# 2) spider-hub（Java）
-cd spider-hub && ./build.sh      # 产物：hub.jar → fpk-src/ui/hub.jar
-
-# 3) 打包 fpk（在 fpk-src 目录，manifest 所在处）
-cd ../fpk-src && fnpack build .
-```
-
-依赖：`.NET SDK`（编译插件用 build.sh 里的 `DOTNET` 变量指定）、`JDK`（编译 hub）、`fnpack`、`dpkg-deb`（首次拉参考程序集）。
-
----
+| 端点 | 描述 |
+|------|------|
+| `/TvBox/Status` | 插件状态 |
+| `/TvBox/Sources` | 站点统计（可同步站点数） |
+| `/TvBox/Sync` · `/TvBox/Stop` | 触发同步 / 停止 |
+| `/TvBox/SelfUpdate` | 插件自更新 |
+| `/TvBox/ProbeWrite` | 输出目录试写 |
+| `/TvBox/Config` | 读写插件配置 |
+| `/TvBox/ConfigBoot` · `/TvBox/ConfigPublic` | 配置页引导脚本 / 公开字段（不含令牌） |
+| `/TvBox/Kick` · `/TvBox/Live` | 唤醒 / 直播 M3U |
+| `/TvBox/Probe` | 播放地址探测 |
+| `/TvBox/PushItem` | 单条推送（搜索页调用） |
 
 ## 已知限制
 
-- **dex 内的 spider 类**：TVBox 配置里一部分源把 spider 打成 Android dex，纯 JVM 跑不起来（实验数据见 `spider-host/`），这类源在站点页会显示不可用
+- **dex 内的 spider 类**：TVBox 配置里一部分源把 spider 打进 Android dex，纯 JVM 跑不起来，这类源在站点页显示不可用
 - **需要登录的源**（B 站系等）要自备 cookie；**需要外部解析器**的源要自备解析接口模板
-- 网盘类源（继承 `Pan` 基类）没有账号拿不到直链，默认在解析阶段排除
-- 源站随时可能失效、改接口——这是第三方内容，不是本项目能修的
+- **网盘类源**（继承 `Pan` 基类）没有账号拿不到直链，默认在解析阶段排除
+- **源站随时失效**：第三方内容，接口一改就可能播不了，本项目只能保证「探测 → 不写入播不了的条目」
+
+## 版本历史
+
+### v0.1.1 (2026-10-23)
+
+- 首个对外版本：点播源采集 → 站点探测 → 跨站搜索 → 一键推送 → 同步进媒体库
+- 输出按站点分目录：`<输出目录>/<站点>/movies|tv/…`（站点层在分类目录外侧，Emby 才好认剧名）
+- 新增「删除历史数据」：先统计再确认（需输入 `DELETE`），只删 9 类扩展名，站点根目录与符号链接一律不动
+- 插件安装 / 自更新后自动重启 Emby，前端显示重启进度弹窗（成功自动关、失败保留原因、刷新可续接）
+- 配置 32 项在 Web UI / 插件页 / API 三入口完全对齐（此前有 12 项只能在插件页改）
+- 「全部加入同步」只认已确认可播的站点，无可播时拒绝提交并提示先探测
+- 修复：搜索页推送把片名当成站点目录名
+- 修复：部署脚本指向不存在的 Emby 应用，插件此前从未真正更新到运行中的 Emby
+- 修复：`autoDetectOutputRoot()` 正则多转义导致函数整体不可用
+
+## 维护者
+
+- 作者：[@再见一零一二](https://gitee.com/wyf1015)
 
 ---
 
-## 许可与致谢
-
-- 本项目代码：仅供学习与自用，请遵守你所在地区的法律法规与源站条款
-- catvod spider 及相关 jar 版权归原作者，本项目只做运行时接入，不修改其逻辑
-- 感谢 Emby 社区与 TVBox 生态的公开文档
+> 如果这个项目对您有帮助，欢迎赞助支持 ❤️
