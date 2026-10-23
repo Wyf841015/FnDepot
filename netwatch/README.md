@@ -1,94 +1,79 @@
-# netwatch - 网络流量监控
+# 网络监控 (netwatch)
 
-fnOS 系统下的实时网络流量监控工具，零依赖、纯 Node.js 实现。
+> 实时网络流量监控：网卡速率、进程级流量归因、连接列表、历史曲线与 CSV 导出，内置 pktstat-BPF 引擎。
 
-## 特性
+![网络监控](ICON_256.PNG)
 
-- **实时监控**：SSE 实时推送，秒级更新网络状态
-- **总流量 + 接口带宽**：下载/上传速率 KPI
-- **活跃连接**：TCP/UDP 连接列表（进程/端口/状态）
-- **进程级流量**：nethogs 统计 TCP+UDP 完整流量，不丢 UDP 数据
-- **App 流量排行**：KPI 与表格数据严格一致
-- **Top 主机 + 归属地**：连接聚合 + IP 城市/地区
-- **协议分布 + 历史趋势**：TCP/UDP 占比 + canvas 折线图
-- **排序表格 + 双主题**：表头排序 + 深色/浅色自适应
+## v0.6.5 更新
 
-## 安装
+**减少写盘：SQLite 落库从「每次采样」改成「攒批」**
 
-1. 在 fnOS 应用中心上传 `netwatch.fpk`
-2. 启用应用（需 root 权限读取网络状态）
-3. 浏览器或 fnOS 桌面图标访问
+- 🐛 以前 `computeRate()` 内部直接 UPSERT 累计值，而它被「2 秒轮询 + 首次 SSE 连接 + API 兜底」多路径调用，等于每次采样都提交一个事务 —— 实测持续写盘 **23.2 KB/s**，`netwatch.db-wal` 大小不变但 mtime 一直在跳
+- ✅ 拆成「算」和「写」：`computeRate()` 只更新内存，落库统一由 `flushCumulativeIfDue()` 决定 —— 距上次 **≥5 秒** 或 累计增长 **≥1 MB** 才写一次（大流量时仍及时落盘）
+- ✅ `SIGTERM` / `SIGINT` 退出前强制落一次，崩溃/重启不丢最后一段增量
+- ⚡ SQLite 加 `PRAGMA synchronous = NORMAL`（WAL 官方推荐档）+ `temp_store = MEMORY`
+- 📉 实测（同一进程改前改后）：**23.2 KB/s → 3.1 KB/s（−87%）**
+- 说明：`/proc/<pid>/io` 的 `syscw` 含 stdout/pipe 等非磁盘写，不能当磁盘写次数看；磁盘写次数要看具体文件 mtime 变化（`db-wal` 实测 0.47 次/秒）
+
+## 功能特性
+
+- **实时速率**：总吞吐 / 收 / 发，秒级刷新（SSE 推送，不用轮询）
+- **进程级流量归因**：基于 pktstat-BPF（eBPF），按进程统计收发字节，不依赖 nethogs
+- **连接列表**：`ss` 解析出的活跃连接，含对端地址、进程、收发字节
+- **历史与告警**：SQLite 存 90 天历史点，速率/连接数阈值触发 SSE 告警 + 可选 webhook
+- **数据导出**：CSV 导出
+- **低资源**：V8 堆限制 96 MB，常驻内存约 130 MB
+
+## 快速上手
+
+1. 安装后打开应用，首页即实时速率与网卡列表
+2. 「App 流量」页看进程级归因（首次需要几秒采集）
+3. 需要历史曲线时点「历史」，可选时间范围后导出 CSV
+4. 告警阈值在「设置」里配（速率 Mbps / 连接数 / webhook）
+
+## 技术架构
+
+```
+/proc/net/dev ──┐
+                ├── 采样（2s）── 内存累计 ──┬── SSE 推送前端
+pktstat-bpf ────┤                          └── SQLite（5s 或 1MB 攒批落库）
+ss -tunapie ────┘
+```
+
+- 单进程 Node.js（零第三方运行时依赖），fnOS 统一网关 socket 接入
+- 累计值跨重启保留（SQLite `cumulative` 表 + `history_points` 历史表）
 
 ## 版本历史
 
+### v0.6.5 (2026-10-23)
+
+## v0.6.5 更新
+
+**减少写盘：SQLite 落库从「每次采样」改成「攒批」**
+
+- 🐛 以前 `computeRate()` 内部直接 UPSERT 累计值，而它被「2 秒轮询 + 首次 SSE 连接 + API 兜底」多路径调用，等于每次采样都提交一个事务 —— 实测持续写盘 **23.2 KB/s**，`netwatch.db-wal` 大小不变但 mtime 一直在跳
+- ✅ 拆成「算」和「写」：`computeRate()` 只更新内存，落库统一由 `flushCumulativeIfDue()` 决定 —— 距上次 **≥5 秒** 或 累计增长 **≥1 MB** 才写一次（大流量时仍及时落盘）
+- ✅ `SIGTERM` / `SIGINT` 退出前强制落一次，崩溃/重启不丢最后一段增量
+- ⚡ SQLite 加 `PRAGMA synchronous = NORMAL`（WAL 官方推荐档）+ `temp_store = MEMORY`
+- 📉 实测（同一进程改前改后）：**23.2 KB/s → 3.1 KB/s（−87%）**
+- 说明：`/proc/<pid>/io` 的 `syscw` 含 stdout/pipe 等非磁盘写，不能当磁盘写次数看；磁盘写次数要看具体文件 mtime 变化（`db-wal` 实测 0.47 次/秒）
+
 ### v0.6.4
 
-**放弃降权运行，改回 `run-as: root`（实测决定）**
-
-- 现象：App 流量页进程列表只剩一条 `(kernel)`，无用户态进程明细
-- 根因：v0.6.3 曾尝试以 `netwatch` 用户运行、通过 file capability 授予 eBPF 能力。
-  实测确认 **fnOS 会把整个应用进程树（含 install/upgrade 回调与 `cmd/main`）都以
-  `run-as` 指定的用户运行**，这些脚本全部以 `uid=949` 执行，
-  `unable to set CAP_SETFCAP effective capability: Operation not permitted`
-  —— 降权后应用内没有任何代码路径能获得 root，capability 永远设不上，
-  pktstat 采集失败，只剩 ss 侧汇总的 `(kernel)`
-- 修复：`config/privilege` 改回 `run-as: root`，root 自带全部能力，开箱即用
-- 关键细节：`apply_capabilities.sh` 在 root 下直接早退。二进制一旦带 file
-  capability，内核会把执行它的进程能力集**截断到那几项**，root 反而丢失其余能力
-
-### v0.6.3
-
-**App 流量页实时刷新 + 速率修复**
-
-- 修复进程流量速率恒为 0：速率基准不再被每次读路径推进，最短 1 秒才推进一次并复用缓存
-- 修复采样盲区：pktstat 采集窗口按轮询间隔 +1 秒设置，消除约一半漏采
-- App 流量页新增「实时更新 HH:MM:SS」时间指示
-- 修复 `apply_capabilities` 静默失败：`chown`/`chmod`/`setfacl` 会清除 file capability，
-  已改为 `setcap` 最后执行；并修复 fnOS 回调环境下的二进制路径解析（经 `target` 软链）
-- 修复页面不自动刷新：`applyAll` 顺序裸调用，任一组件抛错会中断整链导致表格不更新，
-  已改为各子渲染独立 `try/catch` 隔离
-- 新增启动自检：缺 eBPF 能力时写 info.log，并在 App 流量页显示可操作告警条
+- 放弃降权，改回 run-as: root（降权后 eBPF 能力永远设不上）
 
 ### v0.6.2
 
-- 今日/本周统计卡区分上行与下行
-- 修复今日/本周统计卡内容显示不全
-- 流量历史按时间段查看（最近 1h/24h/7d/30d + 自定义起止）
-- 导出支持选择保存目录 + 保存后提示完整路径
-- 修复区间导出文件名含非法字符
+- 卸载重装后 App 流量页只剩 (kernel)：启动自检 + 多路径自愈 + 界面告警
 
 ### v0.6.0
 
-- **SQLite 持久化累计**：接口流量写入数据库永续累计，跨主机重启不归零（内核计数器回退自动续计），可主动清零
-- 多维分析 API：累计/今日/本周/本月/最近24h + 按小时/天/周/月分桶
-- 前端流量统计面板：累计下行/上行、今日/本周/本月，随 SSE 实时刷新
-- 代码审查修复：维度窗口边界正确、多进程并发写锁、history 90 天保留、重启速率尖峰抑制
-- 新增「联系作者」按钮（✉️）：弹窗显示 QQ 交流群 745565752，支持一键复制群号
+- App 流量页自动刷新（不必切换页面才有新数据）
 
 ### v0.5.0
 
-- 进程级流量引擎升级：nethogs → pktstat-bpf（eBPF 内核级计数，全协议不丢包）
-- 内存优化：进程流量按需启停，运行时内存 400MB → ~120MB
-- App 流量卡片统一网卡全量口径 + 可归因率指标
-- 进程流量累计跨重启持久化 + 轮询健壮性（自动续排 + watchdog）
-- CORS 收窄至同源
+- pktstat-BPF 引擎替代 nethogs，进程级流量归因
 
-### v0.2.0
+## 维护者
 
-- 性能：ss 异步采样 + 缓存，消除事件循环阻塞
-- 进程流量实时速率列（累计 vs 当前速率）
-- Top 主机：IP 归属地 + 按流量/速率排序
-- 历史流量落盘持久化（跨重启累计）
-- 阈值告警 + hover tooltip + CSV 导出 + nethogs 探测提示
-
-### v0.1.0
-
-- 初始版本：实时网络流量监控
-- 总流量 + 接口带宽 + 活跃连接
-- 进程级流量（nethogs TCP+UDP）
-- App 流量排行 + Top 主机 + 历史流量
-- 协议分布 + 主题切换 + 排序表格 + SSE 实时刷新
-
-## 许可
-
-MIT
+一零一二 · 问题反馈：https://gitee.com/wyf1015/netwatch/issues

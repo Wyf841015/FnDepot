@@ -505,6 +505,17 @@
               "size": 5327377
             }
           }
+        },
+        "0.6.5": {
+          "changelog": "减少写盘：SQLite 落库从「每次采样」改成「攒批」\n\n- 🐛 问题：`computeRate()` 内部直接 UPSERT 累计值，而它被「2 秒轮询 + 首次 SSE 连接 + API 兜底」多路径调用，等于每次采样都提交一个事务 —— 生产实测持续写盘 23.2 KB/s，`netwatch.db-wal` 大小不变但 mtime 一直在跳\n- ✅ 现在拆成「算」和「写」两件事：`computeRate()` 只更新内存，落库统一由 `flushCumulativeIfDue()` 决定 —— 距上次 ≥5 秒 或 累计增长 ≥1 MB 才写一次（大流量时仍及时落盘）\n- ✅ `SIGTERM` / `SIGINT` 退出前强制落一次，崩溃/重启不丢最后一段增量\n- ⚡ SQLite 加 `PRAGMA synchronous = NORMAL`（WAL 下官方推荐档）+ `temp_store = MEMORY`\n- 📉 实测（同一进程改前改后）：写盘 **23.2 KB/s → 3.1 KB/s（−87%）**\n- 顺带说明：`/proc/<pid>/io` 的 `syscw` 含 stdout/pipe 等非磁盘写，不能当作磁盘写次数；磁盘写次数要看具体文件的 mtime 变化（`db-wal` 实测 0.47 次/秒）",
+          "updated_at": "2026-10-23T21:50:00+08:00",
+          "packages": {
+            "all": {
+              "download_url": "netwatch/netwatch.fpk",
+              "sha256": "6d1ba17e99a8edb7f74b6b63f29fc0d4710b1c8c9dec602c2e7eeed1fc60e924",
+              "size": 5328132
+            }
+          }
         }
       }
     },

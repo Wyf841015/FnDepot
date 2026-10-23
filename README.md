@@ -16,7 +16,7 @@
 | [m3u8DL 专业下载器](fnm3u8dl/README.md) | v0.8.2 | N_m3u8DL-RE 完整 Node.js 重写，HLS+DASH+MSS 三协议、AES-128 解密、批量添加、直播录制、速度显示、493 个 TDD 测试 |
 | [视频下载器](fnytdlp/README.md) | v0.6.3 | 集成 yt-dlp (1872+ 站点)，AI 视频总结 / 缩略图代理 / 字幕提取 / 速度曲线 / 频道订阅 / 自适应架构 |
 | [Cookie 提取器](fngetcookie/README.md) | v0.2.0 | 通过代理方式自动捕获网站 Cookie，多格式导出，直连模式绕过 CSP 反代理站点 |
-| [网络监控](netwatch/README.md) | v0.5.0 | 实时网络流量监控，pktstat-BPF 引擎 + 进程级流量归因 |
+| [网络监控](netwatch/README.md) | v0.6.5 | 实时网络流量监控，pktstat-BPF 引擎 + 进程级流量归因 |
 | [TvBox For Emby](tvboxhub/README.md) | v0.5.1 | 把 TVBox 点播源接入 Emby：跨站搜索、一键推送 strm、按站点建媒体库，内置 JRE |
 
 ## 安装说明
