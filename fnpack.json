@@ -244,6 +244,17 @@
               "size": 569116
             }
           }
+        },
+        "0.13.1": {
+          "changelog": "v0.13.1\n- 修复「用户清理」可能删掉正在运行的应用账号: 账号名 ≠ 应用名时(如 netease 用 docker-netease 账号)原判据失效, 该账号被误标可删\n- 新增判据: 已安装应用按 <卷>/@appcenter/<应用名> 目录 owner 反查 uid, 按名字查不到时用它兜底\n- 新增判据: 被 Docker 容器占用的账号不可删(含已停止的容器 — 它们没有进程, 原「有进程在运行」拦不住)\n  · 运行中容器读 /proc/<pid>/status 的 Uid, 能穿透镜像内用户名\n  · Config.User 写成数字 uid 时直接采信; 写成用户名时刻意不猜(按镜像内 passwd 解析, 硬拦会误伤)\n  · bind 挂载目录 / named volume 挂载点的 owner\n- 「应用残余清理 → 同时删除用户」走同一套判据, 不再从这条路径绕过\n- 列表新增 Docker 徽章(悬停显示容器名与占用来源), 该行勾选框禁用, 全选不会勾上\n- docker 不可用或无权限时状态栏明确提示「未检测」, 不把查不到静默当成没占用\n- 测试: 新增 23 项(假 docker 脚本塞 PATH, 不碰真 Docker) + 2 项 UI 断言, 全量 541/541 通过",
+          "updated_at": "2026-10-25",
+          "packages": {
+            "all": {
+              "download_url": "fnclearup/fnclearup.fpk",
+              "sha256": "7aa46ac53fee1073ee53fb8b23e35680befe9ad71f859374433ef34e219256bf",
+              "size": 571928
+            }
+          }
         }
       }
     },
