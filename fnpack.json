@@ -714,14 +714,14 @@
       "distributor_url": "https://gitee.com/wyf1015",
       "bug_report_url": "https://gitee.com/wyf1015/gputempfake/issues",
       "releases": {
-        "0.1.2": {
-          "changelog": "首版上架：给没有 GPU 温度传感器的机型补一个读数\n\n- 一键接管 / 一键还原：写入 systemd 注入配置并重启 resmon_service，撤销时删干净并重启\n- 接管前验证拦截库是否真的加载进 resmon 进程，不只看命令返回码\n- 本机检测表：GPU 设备、真实传感器、CPU 温度来源、服务状态、库是否加载、配置与文件路径\n- 适用性判定：检测到真实 GPU 传感器 / 读不到 CPU 温度 / 架构无对应库时禁用接管并说明原因\n- 纯 bash CGI 零运行时依赖，双架构拦截库（x86_64 / aarch64）随包分发\n- 卸载自动清理注入，不留悬挂的 LD_PRELOAD",
-          "updated_at": "2026-10-29T20:21:40+08:00",
+        "0.1.0": {
+          "changelog": "首个公开版本\n\n- 一键接管 / 一键还原：写入 systemd 注入配置并重启 resmon_service；还原会删干净并重启服务，并核验拦截库是否真的从进程内存消失\n- 接管后验证拦截库是否真的加载进 resmon 进程，不只看命令返回码\n- 本机检测表：GPU 设备、真实传感器、CPU 温度来源、服务状态、库是否加载、配置与文件路径\n- 适用性判定：检测到真实 GPU 传感器 / 读不到 CPU 温度 / 架构无对应库时禁用接管并说明原因\n- 纯 bash CGI 零运行时依赖，双架构拦截库（x86_64 / aarch64）随包分发\n- 深色 / 浅色主题，手机端适配；头部赞助按钮，赞赏码可点开放大\n- 卸载自动清理注入，不留悬挂的 LD_PRELOAD",
+          "updated_at": "2026-10-29T20:30:00+08:00",
           "packages": {
             "all": {
               "download_url": "gputempfake/gputempfake.fpk",
-              "sha256": "f2e9b19d767be5fc15864bd99fe3a5ca69b5c01df22d13ffe8be2ac9d73de848",
-              "size": 204680
+              "sha256": "eff0e879a198cd9cab8cc9095e00c501facd6621bf82c18f9533f82b46b9724a",
+              "size": 208060
             }
           }
         }
