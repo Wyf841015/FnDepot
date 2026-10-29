@@ -689,6 +689,43 @@
           }
         }
       }
+    },
+    "gputempfake": {
+      "display_name": "GPU 温度接管",
+      "desc": "给内核层就没有 GPU 温度传感器的机型（如 J3355 / Apollo Lake）补一个读数，让资源监控里的 GPU 温度不再空白",
+      "platform": [
+        "all"
+      ],
+      "categories": [
+        "系统工具"
+      ],
+      "icon_url": "gputempfake/ICON_256.PNG",
+      "preview_urls": [
+        "gputempfake/Preview/screenshot_overview.png",
+        "gputempfake/Preview/screenshot_untaken.png",
+        "gputempfake/Preview/screenshot_sponsor.png"
+      ],
+      "run_as": "root",
+      "install_type": "",
+      "is_docker": false,
+      "maintainer": "一零一二",
+      "maintainer_url": "https://gitee.com/wyf1015",
+      "distributor": "一零一二",
+      "distributor_url": "https://gitee.com/wyf1015",
+      "bug_report_url": "https://gitee.com/wyf1015/gputempfake/issues",
+      "releases": {
+        "0.1.2": {
+          "changelog": "首版上架：给没有 GPU 温度传感器的机型补一个读数\n\n- 一键接管 / 一键还原：写入 systemd 注入配置并重启 resmon_service，撤销时删干净并重启\n- 接管前验证拦截库是否真的加载进 resmon 进程，不只看命令返回码\n- 本机检测表：GPU 设备、真实传感器、CPU 温度来源、服务状态、库是否加载、配置与文件路径\n- 适用性判定：检测到真实 GPU 传感器 / 读不到 CPU 温度 / 架构无对应库时禁用接管并说明原因\n- 纯 bash CGI 零运行时依赖，双架构拦截库（x86_64 / aarch64）随包分发\n- 卸载自动清理注入，不留悬挂的 LD_PRELOAD",
+          "updated_at": "2026-10-29T20:21:40+08:00",
+          "packages": {
+            "all": {
+              "download_url": "gputempfake/gputempfake.fpk",
+              "sha256": "f2e9b19d767be5fc15864bd99fe3a5ca69b5c01df22d13ffe8be2ac9d73de848",
+              "size": 204680
+            }
+          }
+        }
+      }
     }
   }
 }
