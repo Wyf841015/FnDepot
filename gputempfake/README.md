@@ -1,5 +1,7 @@
 # GPU 温度接管
 
+> 当前版本：**v0.1.0**（首发版本）
+
 给**内核层就没有 GPU 温度传感器**的机型补一个读数，让 fnOS「资源监控」里的「GPU 温度」不再空白。
 
 ![界面](Preview/screenshot_overview.png)
@@ -81,3 +83,7 @@ fnOS 的 `resmon_service` 通过 `libhwinfo.so` 用 `glob()` 探测传感器，G
 - 纯 bash CGI 零运行时依赖，双架构拦截库（x86_64 / aarch64）随包分发
 - 深色 / 浅色主题，手机端适配；头部赞助按钮，赞赏码可点开放大
 - 卸载自动清理注入，不留悬挂的 `LD_PRELOAD`
+
+---
+
+MIT License · 作者：[一零一二](https://gitee.com/wyf1015)
