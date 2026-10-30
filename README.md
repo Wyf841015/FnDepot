@@ -10,7 +10,8 @@
 | 应用 | 版本 | 说明 |
 |------|------|------|
 | [日志哨兵](fnlogpush/) | v1.3.0 | 日志监控 + 多渠道推送 + 事件管理 |
-| [USB自动同步](usbrsync/) | v0.1.0 | USB存储设备自动同步工具 |
+| [USB自动同步](usbrsync/) | v0.1.0 | USB存储设备自动同步工具（原 CGI 版） |
+| [USB自动同步 (Node.js 版)](usbrsync1/README.md) | v0.5.0 | USB插入自动同步，数据安全护栏（--delete 预检拦截）、真实进度、同步历史与统计概览 |
 | [清理精灵](fnclearup/) | v0.9.7 | 扫描FnOS所有vol目录，找出已卸载应用（含关联系统用户）、已删除网盘挂载、已删除docker残余卷的残留目录，一键清理 |
 | [m3u8下载器](fnm3u8/README.md) | v0.1.0 | m3u8视频下载，支持多线程/断点续传/AES解密/批量下载/直播录制 |
 | [m3u8DL 专业下载器](fnm3u8dl/README.md) | v0.8.2 | N_m3u8DL-RE 完整 Node.js 重写，HLS+DASH+MSS 三协议、AES-128 解密、批量添加、直播录制、速度显示、493 个 TDD 测试 |
