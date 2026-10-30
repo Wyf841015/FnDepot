@@ -266,6 +266,17 @@
               "size": 592768
             }
           }
+        },
+        "0.15.1": {
+          "changelog": "v0.15.1\n- 修复：应用数据目录以前写成 process.env.TRM_PKGVAR || '/vol3/@appdata/fnclearup'。框架启动会注入 TRM_PKGVAR（值跟着安装卷走），但手动 node ui/server.js（调试/重启脚本/守护脚本）时没有该变量 → 掉回写死的 /vol3，同一台机器出现两套数据目录：界面开关在一处、计划任务与扫描状态在另一处（表现为「开关设了又变回去 / 计划任务不见了 / 哈希缓存像丢了」）\n- 新增 app/ui/lib/pkgvar.js 统一解析：① 框架注入的 TRM_PKGVAR ② 从本文件真实路径反推 <vol>/@appcenter/<app>/ → <vol>/@appdata/<app>（/var/apps/<app>/target 软链 realpath 后同样成立，应用名从路径取）③ 才用历史字面量兜底\n- 接入 6 处落盘位置：util.pkgvarRoot() / util.getManifestDir() / api/prefs.js / api/dup.js / api/simdup.js（缩略图缓存）/ exclude_rules.js；并统一 ui/server.js 的 PKGVAR / DATA_DIR（原来无 env 时退回 <vol>/@appcenter/<app>/data，与 prefs 不同源）\n- 升级提示：手动启动过的机器，<vol>/@appcenter/fnclearup/data 下的 schedule.json、dup/、empty_dir/、schedule_reports/ 需迁移到 <vol>/@appdata/fnclearup/data（补缺不覆盖，原目录可自行删除）\n- 新增 tests/test_pkgvar.js 6 项（路径反推、非安装目录返回 null、env 优先含 trim/纯空白、无 env 兜底、manifest 与 data 同源）；全量 44 个测试文件通过",
+          "updated_at": "2026-10-30T21:50:00+08:00",
+          "packages": {
+            "all": {
+              "download_url": "fnclearup/fnclearup.fpk",
+              "sha256": "9bf98b983fc8fc2d3ea19568cffd7efeae9f006901bd62be9d08e0d0f35d8ff3",
+              "size": 594597
+            }
+          }
         }
       }
     },
