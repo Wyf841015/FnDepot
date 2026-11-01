@@ -1,4 +1,4 @@
-# USB Rsync — Node.js 版 (v0.5.0)
+# USB Rsync — Node.js 版 (v0.5.1)
 
 > USB 存储设备自动同步工具，检测到 USB 设备插入后自动同步指定目录，支持单向和双向同步模式。
 > **Node.js 重写版** — 由 bash CGI + bash 守护架构迁移为纯 Node.js 单进程架构。
@@ -75,6 +75,53 @@ fnpack build .
 - `logs/sync.log` — rsync 日志
 
 ## 版本历史
+
+### v0.5.1 — 大容量 U 盘「源目录无权限」修复
+
+大容量 U 盘（exFAT / NTFS，如 /dev/sdg）在「源目录」浏览时显示无权限，
+小容量 U 盘却正常。根因是这两类盘的文件系统驱动不同：小盘多是 FAT32 走内核
+`vfat`，挂载时带 `uid=/fmask`，谁都能读；大盘走 `fuse`（`lsblk` 里是
+`fuseblk` / `fuse.exfat` / `fuse.ntfs-3g`），而 fuse 默认**只允许挂载它的那个
+uid 访问，连 root 也会被拒**（挂载时没带 `allow_other` 的话）。
+
+**按挂载 owner 降权读取（新增 `ui/mountperm.js`）**
+- `parseMounts` 解析 `/proc/mounts`（含 `\040` 八进制转义）、`mountForPath` 最长前缀匹配
+- `ownerUidOf` 取挂载 owner：① 挂载参数里的 `uid=/gid=` ② 持有该挂载的 fuse 守护进程 uid
+- `listAsUid` 以该 uid 起子进程用 `ls -1ap` 列目录（末尾 `/` 标目录，免逐个 stat）
+- `/api/browse` 遇 `EACCES/EPERM` 自动降权重列一次，成功则正常返回并带 `via: "uid:N(来源)"`
+- rsync 侧同步支持：`preflight` 的 dry-run、正向同步、反向恢复三处 `spawn` 都带 `uid/gid`；
+  `requestSync` 先探测 root 能否读源目录，读不到且挂载 owner 非 root 才降权（并写日志）
+
+**允许范围**
+- `isAllowedPath` 增加「当前挂载着的可移动/外接文件系统」动态放行：外接盘被挂到
+  `/vol00` 以外（如 `/run/media`）时不再报 `root not allowed`
+- `SYSTEM_MOUNT_DENY` 把 `/boot`（efi 是 vfat）、`/sys`、`/proc`、`/run`、`/usr` 等系统挂载排除
+
+**错误说清楚（原来是死的 `not a directory`）**
+- `EACCES` → 「没有读取权限（EACCES）：该盘由 uid=N 挂载，只有它能访问」
+- `ENOENT` → 「目录不存在（设备可能已拔出）」；`ENOTDIR` → 「这不是一个目录」
+- `/vol00` 下未挂载的占位目录（mode 000、空）→ 「设备未连接（这是挂载点占位目录…）」，
+  以前 root 读得进去，界面显示成空文件夹，看着像盘里没东西
+- 子项 `statSync` 失败不再拖垮整层目录
+
+**新增自查接口 `GET /api/diag_usb`**
+一次性摊开：`lsblk` 树（tran/rm/fstype/mountpoint）、`collectUsbMounts()` 结果、
+每个设备的 `/proc/mounts` 原始行、挂载点 `stat`(mode/uid/gid)、`realpath`、
+`readdir` 的真实 errno、`isAllowedPath` 判定、挂载 owner、按 owner 读取的探测结果，
+以及 `/vol00` 每个占位目录的 mode 与 mounted 状态。盘插上后一句话就能定位。
+
+**修复「设备未连接」误判正常卷目录（本条为 v0.5.1 内部的回归修复）**
+fnOS 的用户卷目录大量是 `d---------+`（mode 000 + POSIX ACL，如 `/vol1/1000`、
+`/vol1/1000/Photos`、`/vol1/1000/手机系统备份`）。最初的占位目录判断写成
+「mode 000 且不是挂载点 → 设备未连接」，把这些正常目录全部误判了。
+现收窄为：只有父目录是外接设备挂载根（`/^\/vol0+$/`，即 `/vol00`）、
+该目录不在 `/proc/mounts` 里、且 mode 为 0，才算占位目录。
+
+**测试**
+- 新增 `tests/test_mountperm.js` 9 项（八进制转义、挂载解析、最长前缀匹配、`uid=` 优先、
+  fuse 进程探测含假 `/proc`、非 fuse 返回 null、`listAsUid` 类型标记）
+- `tests/test_api.js` 新增回归用例「mode 000 的普通目录仍可浏览（不得误判为设备占位）」
+- 全量 101 项通过（api 26 + auto_sync 17 + mountperm 9 + rsync_guards 26 + usb_detect 23）
 
 ### v0.5.0 — 同步可靠性与数据安全（汇总 v0.4.3 → v0.4.11）
 
