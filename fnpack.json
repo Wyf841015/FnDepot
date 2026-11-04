@@ -759,6 +759,44 @@
           }
         }
       }
+    },
+    "fnaiapi": {
+      "display_name": "智能识别服务",
+      "desc": "给 MT Photos 用的本地 AI 识别引擎：人脸特征、以文搜图、文字识别三合一，核显加速，照片不出本机",
+      "platform": [
+        "all"
+      ],
+      "categories": [
+        "系统工具"
+      ],
+      "icon_url": "fnaiapi/ICON_256.PNG",
+      "preview_urls": [
+        "fnaiapi/Preview/screenshot_20261104_150001_com.trim.app.jpg",
+        "fnaiapi/Preview/screenshot_20261104_150004_com.trim.app.jpg",
+        "fnaiapi/Preview/screenshot_20261104_150002_com.trim.app.jpg",
+        "fnaiapi/Preview/screenshot_20261104_150003_com.trim.app.jpg"
+      ],
+      "run_as": "root",
+      "install_type": "",
+      "is_docker": "False",
+      "maintainer": "一零一二",
+      "maintainer_url": "https://gitee.com/wyf1015",
+      "distributor": "一零一二",
+      "distributor_url": "https://gitee.com/wyf1015",
+      "bug_report_url": "https://gitee.com/wyf1015/fnaiapi/issues",
+      "releases": {
+        "0.1.0": {
+          "changelog": "v0.1.0 · 首次发布\n- 三个识别能力一个应用全给：人脸特征（512 维）、以文搜图（CLIP 图文向量）、文字识别（PP-OCRv4/v6 可切）\n- 与 MT Photos 现有数据格式兼容，切换过来不需要清空已有识别结果\n- 核显加速（无核显自动回退 CPU）；模型按需加载、空闲 5 分钟自动释放，内存占用可控\n- 识别历史保存在本地，重启不丢，可按能力筛选、按天查看\n- 模型准备不用敲命令：一键复制、多源下载、本地路径导入\n- 管理界面支持深色/浅色主题与手机访问，内置反馈与赞助入口",
+          "updated_at": "2026-11-04T15:07:25%:z",
+          "packages": {
+            "all": {
+              "download_url": "fnaiapi/fnaiapi.fpk",
+              "sha256": "853dab664d0c22654367a48ec4da29306a68f15a4474902ab4109a2689788994",
+              "size": "3594724"
+            }
+          }
+        }
+      }
     }
   }
 }
