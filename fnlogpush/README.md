@@ -3,9 +3,9 @@
 > 自动监控飞牛NAS系统日志和备份进度，实时推送至多种渠道
 
 [![Platform](https://img.shields.io/badge/platform-FNOS-blue)](https://www.fnnas.com/)
-[![Version](https://img.shields.io/badge/version-1.5.2-green)](https://gitee.com/wyf1015/FNLogPush)
+[![Version](https://img.shields.io/badge/version-1.5.4-green)](https://gitee.com/wyf1015/FNLogPush)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-110%20passed-brightgreen)](tests/)
+[![Tests](https://img.shields.io/badge/tests-470%20passed-brightgreen)](tests/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
 
 ## 功能特性
@@ -160,14 +160,35 @@ fnlogpush/
 
 ## 版本历史
 
+### v1.5.4 (2026-11-05)
+
+- 🐛 **修复「所有推送都停了」**（P0）— 事件过滤条件写反：配置里的 `selected_events`
+  是用户勾选**要推送**的事件，却直接当成 SQL 的 `excluded_events`（`eventId NOT IN (...)`）传进去，
+  等于把所有想推的事件排除掉。勾得少只是漏推，**全选（168/168）后变成一条都不推**。
+  现在按补集计算：全选 → 不过滤、全不选 → 不推、部分选 → 只推选中的；
+  事件目录读不到时退回 `event_ids`，最坏退化成「不过滤」而不是「全排除」
+- 🐛 **修复结构化日志文件始终为空**（P0）— 文件日志用了 `logger.add(format=JSONFormatter())`，
+  而 loguru 会把 callable 的返回值当成**模板**再 `format_map()` 一次，成品 JSON 的
+  `{"time": …}` 被解析成占位符 `"time"` → `KeyError: '"time"'`。结果 `app.log`
+  从上线起一直是 **0 字节**，且每条 WARNING/ERROR 都往 stderr 喷一段
+  “Logging error in Loguru Handler #1 / Record was …”，这些噪声被 fnOS 收进 info.log，
+  把真正的日志埋掉。改为自实现 `JsonFileSink`（callable 放 sink 位置），保留原 JSON 字段结构，
+  自带 10 MB 大小轮转与备份清理，写盘异常一律吞掉不影响业务
+- 🐛 **修复「测试连接」提示路径不合法** — 数据库路径白名单补回 `/usr/trim/var`
+  （eventlogger / backup_service / downloadcenter 的 db3 都在该目录下）
+- 🧪 新增 16 项回归测试（事件过滤 8 项 + JSON 日志 8 项），**全量 470 项通过**
+- 🧹 删除 `logger.level = log_level`（loguru 的 `level` 是方法，赋值只会遮蔽它，不改变任何过滤行为）
+
 ### v1.5.3 (2026-09-26)
-- 修复「Bark 推送配置保存不了」：pydantic 模型 `BarkConfig` 缺 `device_key` 字段，且 `server_url` 与前端/工厂期望的 `server` 字段名不符。pydantic 嵌套模型 `extra` 默认 `ignore`，`model_validate` + `model_dump` 会**静默丢弃**这两个字段，接口仍返回成功 → 配置保存后永不生效。修复：字段名对齐为 `server` 并补上 `device_key`
-- 修复「PushPlus 主题配置保存不了」：`PushPlusConfig` 缺 `topic` 字段（同类问题，全项目扫描发现）
-- 新增 12 项渠道模型字段对齐测试，参数化遍历推送渠道工厂，从机制上防止这一类「静默丢字段」问题复发
+- 🐛 **修复「Bark 推送配置保存不了」** — 前端提交 `bark:{enabled, device_key, server}`，但 pydantic 模型 `BarkConfig` 只定义了 `enabled` + `server_url`。pydantic 嵌套模型 `extra` 默认 `ignore`，`model_validate` + `model_dump` 把 `device_key` 和 `server` **静默丢弃**，接口照样返回成功 → 保存后配置永远不生效。修复：字段名对齐前端/工厂的 `server`，并补上 `device_key`
+- 🐛 **修复「PushPlus 主题配置保存不了」**（同类 bug，全项目扫描抓出）— `PushPlusConfig` 缺 `topic` 字段，前端提交的 `topic` 同样被静默丢弃，已补上
+- 🧪 新增 `test_push_channel_model_alignment.py` 12 项 — 参数化遍历 `push_service` 渠道工厂，断言每个渠道期望的 key 都存在于对应 pydantic 模型中，从机制上防住这一类「静默丢字段 → 配置存不进去」的 bug 复发
+- 📦 同步 `package-lock.json` 版本号（此前滞留在 1.3.0）
 
 
 ### v1.5.2 (2026-09-24)
-- 修复「音乐监控每次重启推送全库」：`failed_push` 失败重试队列在重启时自动补发历史积压导致每次重启推 412 首历史歌。修复：`load_pending()` 加时效过滤，重启只恢复窗口内近期失败、陈旧积压不重放
+- 🐛 **修复「音乐监控每次重启推送全库」** — 根因是 `failed_push` 失败重试队列在重启时自动补发历史积压（修复前某次 `last_id` 读小值把 412 首历史歌当新增推送、mof 失败落库后每次重启 `_restore_failed_tasks()` 全部重放）。修复：`load_pending()` 加 `max_age_hours=6` 时效过滤，重启只恢复窗口内近期失败、陈旧积压不重放；已清空历史音乐失败积压
+- 🧪 新增 2 项 `push_service` 重放过滤测试（pending 时效过滤 + restore 跳过陈旧），推送相关 31 项全过
 
 ### v1.5.1 (2026-09-23)
 - 🎨 **修复主题切换无法持久化** — 根因 `requestIdleCallback` 空闲回调在页面繁忙/快速刷新/关闭时可能不触发，`beforeunload`/`pagehide` 在 fnOS WebView 也不总是触发 → 切换主题后保存从未发出，刷新/重开应用回退。修复：切主题改为**立即保存**（不再走 rIC 延迟）+ 后端保存请求补 GATEWAY_BASE 前缀
@@ -180,8 +201,8 @@ fnlogpush/
   - 新建歌单 / 歌单加歌 / 歌单移除歌曲 / 用户登录
 - 🧩 前端新增「音乐监控」配置面板（启用开关 / 库路径 + 检查连接 / 轮询间隔 / 事件类型勾选）+ 侧边栏入口 + 状态栏「音乐」指示
 - 🔧 后端新增 `MusicDBPoller` 轮询器 + `MusicMonitorService` 服务层 + 6 个 `/api/music/*` 路由（config/status/start/stop/db-check）
-- 🛡️ 支持重复播放检测（`play_history.play_count` 累加对比）+ 登录幂等 + 300s 去重 + 基线不推送已有数据
-- 🔒 数据库路径白名单新增 `/usr/local/apps/@appdata` 前缀（启用飞牛应用数据曲库）
+- 🛡️ 支持重复播放检测（`play_history.play_count` 累加对比）+ 重塑幂等 + 300s 去重 + 基线不推送已有数据
+- 🔒 数据库路径白名单新增 `/usr/local/apps/@appdata` 前缀（enable 飞牛应用数据曲库）
 - 🧪 新增音乐监控测试 **17 项**（基线 / 各事件 / 去重 / 重复播放 / 登录幂等 / 状态持久化）
 
 ### v1.4.1 (2026-09-14)
@@ -275,7 +296,7 @@ fnlogpush/
 - ✅ **测试 92 → 112** - 新增 pydantic 严格校验回归 + hot-reload 同步 + chart_data 桶化 + 备份路径穿越 + 端到端 KPI 验证
 
 ### v1.0.1 (2026-06-01)
-- ✨ **恢复飞书多维表格统计推送** - 提取公共库 `cmd/lib/feishu_push.sh`，install/upgrade 共享
+- ✨ **恢复安装/升级统计上报** - 抽成公共库，install / upgrade 回调共用
 - 🐛 **修复移动端底部菜单 active 状态不同步** - `syncNavActive` 同步 `.mobile-nav-btn`
 - 🐛 **修复 WebSocket 连接失败** - URL 改用 `GATEWAY_BASE` 直接构造，兼容 fnOS 网关
 - 🐛 **修复统计图表不显示** - `switchNavPanel` 切换到 stats 面板时主动调用 `initStatsPanel`
