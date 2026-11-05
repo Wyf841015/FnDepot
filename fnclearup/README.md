@@ -4,6 +4,27 @@
 
 ![清理精灵 FnClearup](ICON_256.png)
 
+## v0.15.2 更新
+
+- 💾 **支持外接存储（U 盘 / 移动硬盘）** —— fnOS 把可移除设备挂在 `/vol00`、`/vol01`…
+  （`check_perm` / `filestor_service` 二进制里就是 `/vol00/` + `fuseblk ntfs exfat`）。
+  此前浏览对话框只认 `/vol1`–`/vol10` 和网盘 `/vol02`，外接盘既看不到也选不了
+  （实测 `GET /api/browse?path=/vol00` 直接 403「路径越界」）。现在：
+  - 浏览根目录**动态列出**外接设备并标注「外接设备」，插上即出现，不用重启应用
+  - 重复文件 / 空目录 / 大文件 / 磁盘分析的默认扫描根包含外接盘
+    （仍排除网盘 `/vol02`：fuse 逐文件 stat 太慢）
+- ♻️ **外接盘回收站 `_fnclearup_trash`** —— 外接盘多为 exFAT/NTFS，没有
+  `/volN/<UID>/.@#local/trash`，以前只能报「路径格式不支持回收站」或降级成永久删除。
+  现在删除改为移到**同盘** `<挂载根>/_fnclearup_trash/<原相对路径>`：
+  - 同设备 `rename` 原子移动，不跨盘复制、不占双倍空间；跨设备才退化为复制+删除
+  - 挂载点按 `/proc/self/mounts` 的**最长前缀**判定：设备挂在 `/vol00/USB_NAME` 时，
+    回收站落在该设备根下，而不是 `/vol00` 那个 root 空壳目录
+  - 同名冲突自动追加 `_1/_2` 后缀；只读 NTFS（EROFS）会明确报错，**绝不静默永久删除**
+  - 「回收站」页可统计与清理外接盘回收站，与 fnOS 原生回收站并列展示
+- 🛡️ `_fnclearup_trash` 纳入受保护目录：清理扫描不能把它当普通目录删掉
+- 🧪 新增 17 项回归测试（外接盘识别 / 挂载点匹配 / 真实移动 / 同名冲突 / 目录整体移动 /
+  保护语义 / 与 `isSafePath` 联动），全部在 `/tmp/fnclearup_test` 沙箱内执行，绝不触碰真实 `/vol*`
+
 ## v0.15.1 更新
 
 - 修复：应用数据目录（PKGVAR）以前写成 `process.env.TRM_PKGVAR || '/vol3/@appdata/fnclearup'`。

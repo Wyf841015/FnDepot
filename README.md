@@ -12,7 +12,7 @@
 | [日志哨兵](fnlogpush/) | v1.5.4 | 日志监控 + 多渠道推送 + 事件管理 |
 | [USB自动同步](usbrsync/) | v0.1.0 | USB存储设备自动同步工具（原 CGI 版） |
 | [USB自动同步 (Node.js 版)](usbrsync1/README.md) | v0.5.1 | USB插入自动同步，数据安全护栏（--delete 预检拦截）、真实进度、同步历史与统计概览；大容量 exFAT/NTFS 盘按挂载 owner 降权读取 |
-| [清理精灵](fnclearup/README.md) | v0.15.1 | 系统清理（已卸载应用残留 / 网盘挂载 / Docker 残余卷 / 系统缓存 / 回收站 / tmp）＋重复文件、相似图片、空目录、大文件扫描，定时任务与主题切换 |
+| [清理精灵](fnclearup/README.md) | v0.15.2 | 系统清理（已卸载应用残留 / 网盘挂载 / Docker 残余卷 / 系统缓存 / 回收站 / tmp）＋重复文件、相似图片、空目录、大文件扫描，定时任务与主题切换 |
 | [m3u8下载器](fnm3u8/README.md) | v0.1.0 | m3u8视频下载，支持多线程/断点续传/AES解密/批量下载/直播录制 |
 | [m3u8DL 专业下载器](fnm3u8dl/README.md) | v0.8.2 | N_m3u8DL-RE 完整 Node.js 重写，HLS+DASH+MSS 三协议、AES-128 解密、批量添加、直播录制、速度显示、493 个 TDD 测试 |
 | [视频下载器](fnytdlp/README.md) | v0.6.3 | 集成 yt-dlp (1872+ 站点)，AI 视频总结 / 缩略图代理 / 字幕提取 / 速度曲线 / 频道订阅 / 自适应架构 |
