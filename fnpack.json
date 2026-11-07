@@ -819,6 +819,45 @@
           }
         }
       }
+    },
+    "fnproc": {
+      "display_name": "进程管家",
+      "desc": "实时看清 NAS 上在跑什么：进程列表与树形视图、监听端口精确归属、Docker 容器聚合、系统服务就地启停，每一次操作都有记录可查 - Node.js 版",
+      "platform": [
+        "all"
+      ],
+      "categories": [
+        "系统工具"
+      ],
+      "icon_url": "fnproc/ICON_256.PNG",
+      "preview_urls": [
+        "fnproc/Preview/screenshot_20261107_193001_fnproc_overview.jpg",
+        "fnproc/Preview/screenshot_20261107_193015_fnproc_process.jpg",
+        "fnproc/Preview/screenshot_20261107_193030_fnproc_ports.jpg",
+        "fnproc/Preview/screenshot_20261107_193045_fnproc_services.jpg",
+        "fnproc/Preview/screenshot_20261107_193100_fnproc_audit.jpg"
+      ],
+      "run_as": "root",
+      "install_type": "",
+      "is_docker": false,
+      "maintainer": "一零一二",
+      "maintainer_url": "https://github.com/Wyf841015",
+      "distributor": "一零一二",
+      "distributor_url": "https://github.com/Wyf841015",
+      "bug_report_url": "https://github.com/Wyf841015",
+      "releases": {
+        "0.1.1": {
+          "changelog": "v0.1.1\n- 操作记录改为本地数据库持久保存：发信号、服务启停、应用启停、被拒绝的尝试全部留档，重启、崩溃、断电都不丢，也不再被自动清理\n- 记录页面升级：按操作与结果筛选、关键字搜索、分页浏览，顶部显示总条数与成功 / 拒绝 / 失败分布\n- 服务操作的结果区分「被规则拦下」与「执行了但失败」\n\nv0.1.0 首发\n- 六个页面：概览、进程、端口、容器、服务、记录，顶部指标条始终可见\n- 进程：列表 / 树形 / 详情三种视角，支持 9 种信号处置\n- 端口：监听端口精确归属到进程、用户与容器\n- 容器：Docker 容器聚合，可只看某个容器的进程\n- 服务：系统服务就地启停，关键服务受保护\n- 概览曲线支持 60 秒到 24 小时六档时间范围，历史数据自动留存\n- 亮色 / 暗色主题一键切换，桌面与手机自适应",
+          "updated_at": "2026-11-07T19:45:00+08:00",
+          "packages": {
+            "all": {
+              "download_url": "fnproc/fnproc.fpk",
+              "sha256": "65272066356830bf70757de9111d52d64447b4a663cf7aaeaca90e2f912f7e0f",
+              "size": 227517
+            }
+          }
+        }
+      }
     }
   }
 }
