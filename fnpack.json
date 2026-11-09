@@ -863,8 +863,8 @@
           "packages": {
             "all": {
               "download_url": "fnproc/fnproc.fpk",
-              "sha256": "80763930c0c6ab1fabb143e96c06a74e89d199bed9467b1b8940fcf7ead8d2c7",
-              "size": 314876
+              "sha256": "3245e138e45c49503e8850db1428b3e6ad80bd54647eae77bcaa786761a623a5",
+              "size": 314888
             }
           }
         }
